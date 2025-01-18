@@ -1,0 +1,221 @@
+button {
+  position: relative;
+  overflow: hidden;
+  height: 50px; /* Adjust as needed */
+}
+.text,
+.new-text {
+  position: absolute;
+  top: 50%;
+  transform: translateY(50%);
+  transition: transform 0.5s ease-in-out;
+}
+.new-text {
+  transform: translateY(100%);
+}
+
+.gardient-text {
+  background: linear-gradient(
+    to bottom right,
+    theme("colors.gradientStart"),
+    theme("colors.gradientEnd")
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-stroke-text {
+  color: transparent;
+  -webkit-text-stroke: 2px transparent;
+  position: relative;
+}
+.gradient-stroke-text::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: transprent;
+  background: linear-gradient(
+    to bottom right,
+    theme("colors.gradientStart"),
+    theme("colors.gradientEnd")
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke: 5px;
+}
+#talkBtn::after {
+  content: "";
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  background: theme(colors.themeBlue);
+  left: 0%;
+}
+#talkBtn::before {
+  content: "";
+  width: 0%;
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  background: theme(colors.themeBlue);
+  left: 0%;
+  transition: all 0.5s;
+}
+
+#talkBtn:hover::before {
+  width: 100%;
+}
+
+#meAnimate {
+  animation: meAnimation 2.5s ease alternate infinite;
+}
+
+@keyframes meAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-30px);
+  }
+}
+
+#rotateAbout {
+  animation: rotateAbout 2s ease-in-out alternate infinite;
+}
+
+@keyframes rotateAbout {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+#aboutCard:hover {
+  rotate: -4deg;
+  box-shadow: 50px 50px 50px 0px rgba(0, 0, 0, 0.1);
+}
+#aboutCard:hover #aboutName {
+  color: theme(colors.themePurple);
+}
+#aboutCard:hover #icon {
+  background-color: theme(colors.themePurple);
+  border: theme(colors.themePurple);
+  color: white;
+}
+.portfolioGardient {
+  background: linear-gradient(
+    to bottom right,
+    theme("colors.PGardientEnd"),
+    theme("colors.PGardientStart")
+  );
+}
+#viewWork::after {
+  content: "";
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  background: white;
+  left: 0%;
+}
+#viewWork::before {
+  content: "";
+  width: 0%;
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  background: white;
+  left: 0%;
+  transition: all 0.5s;
+}
+#viewWork:hover::before {
+  width: 100%;
+}
+#ProjectHovers:hover #proejctLinks {
+  transform: translateY(0%);
+}
+#Pcircle {
+  box-shadow: 0 0 10px rgb(195, 195, 195), inset 0 0 3px rgb(195, 195, 195);
+}
+#viewProject::after {
+  content: "";
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  background: theme(colors.themePurple);
+  left: 0%;
+}
+#viewProject::before {
+  content: "";
+  width: 0%;
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  background: theme(colors.themePurple);
+  left: 0%;
+  transition: all 0.5s;
+}
+#viewProject:hover::before {
+  width: 100%;
+}
+.projectGardient {
+  background: linear-gradient(to bottom right, #d5d4efc8, #feebeaec);
+}
+#testiBoxes:hover {
+  margin-bottom: 3px;
+  margin-top: -3px;
+  box-shadow: 0 0 50px #d3d3d3, 0 0 100px #d3d3d3;
+}
+#happyClientsBoxShadow {
+  box-shadow: 0 0 50px rgba(170, 170, 170, 0.51);
+}
+#blueGardient {
+  background: linear-gradient(
+    to left,
+    theme("colors.blueGardientEnd"),
+    theme("colors.blueGardientStart")
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.smallFooterBorder::before {
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to left, #120f47, #201b76, #120f47);
+  transform: translateY(-50%);
+}
+.lineOneRotate {
+  transform: translateY(300%) rotate(45deg);
+}
+.lineTwoRotate {
+  transform: translateY(-300%) rotate(-45deg);
+}
+#AboutAnimation {
+  animation: upDown 4s ease-in-out alternate infinite;
+}
+@keyframes upDown {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(50%);
+  }
+}
+.eduGardient {
+  background: linear-gradient(
+    to right,
+    theme(colors.EduGardientStart),
+    theme(colors.EduGardientEnd)
+  );
+}
+.projectHovers:hover .projectImgs {
+  scale: 1.2;
+}
