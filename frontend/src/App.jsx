@@ -10,7 +10,7 @@ import PortfolioPage from "./pages/Portfolio/PortfolioPage";
 import TestimonialPage from "./pages/Testimonial/TestimonialPage";
 import ContactPage from "./pages/contact/contactPage";
 import BlogPage from "./pages/blog/BlogPage";
-import AdminDashboard from "./admin/components/AdminDashboard";
+import AdminDashboard from "./admin/AdminDashboard";
 const App = () => {
   return (
     <>
@@ -21,8 +21,6 @@ const App = () => {
         <Route path={"/Testimonials"} element={<TestimonialPage />} />
         <Route path={"/Blog"} element={<BlogPage />} />
         <Route path={"/Contact"} element={<ContactPage />} />
-      </Routes>
-      <Routes>
         <Route path={"/Admin/*"} element={<AdminDashboard />} />
       </Routes>
     </>

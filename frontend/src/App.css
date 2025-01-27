@@ -219,3 +219,21 @@ button {
 .projectHovers:hover .projectImgs {
   scale: 1.2;
 }
+#linksHover:hover #linksIcon {
+  transform: rotate(90deg);
+}
+#dashboardRight::-webkit-scrollbar {
+  width: 5px;
+  height: 12px;
+}
+#dashboardRight::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+#dashboardRight::-webkit-scrollbar-thumb {
+  background: theme(colors.themeBlue);
+  border-radius: 10px;
+}
+#dashboardRight::-webkit-scrollbar-thumb:hover {
+  background: theme(colors.blueGardientEnd);
+}
