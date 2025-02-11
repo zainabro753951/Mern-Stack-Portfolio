@@ -8,8 +8,7 @@ import { MdDelete } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { GetAboutData } from "../../../Context/GetAboutData.jsx";
 import { IoWarning } from "react-icons/io5";
-import Toastify from "toastify-js";
-import "toastify-js/src/toastify.css";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 
 // Popup component for editing the values
@@ -103,20 +102,11 @@ const ViewAbout = () => {
           );
           if (response.data) {
             setAboutData(response.data);
-            Toastify({
-              text: "About data has been updated successfully!",
-              duration: 3000,
-              close: true,
-              gravity: "top", // `top` or `bottom`
-              stopOnFocus: true, // Prevents dismissing of toast on hover
-              style: {
-                borderRadius: "10px",
-                color: "white",
-
-                background:
-                  "linear-gradient(to bottom right, #5137A1, #DB6268)",
-              },
-            }).showToast();
+            toast.success("About data has been updated successfully", {
+              theme: "dark",
+              autoClose: 3000,
+              closeButton: false,
+            });
           }
         } else {
           setEmptyHobby("Hobby fields is required!");
@@ -129,6 +119,7 @@ const ViewAbout = () => {
 
   return (
     <div className="h-screen w-full overflow-hidden flex p-2 gap-2 bg-gray-200">
+      <ToastContainer />
       <DashboardLeft />
       <div
         id="dashboardRight"
