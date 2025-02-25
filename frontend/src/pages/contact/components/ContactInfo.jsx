@@ -1,13 +1,17 @@
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 import React from "react";
 import { Link } from "react-router-dom";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const ContactInfo = () => {
   let contactInfo = [
     {
       svg: (
         <svg
-          width="59"
-          height="68"
+          className="lg:w-[4.5vw] md:w-[5.5vw] xs:w-[7vw]"
           viewBox="0 0 59 68"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -27,8 +31,7 @@ const ContactInfo = () => {
     {
       svg: (
         <svg
-          width="61"
-          height="61"
+          className="lg:w-[4.5vw] md:w-[5.5vw] xs:w-[7vw]"
           viewBox="0 0 61 61"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -52,8 +55,7 @@ const ContactInfo = () => {
     {
       svg: (
         <svg
-          width="63"
-          height="62"
+          className="lg:w-[4.5vw] md:w-[5.5vw] xs:w-[7vw]"
           viewBox="0 0 63 62"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -71,24 +73,40 @@ const ContactInfo = () => {
       btn: "Send An Email",
     },
   ];
+  gsap.config({ force3D: true });
+  useGSAP(() => {
+    gsap.from(".contactInfo", {
+      y: 150,
+      opacity: 0,
+      scale: 0,
+      duration: 1.8,
+      ease: "back",
+      transformOrigin: "center",
+      force3D: true,
+    });
+  }, []);
+
   return (
     <div className="bg-[#F9FBFF]">
-      <div className="max-w-[1200px] mx-auto pb-24">
-        <div className="w-full grid grid-cols-3 gap-10">
+      <div className="md:max-w-[80vw] mx-auto lg:pb-[8vw] lg:pt-0 xs:pt-[15vw] xs:py-[15vw]">
+        <div className="w-full grid lg:grid-cols-3 place-items-center items-center xs:grid-cols-1 gap-10">
           {contactInfo.map((items, idx) => {
             return (
               <div
                 key={idx}
-                className="p-7 flex -translate-y-1/2 items-center gap-4 bg-white shadow-xl rounded-xl"
+                style={{ willChange: "transform, opacity, scale" }}
+                className="p-7 flex contactInfo lg:-translate-y-1/2 items-center gap-4 bg-white shadow-xl rounded-xl"
               >
                 <div>{items.svg}</div>
                 <div className="flex flex-col gap-1">
-                  <h3 className="text-2xl font-semibold font-lexend_deca">
+                  <h3 className="lg:text-[1.8vw] md:text-[2.8vw] xs:text-[4.3vw] font-semibold font-lexend_deca">
                     {items.heading}
                   </h3>
-                  <p className="text-lg text-gray-500 font-jost">{items.p}</p>
+                  <p className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] text-gray-500 font-jost">
+                    {items.p}
+                  </p>
                   <Link
-                    className="mr-auto font-semibold transition-all duration-300 hover:text-themeBlue text-themePurple relative"
+                    className="mr-auto lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.8vw] font-semibold transition-all duration-300 hover:text-themeBlue text-themePurple relative"
                     id="viewProject"
                   >
                     {items.btn}

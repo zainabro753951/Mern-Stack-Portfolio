@@ -50,9 +50,13 @@ const ProfilePopup = ({ isOpen, onClose }) => {
       adminData ? adminData.profileImg : undefined
     );
     try {
-      let response = await axios.post("/api/admin/update_admin", formData, {
-        withCredentials: true,
-      });
+      let response = await axios.post(
+        "http://localhost:3000/admin/update_admin",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
       if (response.data) {
         onClose();
         setAdminData(response.data);
@@ -76,7 +80,7 @@ const ProfilePopup = ({ isOpen, onClose }) => {
       >
         <div
           onClick={onClose}
-          className="w-10 h-10 border rounded-full absolute top-5 flex items-center justify-center border-gray-700"
+          className="lg:w-[3vw] md:w-[4vw] xs:w-[5.3vw] lg:h-[3vw] md:h-[4vw] xs:h-[5.3vw] lg:text-[1.4vw] md:text-[2.4vw] xs:text-[3.5vw] border rounded-full absolute top-5 flex items-center justify-center border-gray-700"
         >
           <RxCross2 />
         </div>
@@ -84,10 +88,10 @@ const ProfilePopup = ({ isOpen, onClose }) => {
           encType="multipart/form-data"
           method="post"
           onSubmit={handleUpdateAdmin}
-          className="grid grid-cols-3 items-center gap-9"
+          className="grid md:grid-cols-3 xs:grid-cols-1 place-items-center items-center gap-9"
         >
           <div>
-            <div className="w-[300px] relative h-[300px]">
+            <div className="lg:w-[17vw] md:w-[18vw] xs:w-[20vw] relative lg:h-[17vw] md:h-[18vw] xs:h-[20vw]">
               <img
                 className="w-full h-full object-cover object-center bg-purple-600 rounded-full"
                 src={adminPreview}
@@ -95,7 +99,7 @@ const ProfilePopup = ({ isOpen, onClose }) => {
               />
               <label
                 htmlFor="adminProfile"
-                className="w-10 h-10 flex absolute bottom-10 right-4 cursor-pointer items-center justify-center bg-themePurple shadow-md rounded-full text-white"
+                className="lg:w-[3vw] md:w-[4vw] xs:w-[5.5vw] lg:h-[3vw] lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.5vw] md:h-[4vw] xs:h-[5.5vw] flex absolute bottom-[5%] right-[6%] cursor-pointer items-center justify-center bg-themePurple shadow-md rounded-full text-white"
               >
                 <input
                   className="hidden"
@@ -114,7 +118,7 @@ const ProfilePopup = ({ isOpen, onClose }) => {
             </div>
           </div>
           <div className="col-span-2 w-full flex flex-col gap-3">
-            <div className="flex items-center gap-3 w-full">
+            <div className="grid sm:grid-cols-2 xs:grid-cols-1 items-center gap-3 w-full">
               <div className="flex w-full">
                 <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-transparent border border-e-0 border-gray-800 rounded-s-md ">
                   <svg
@@ -132,7 +136,7 @@ const ProfilePopup = ({ isOpen, onClose }) => {
                   id="website-admin"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="rounded-none text-md w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-800 p-2.5 outline-none"
+                  className="rounded-none text-md w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-800 lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] outline-none"
                   placeholder="Bonnie Green"
                 />
               </div>
@@ -153,7 +157,7 @@ const ProfilePopup = ({ isOpen, onClose }) => {
                   id="website-admin"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="rounded-none text-md w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-800 p-2.5 outline-none"
+                  className="rounded-none text-md w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-800 lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] outline-none"
                   placeholder="Bonnie Green"
                 />
               </div>
@@ -175,7 +179,7 @@ const ProfilePopup = ({ isOpen, onClose }) => {
                 id="website-admin"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className="rounded-none text-md w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-800 p-2.5 outline-none"
+                className="rounded-none text-md w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-800 lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] outline-none"
                 placeholder="+244 564 4651"
               />
             </div>

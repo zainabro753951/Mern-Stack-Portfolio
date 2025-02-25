@@ -3,29 +3,34 @@ import HireMeBtn from "../../../components/HireMeBtn";
 const ContactForm = () => {
   return (
     <div className="bg-[#F9FBFF]">
-      <div className="max-w-[1200px] mx-auto py-24">
+      <div className="md:max-w-[80vw] mx-auto lg:py-[8vw] xs:py-[15vw]">
         <div className="w-[70%] mx-auto">
-          <h3 className="text-3xl font-semibold font-lexend_deca mb-2">
+          <h3 className="lg:text-[1.8vw] md:text-[2.8vw] xs:text-[4.3vw] font-semibold font-lexend_deca mb-2">
             Let's Talk
           </h3>
-          <p>Got a project in mind? Fill in the form or send us.</p>
-          <form method="post" className="flex flex-col gap-8 w-full py-5">
+          <p className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw]">
+            Got a project in mind? Fill in the form or send us.
+          </p>
+          <form
+            method="post"
+            className="flex flex-col lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] gap-8 w-full py-5"
+          >
             <input
               type="text"
               placeholder="First Name"
-              className="py-3 rounded-lg font-jost placeholder:text-gray-500 border-gray-100 border px-5 outline-none focus:border-themeBlue"
+              className="lg:py-[1.2vw] md:py-[2.2vw] xs:py-[3.8vw] w-full rounded-lg lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] font-jost placeholder:text-gray-500 border-gray-100 border px-5 outline-none focus:border-themeBlue"
             />
             <input
               type="text"
               placeholder="Last Name"
-              className="py-3 rounded-lg font-jost placeholder:text-gray-500 border-gray-100 border px-5 outline-none focus:border-themeBlue"
+              className="lg:py-[1.2vw] md:py-[2.2vw] xs:py-[3.8vw] w-full rounded-lg lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] font-jost placeholder:text-gray-500 border-gray-100 border px-5 outline-none focus:border-themeBlue"
             />
             <input
               type="email"
               placeholder="Email"
-              className="py-3 rounded-lg font-jost placeholder:text-gray-500 border-gray-100 border px-5 outline-none focus:border-themeBlue"
+              className="lg:py-[1.2vw] md:py-[2.2vw] xs:py-[3.8vw] w-full rounded-lg lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] font-jost placeholder:text-gray-500 border-gray-100 border px-5 outline-none focus:border-themeBlue"
             />
-            <select className="py-3 rounded-lg font-jost placeholder:text-gray-500 border-gray-100 border px-5 outline-none focus:border-themeBlue">
+            <select className="lg:py-[1.2vw] md:py-[2.2vw] xs:py-[3.8vw] w-full rounded-lg lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] font-jost placeholder:text-gray-500 border-gray-100 border px-5 outline-none focus:border-themeBlue">
               <option className="py-2 inline-block" value="">
                 Select your budget
               </option>
@@ -43,7 +48,7 @@ const ContactForm = () => {
               </option>
             </select>
             <textarea
-              className="py-3 rounded-lg font-jost placeholder:text-gray-500 border-gray-100 border px-5 outline-none focus:border-themeBlue"
+              className="lg:py-[1.2vw] md:py-[2.2vw] xs:py-[3.8vw] w-full rounded-lg lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] font-jost placeholder:text-gray-500 border-gray-100 border px-5 outline-none focus:border-themeBlue"
               name=""
               id=""
               rows="7"

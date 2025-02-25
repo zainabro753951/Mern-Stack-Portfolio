@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 import adminModel from "../Models/admin.model.js";
 
-const secureRoute = async (req, res, next) => {
+const secureAdminRoute = async (req, res, next) => {
   try {
-    const token = req.cookies.token;
-    console.log(token);
+    const token = req.cookies.admintoken;
+
     if (!token) {
       return res.status(401).json({ msg: "No token, found" });
     }
@@ -15,10 +15,9 @@ const secureRoute = async (req, res, next) => {
       console.error(err);
       return res.status(403).json({ msg: "Token is not valid" });
     }
-    console.log(decode);
 
     const admin = await adminModel
-      .findOne({ _id: decode.adminId })
+      .findOne({ _id: decode.data })
       .select("-password");
     if (!admin) {
       return res.status(404).json({ msg: "Admin not found" });
@@ -31,4 +30,4 @@ const secureRoute = async (req, res, next) => {
   }
 };
 
-export default secureRoute;
+export default secureAdminRoute;

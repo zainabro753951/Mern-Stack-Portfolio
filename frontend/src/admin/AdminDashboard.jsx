@@ -3,14 +3,17 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import HomeDashboard from "./Pages/HomeDashboard/HomeDashboard";
 import Login from "./components/Login";
 import AddAbout from "./Pages/addAbout/AddAbout";
-import { useAuth } from "../Context/AuthProvider";
 import ViewAbout from "./Pages/ViewAbout/ViewAbout";
 import AddEducationPgae from "./Pages/addEducation/AddEducationPgae";
 import ViewEducationPage from "./Pages/viewEducation/viewEducationPage";
 import EditEducation from "./Pages/editEducation/EditEducation";
+import AdminSignup from "./components/adminSignup";
+import { useAdminAuth } from "../Context/AdminAuthProvider";
+import ProtectAdminRoute from "../Secure/ProtectAdminRoute";
 
 const AdminDashboard = () => {
-  let { authAdmin, setAuthAdmin, loading } = useAuth();
+  const { isAdminAuthenticated, isAuthChecked } = useAdminAuth();
+  console.log(isAdminAuthenticated);
 
   return (
     <>
@@ -18,39 +21,88 @@ const AdminDashboard = () => {
         <Route
           path="/"
           element={
-            authAdmin ? <HomeDashboard /> : <Navigate to={"/admin/login"} />
+            <ProtectAdminRoute
+              isAdminAuthenticated={isAdminAuthenticated}
+              isAuthChecked={isAuthChecked}
+            >
+              <HomeDashboard />
+            </ProtectAdminRoute>
           }
         />
         <Route
           path="/addAbout"
-          element={authAdmin ? <AddAbout /> : <Navigate to={"/admin/login"} />}
+          element={
+            <ProtectAdminRoute
+              isAdminAuthenticated={isAdminAuthenticated}
+              isAuthChecked={isAuthChecked}
+            >
+              <AddAbout />
+            </ProtectAdminRoute>
+          }
         />
         <Route
           path="/viewAbout"
-          element={authAdmin ? <ViewAbout /> : <Navigate to={"/admin/login"} />}
+          element={
+            <ProtectAdminRoute
+              isAdminAuthenticated={isAdminAuthenticated}
+              isAuthChecked={isAuthChecked}
+            >
+              <ViewAbout />
+            </ProtectAdminRoute>
+          }
         />
         <Route
           path="/addEducation"
           element={
-            authAdmin ? <AddEducationPgae /> : <Navigate to={"/admin/login"} />
+            <ProtectAdminRoute
+              isAdminAuthenticated={isAdminAuthenticated}
+              isAuthChecked={isAuthChecked}
+            >
+              <AddEducationPgae />
+            </ProtectAdminRoute>
           }
         />
         <Route
           path="/viewEducation"
           element={
-            authAdmin ? <ViewEducationPage /> : <Navigate to={"/admin/login"} />
+            <ProtectAdminRoute
+              isAdminAuthenticated={isAdminAuthenticated}
+              isAuthChecked={isAuthChecked}
+            >
+              <ViewEducationPage />
+            </ProtectAdminRoute>
           }
         />
         <Route
           path="/editEducation/:id"
           element={
-            authAdmin ? <EditEducation /> : <Navigate to={"/admin/login"} />
+            <ProtectAdminRoute
+              isAdminAuthenticated={isAdminAuthenticated}
+              isAuthChecked={isAuthChecked}
+            >
+              <EditEducation />
+            </ProtectAdminRoute>
+          }
+        />
+        <Route
+          path="/editEducation/:id"
+          element={
+            <ProtectAdminRoute
+              isAdminAuthenticated={isAdminAuthenticated}
+              isAuthChecked={isAuthChecked}
+            >
+              <EditEducation />
+            </ProtectAdminRoute>
           }
         />
         <Route
           path="/login"
-          element={authAdmin ? <Navigate to={"/admin"} /> : <Login />}
+          element={
+            isAdminAuthenticated ? <Navigate to={"/admin"} /> : <Login />
+          }
         />
+
+        <Route path="/admin-signup/:key" element={<AdminSignup />} />
       </Routes>
     </>
   );

@@ -33,8 +33,9 @@ const ViewAbout = () => {
     aboutData ? aboutData.profileImg : ""
   );
   const [imagePreview, setImagePreview] = useState(
-    profileImg ? `http://localhost:3000/${profileImg}` : ""
+    aboutData ? `http://localhost:3000/${aboutData.profileImg}` : ""
   );
+  console.log(profileImg);
 
   const [about, setAbout] = useState(aboutData ? aboutData.about : "");
   const [emptyHobby, setEmptyHobby] = useState("");
@@ -67,7 +68,7 @@ const ViewAbout = () => {
       setAbout(aboutData.about);
       setEmail(aboutData.email);
       setProfileImg(aboutData.profileImg);
-      setImagePreview(`http://localhost:3000/${profileImg}`);
+      setImagePreview(`http://localhost:3000/${aboutData.profileImg}`);
       setAboutHeadline(aboutData.aboutHeadline);
       if (aboutData.hobbies && aboutData.hobbies.length > 0) {
         aboutData.hobbies.filter((item) => {
@@ -76,6 +77,7 @@ const ViewAbout = () => {
       }
     }
   }, [aboutData]);
+  console.log(imagePreview);
 
   const handleSave = async (e) => {
     e.preventDefault();
@@ -94,7 +96,7 @@ const ViewAbout = () => {
         formData.append("hobbies", moreHobbies);
         if (moreHobbies.length > 0) {
           const response = await axios.post(
-            "/api/admin/update_about",
+            "http://localhost:3000/admin/update_about",
             formData,
             {
               withCredentials: true,
@@ -123,14 +125,14 @@ const ViewAbout = () => {
       <DashboardLeft />
       <div
         id="dashboardRight"
-        className="w-[75%] h-full bg-[#F9FBFF] relative rounded-[50px] overflow-auto"
+        className="lg:w-[75vw] md:w-[70vw] xs:w-[100%] h-full bg-[#F9FBFF] relative rounded-[50px] overflow-auto"
       >
         <AdminHeader />
         <div className="px-5">
-          <h1 className="text-3xl font-semibold font-lexend_deca pb-3">
+          <h1 className="lg:text-[2.4vw] md:text-[3.4vw] xs:text-[5.5vw] font-semibold font-lexend_deca pb-3">
             View About
           </h1>
-          <p className="text-lg font-jost text-gray-500">
+          <p className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-jost text-gray-500">
             I continuously embrace new challenges and opportunities throughout
             my professional journey. My focus has always been on enhancing my
             skills and providing innovative solutions.
@@ -141,9 +143,9 @@ const ViewAbout = () => {
             method="post"
             encType="multipart/form-data"
             onSubmit={handleSave}
-            className="w-full grid grid-cols-3 items-center gap-3"
+            className="w-full xs:flex flex-col md:items-start xs:items-center gap-3"
           >
-            <div className="w-[300px] relative h-[300px]">
+            <div className="lg:w-[20vw] md:w-[30vw] xs:w-[40vw] relative lg:h-[20vw] md:h-[30vw] xs:h-[40vw]">
               <img
                 className="w-full h-full object-cover object-top bg-purple-600 rounded-full"
                 src={imagePreview}
@@ -151,7 +153,7 @@ const ViewAbout = () => {
               />
               <label
                 htmlFor="profileImg"
-                className="w-10 h-10 flex absolute bottom-10 right-4 cursor-pointer items-center justify-center bg-themePurple shadow-md rounded-full text-white"
+                className="lg:w-[3vw] md:w-[4vw] xs:w-[5.5vw] lg:h-[3vw] lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.5vw] md:h-[4vw] xs:h-[5.5vw] flex absolute  bottom-[5%] right-[6%]  cursor-pointer items-center justify-center bg-themePurple shadow-md rounded-full text-white"
               >
                 <input
                   className="hidden"
@@ -169,13 +171,15 @@ const ViewAbout = () => {
               </label>
             </div>
             <div className="w-full col-span-2">
-              <h2 className="text-2xl font-semibold pb-5 font-lexend_deca">
+              <h2 className="lg:text-[1.4vw] md:text-[2.7vw] xs:text-[4vw] font-semibold pb-5 font-lexend_deca">
                 About Me
               </h2>
-              <div className="grid grid-cols-2 gap-5 w-full">
+              <div className="grid md:grid-cols-2 gap-5 w-full">
                 <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
                   <div className="flex w-full flex-col font-jost">
-                    <h4 className="font-semibold">About Headline</h4>
+                    <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                      About Headline
+                    </h4>
                     <input
                       type="text"
                       className="w-full bg-transparent border-none"
@@ -186,7 +190,9 @@ const ViewAbout = () => {
                 </div>
                 <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
                   <div className="flex w-full flex-col font-jost">
-                    <h4 className="font-semibold">Location</h4>
+                    <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                      Location
+                    </h4>
                     <input
                       type="text"
                       className="w-full bg-transparent border-none"
@@ -197,7 +203,9 @@ const ViewAbout = () => {
                 </div>
                 <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
                   <div className="flex w-full flex-col font-jost">
-                    <h4 className="font-semibold">Phone Number</h4>
+                    <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                      Phone Number
+                    </h4>
                     <input
                       type="number"
                       className="w-full bg-transparent border-none"
@@ -208,7 +216,9 @@ const ViewAbout = () => {
                 </div>
                 <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
                   <div className="flex w-full flex-col font-jost">
-                    <h4 className="font-semibold">Education</h4>
+                    <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                      Education
+                    </h4>
                     <input
                       type="text"
                       className="w-full bg-transparent border-none"
@@ -219,7 +229,9 @@ const ViewAbout = () => {
                 </div>
                 <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
                   <div className="flex w-full flex-col font-jost">
-                    <h4 className="font-semibold">About</h4>
+                    <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                      About
+                    </h4>
                     <textarea
                       className="w-full h-fit bg-transparent border-none"
                       value={about}
@@ -248,7 +260,7 @@ const ViewAbout = () => {
                     />
                     <span
                       onClick={addHobbies}
-                      className="bg-themeBlue rounded-r-lg p-3 cursor-pointer text-white text-lg font-lexend_deca"
+                      className="bg-themeBlue rounded-r-lg p-3 cursor-pointer text-white lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
                     >
                       Add
                     </span>
@@ -283,7 +295,9 @@ const ViewAbout = () => {
                 </div>
                 <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
                   <div className="flex w-full flex-col font-jost">
-                    <h4 className="font-semibold">Email</h4>
+                    <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                      Email
+                    </h4>
                     <input
                       type="email"
                       className="w-full bg-transparent border-none"
@@ -294,7 +308,7 @@ const ViewAbout = () => {
                 </div>
               </div>
               <div className="w-full py-10 flex items-center gap-5">
-                <button className="flex items-center gap-3 py-3 px-8 rounded-lg bg-themeBlue text-white text-lg font-jost">
+                <button className="flex items-center gap-3 py-3 px-8 rounded-lg bg-themeBlue text-white lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-jost">
                   <span>Save</span>
                   <span className="text-xl">
                     <FaRegEdit />

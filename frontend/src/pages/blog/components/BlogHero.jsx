@@ -2,13 +2,20 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import BlogTime from "./BlogTime";
+import GetTop from "../../../Context/GetTop";
+
 const BlogHero = () => {
+  const { targetSection } = GetTop();
+
   useEffect(() => {
     let getTime = () => {};
     getTime();
   }, []);
   return (
-    <div className="w-full bg-portfolioHero bg-cover bg-center bg-no-repeat">
+    <div
+      ref={targetSection}
+      className="w-full bg-portfolioHero bg-cover bg-center bg-no-repeat"
+    >
       <div className="max-w-[1200px] h-screen mx-auto flex flex-col items-center gap-7 justify-center">
         <h2
           id="blueGardient"

@@ -47,7 +47,7 @@ const EditEducation = () => {
       <DashboardLeft />
       <div
         id="dashboardRight"
-        className="w-[75%] h-full bg-[#F9FBFF] rounded-[50px] overflow-auto"
+        className="lg:w-[75vw] md:w-[70vw] xs:w-[100%] h-full bg-[#F9FBFF] rounded-[50px] overflow-auto"
       >
         <AdminHeader />
         <div className="px-5">

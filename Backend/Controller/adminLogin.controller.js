@@ -15,20 +15,8 @@ const adminLogin = async (req, res) => {
   if (!isPasswordMatch) {
     return res.status(401).send("Invalid password");
   }
-  let token = createTokenAndSaveCookie(admin._id, res);
-  res.status(200).json({
-    successMsg: "Login successful",
-    admin: {
-      _id: admin._id,
-      username: admin.username,
-      email: admin.email,
-      gender: admin.gender,
-      phoneNumber: admin.phoneNumber,
-      aboutMe: admin.aboutMe,
-      profileImg: admin.profileImg,
-    },
-    token,
-  });
-  console.log(username, password);
+  let key = process.env.ADMIN_TOKEN;
+  let token = createTokenAndSaveCookie(admin._id, key, res);
+  res.status(200).send("Login Successfully!");
 };
 export default adminLogin;

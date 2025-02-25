@@ -1,5 +1,10 @@
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 import React from "react";
-import { Link } from "react-router-dom";
+import TestimonialCard from "../../../components/TestimonialCard";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const TestimonialBody = () => {
   let testimonialData = [
@@ -52,38 +57,37 @@ const TestimonialBody = () => {
       designation: "WordPress Developer",
     },
   ];
+
+  gsap.config({ force3D: true });
+  useGSAP(() => {
+    gsap.from(".testiCard", {
+      scrollTrigger: {
+        trigger: ".testiCard",
+        start: "30% 90%",
+        end: "bottom 10%",
+        toggleActions: "play none none reverse",
+      },
+      scale: 0,
+      opacity: 0,
+      duration: 1.5,
+      stagger: 0.3,
+      transformOrigin: "center",
+      ease: "back",
+      force3D: true,
+    });
+  }, []);
   return (
     <div className="bg-[#F9FBFF]">
-      <div className="max-w-[1200px] min-h-screen mx-auto  py-24 px-5 font-jost">
+      <div className="md:max-w-[80vw] min-h-screen mx-auto  py-24 px-5 font-jost">
         <div className="w-full">
           <div className="grid lg:grid-cols-2 lg:gap-20 xs:gap-8 w-full place-items-center items-center">
-            {testimonialData.map((data) => {
+            {testimonialData.map((data, idx) => {
               return (
                 <div
-                  id="testiBoxes"
-                  className="flex gap-3 transition-all duration-500 p-8 rounded-3xl bg-white w-[33rem] border border-gray-100"
+                  className="testiCard"
+                  style={{ willChange: "scale, opacity" }}
                 >
-                  <div className="h-full w-full">
-                    <img
-                      className="rounded-l-3xl h-full w-full -translate-x-20"
-                      src={data.img}
-                      alt=""
-                    />
-                  </div>
-                  <div className="flex flex-col gap-4">
-                    <div>
-                      <img src="/imgs/testimonial/Quote.svg" alt="" />
-                    </div>
-                    <div>
-                      <p className="text-lg text-gray-500">{data.disc}</p>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <p className="text-3xl font-medium">{data.name}</p>
-                      <p className="text-lg text-gray-500">
-                        {data.designation}
-                      </p>
-                    </div>
-                  </div>
+                  <TestimonialCard data={data} key={idx} />
                 </div>
               );
             })}

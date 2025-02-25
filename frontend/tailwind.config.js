@@ -25,14 +25,14 @@ export default {
         footer: "url('imgs/footer_bg.svg')",
         aboutHero: "url('imgs/About/aboutHero.svg')",
         aboutEducation: "url('imgs/About/ed_and_skill_bg.png')",
-        portfolioHero: "url(../imgs/Portflio/portflio.svg)",
+        portfolioHero: "url(../../imgs/Portflio/portflio.svg)",
       },
       fontFamily: {
         jost: ["Jost", "sans-serif"],
         lexend_deca: ["Lexend Deca", "serif"],
       },
       screens: {
-        xs: "350px",
+        xs: "300px",
       },
     },
   },

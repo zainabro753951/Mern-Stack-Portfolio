@@ -5,7 +5,9 @@ const GetEducation = () => {
   const [getEducation, setGetEducation] = useState("");
   useEffect(() => {
     let getEducation = async () => {
-      const response = await axios.get("/api/admin/getEducation");
+      const response = await axios.get(
+        "http://localhost:3000/admin/getEducation"
+      );
       setGetEducation(response.data);
     };
     getEducation();

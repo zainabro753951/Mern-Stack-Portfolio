@@ -10,7 +10,7 @@ export const AdminDataProvider = ({ children }) => {
   const [adminData, setAdminData] = useState(null);
   useEffect(() => {
     let getAdminData = () => {
-      let adminData = localStorage.getItem("admin");
+      let adminData = localStorage.getItem("adminData");
       let data = JSON.parse(adminData);
       setAdminData(data);
     };

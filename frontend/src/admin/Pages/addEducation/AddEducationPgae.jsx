@@ -20,7 +20,7 @@ const AddEducationPgae = () => {
   let handleSubmitEudcation = (e) => {
     e.preventDefault();
     let resp = axios.post(
-      "/api/admin/add_education",
+      "http://localhost:3000/admin/add_education",
       {
         degree,
         fieldOfStudy,
@@ -40,14 +40,14 @@ const AddEducationPgae = () => {
       <DashboardLeft />
       <div
         id="dashboardRight"
-        className="w-[75%] h-full bg-[#F9FBFF] rounded-[50px] overflow-auto"
+        className="lg:w-[75vw] md:w-[70vw] xs:w-[100%] h-full bg-[#F9FBFF] rounded-[50px] overflow-auto"
       >
         <AdminHeader />
         <div className="px-5">
-          <h1 className="text-3xl font-semibold font-lexend_deca pb-3">
+          <h1 className="lg:text-[2.4vw] md:text-[3.4vw] xs:text-[5.5vw] font-semibold font-lexend_deca pb-3">
             Add Education
           </h1>
-          <p className="text-lg font-jost text-gray-500">
+          <p className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-jost text-gray-500">
             Education is a journey that not only enriches our knowledge but also
             empowers us with skills and experiences that help us grow and
             achieve our goals. Sharing your educational background is an
@@ -66,18 +66,18 @@ const AddEducationPgae = () => {
           <form
             onSubmit={handleSubmitEudcation}
             method="post"
-            className="flex flex-col pb-10 gap-3"
+            className="flex flex-col lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] pb-10 gap-3"
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 xs:flex-col md:flex-row">
               <div className="flex flex-col gap-1 w-full">
                 <label
                   htmlFor="about-headline"
-                  className="text-lg font-lexend_deca"
+                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
                 >
                   Degree/qualification*
                 </label>
                 <input
-                  className="py-3 w-full px-5 rounded-lg border border-gray-400 outline-none focus:border-themeBlue"
+                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="text"
                   value={degree}
                   required
@@ -88,12 +88,12 @@ const AddEducationPgae = () => {
               <div className="flex flex-col gap-1 w-full">
                 <label
                   htmlFor="about-headline"
-                  className="text-lg font-lexend_deca"
+                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
                 >
                   Field of Study*
                 </label>
                 <input
-                  className="py-3 w-full px-5 rounded-lg border border-gray-400 outline-none focus:border-themeBlue"
+                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="text"
                   value={fieldOfStudy}
                   required
@@ -102,16 +102,16 @@ const AddEducationPgae = () => {
                 />
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 xs:flex-col md:flex-row">
               <div className="flex flex-col gap-1 w-full">
                 <label
                   htmlFor="about-headline"
-                  className="text-lg font-lexend_deca"
+                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
                 >
                   Institute Name*
                 </label>
                 <input
-                  className="py-3 w-full px-5 rounded-lg border border-gray-400 outline-none focus:border-themeBlue"
+                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="text"
                   value={instituteName}
                   required
@@ -122,12 +122,12 @@ const AddEducationPgae = () => {
               <div className="flex flex-col gap-1 w-full">
                 <label
                   htmlFor="about-headline"
-                  className="text-lg font-lexend_deca"
+                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
                 >
                   Location*
                 </label>
                 <input
-                  className="py-3 w-full px-5 rounded-lg border border-gray-400 outline-none focus:border-themeBlue"
+                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="text"
                   value={location}
                   required
@@ -136,16 +136,16 @@ const AddEducationPgae = () => {
                 />
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 xs:flex-col md:flex-row">
               <div className="flex flex-col gap-1 w-full">
                 <label
                   htmlFor="about-headline"
-                  className="text-lg font-lexend_deca"
+                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
                 >
                   Start Date*
                 </label>
                 <input
-                  className="py-3 w-full px-5 rounded-lg border border-gray-400 outline-none focus:border-themeBlue"
+                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="date"
                   value={startDate}
                   required
@@ -156,12 +156,12 @@ const AddEducationPgae = () => {
               <div className="flex flex-col gap-1 w-full">
                 <label
                   htmlFor="about-headline"
-                  className="text-lg font-lexend_deca"
+                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
                 >
                   End Date*
                 </label>
                 <input
-                  className="py-3 w-full px-5 rounded-lg border border-gray-400 outline-none focus:border-themeBlue"
+                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="date"
                   value={endDate}
                   required
@@ -201,16 +201,16 @@ const AddEducationPgae = () => {
                 </div>
               </fieldset>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 xs:flex-col md:flex-row">
               <div className="flex flex-col gap-1 w-full">
                 <label
                   htmlFor="about-headline"
-                  className="text-lg font-lexend_deca"
+                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
                 >
                   Grade/Percentage*
                 </label>
                 <input
-                  className="py-3 w-full px-5 rounded-lg border border-gray-400 outline-none focus:border-themeBlue"
+                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="text"
                   value={grade}
                   required
@@ -221,12 +221,12 @@ const AddEducationPgae = () => {
               <div className="flex flex-col gap-1 w-full">
                 <label
                   htmlFor="about-headline"
-                  className="text-lg font-lexend_deca"
+                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
                 >
                   Certifications*
                 </label>
                 <input
-                  className="py-3 w-full px-5 rounded-lg border border-gray-400 outline-none focus:border-themeBlue"
+                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="text"
                   value={certificate}
                   onChange={(e) => setCertificate(e.target.value)}

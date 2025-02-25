@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserLock } from "react-icons/fa";
 import HireMeBtn from "../../components/HireMeBtn";
 import { BiShow, BiHide } from "react-icons/bi";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../Context/AuthProvider";
+import { toast } from "react-toastify";
+import { useAdminAuth } from "../../Context/AdminAuthProvider";
 const Login = () => {
-  const { authAdmin, setAuthAdmin, Loading } = useAuth();
+  const { setIsAdminAuthenticated } = useAdminAuth();
   const [isShow, setIsShow] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +25,7 @@ const Login = () => {
     try {
       // Sending POST request to the backend
       let response = await axios.post(
-        "/api/admin/login",
+        "http://localhost:3000/admin/login",
         {
           username,
           password,
@@ -34,15 +35,9 @@ const Login = () => {
         }
       );
 
-      // Check if login is successful
-      if (response.data && response.data.admin) {
-        // Store admin data in localStorage
-        localStorage.setItem("admin", JSON.stringify(response.data.admin));
-
-        // Navigate to the admin dashboard
-        setAuthAdmin(response.data.admin);
-      } else {
-        setError("Invalid credentials. Please try again.");
+      console.log(response.data);
+      if (response.data) {
+        setIsAdminAuthenticated(true);
       }
     } catch (err) {
       // Handle any errors from the server
@@ -50,13 +45,23 @@ const Login = () => {
       console.error(err);
     }
   };
+  useEffect(() => {
+    if (error) {
+      toast.error(error, {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "dark",
+      });
+    }
+  }, [error]);
+
   return (
     <div className="w-full h-screen bg-cover bg-center flex items-center justify-center bg-portfolioHero">
       <div
-        className="w-[30%] h-[60%] p-8 bg-white/10 backdrop-blur-sm rounded-[50px]"
+        className="lg:w-[30vw] sm:w-[50vw] xs:w-[80vw] lg:p-[2vw] md:p-[3vw] xs:p-[4vw] bg-white/10 backdrop-blur-sm rounded-[2vw]"
         style={{ boxShadow: "0 0 10px #918AFE" }}
       >
-        <h1 className="text-4xl text-center py-5 font-semibold font-lexend_deca text-white">
+        <h1 className="lg:text-[2.5vw] md:text-[3.5vw] sm:text-[4vw] xs:text-[5.5vw] text-center md:py-5 xs:py-3 font-semibold font-lexend_deca text-white">
           Admin <span className="text-themePurple">Login</span>
         </h1>
         <form
@@ -64,11 +69,11 @@ const Login = () => {
           className="w-full h-full flex flex-col gap-3"
         >
           <div>
-            <label className="block mb-2 text-md font-lexend_deca font-medium text-gray-200">
+            <label className="block mb-2 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca font-medium text-gray-200">
               Username
             </label>
             <div className="flex">
-              <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-transparent border border-e-0 border-gray-300 rounded-s-md ">
+              <span className="inline-flex items-center px-3 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] text-gray-900 bg-transparent border border-e-0 border-gray-300 rounded-s-md ">
                 <svg
                   className="w-4 h-4 text-gray-500"
                   aria-hidden="true"
@@ -84,17 +89,17 @@ const Login = () => {
                 id="website-admin"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="rounded-none rounded-e-lg bg-transparent border border-gray-300 text-gray-200 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5 outline-none"
+                className="rounded-none rounded-e-lg bg-transparent border border-gray-300 text-gray-200 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] outline-none"
                 placeholder="Bonnie Green"
               />
             </div>
           </div>
           <div>
-            <label className="block mb-2 text-md font-lexend_deca font-medium text-gray-200">
+            <label className="block mb-2 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca font-medium text-gray-200">
               Password
             </label>
             <div className="flex">
-              <span className="inline-flex items-center px-3 text-sm text-gray-500 bg-transparent border border-e-0 border-gray-300 rounded-s-md ">
+              <span className="inline-flex items-center px-3 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] text-gray-500 bg-transparent border border-e-0 border-gray-300 rounded-s-md ">
                 <FaUserLock />
               </span>
               <div className="border items-center border-gray-300 focus:ring-blue-500 focus:border-blue-500 flex justify-between w-full rounded-e-lg">
@@ -103,7 +108,7 @@ const Login = () => {
                   id="admin-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="rounded-none bg-transparent  text-gray-200  block flex-1 min-w-0 w-full text-sm p-2.5 outline-none"
+                  className="rounded-none bg-transparent  text-gray-200  block flex-1 min-w-0 w-full lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] outline-none"
                   placeholder="*** ***"
                 />
                 <span

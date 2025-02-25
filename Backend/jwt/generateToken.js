@@ -1,17 +1,16 @@
 import jwt from "jsonwebtoken";
 
-export const createTokenAndSaveCookie = (adminId, res) => {
+export const createTokenAndSaveCookie = (data, key, res) => {
   try {
-    const token = jwt.sign({ adminId }, process.env.JWT_KEY, {
+    const token = jwt.sign({ data }, process.env.JWT_KEY, {
       expiresIn: "2d",
     });
-    res.cookie("token", token, {
-      httpOnly: false, // Set to true for better security
+    res.cookie(key, token, {
+      httpOnly: true,
       secure: true,
       sameSite: "Strict",
     });
     console.log("cookie set successfully");
-
     return token;
   } catch (err) {
     console.error(err);

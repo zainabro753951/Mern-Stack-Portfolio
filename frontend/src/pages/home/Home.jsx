@@ -9,8 +9,12 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import MobileHeader from "../../components/MobileHeader";
 import CustomeCursor from "../../components/CustomeCursor";
+import { useAdminAuth } from "../../Context/AdminAuthProvider";
 
 const Home = () => {
+  const { isAdminAuthenticated } = useAdminAuth();
+  console.log(isAdminAuthenticated);
+
   return (
     <>
       <Header />

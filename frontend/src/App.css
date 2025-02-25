@@ -237,3 +237,7 @@ button {
 #dashboardRight::-webkit-scrollbar-thumb:hover {
   background: theme(colors.blueGardientEnd);
 }
+
+#dashbaordleft::-webkit-scrollbar {
+  display: none;
+}

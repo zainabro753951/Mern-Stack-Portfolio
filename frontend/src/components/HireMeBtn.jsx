@@ -25,14 +25,17 @@ const HireMeBtn = ({ text }) => {
     <button
       onMouseEnter={() => setMouseHovered(true)}
       onMouseLeave={() => setMouseHovered(false)}
-      className="flex flex-col items-center justify-center bg-themePurple px-6 rounded-lg"
+      className="flex items-center justify-center h-0 bg-themePurple lg:px-[2vw] md:px-[3vw] sm:px-[3.7vw] xs:px-[4vw] lg:py-[1.7vw] md:py-[1.9vw] sm:py-[2.3vw] xs:py-[3.3vw] rounded-[0.5vw]"
     >
       <div
         ref={textRef}
-        className="flex leading-none flex-col items-center gap-6 relative translate-y-[1.25rem] font-bold text-lg text-white"
+        className="xl:flex xs:hidden leading-none w-fit flex-col items-center gap-[1.6vw] relative translate-y-[1.25rem] font-bold text-[1.2vw] text-white"
       >
         <span>{text}</span>
         <span>{text}</span>
+      </div>
+      <div className="xl:hidden font-bold md:text-[1.5vw] sm:text-[2.3vw] xs:text-[3.3vw] text-white">
+        {text}
       </div>
     </button>
   );

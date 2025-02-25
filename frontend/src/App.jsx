@@ -11,17 +11,24 @@ import TestimonialPage from "./pages/Testimonial/TestimonialPage";
 import ContactPage from "./pages/contact/contactPage";
 import BlogPage from "./pages/blog/BlogPage";
 import AdminDashboard from "./admin/AdminDashboard";
+import WelcomeLoader from "./components/WelcomeLoader";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+
 const App = () => {
   return (
     <>
       <Routes>
         <Route path={"/"} element={<Home />} />
-        <Route path={"/About"} element={<About />} />
-        <Route path={"/Portfolio"} element={<PortfolioPage />} />
-        <Route path={"/Testimonials"} element={<TestimonialPage />} />
-        <Route path={"/Blog"} element={<BlogPage />} />
-        <Route path={"/Contact"} element={<ContactPage />} />
-        <Route path={"/Admin/*"} element={<AdminDashboard />} />
+        <Route path={"/about"} element={<About />} />
+        <Route path={"/portfolio"} element={<PortfolioPage />} />
+        <Route path={"/testimonial"} element={<TestimonialPage />} />
+        <Route path={"/blog"} element={<BlogPage />} />
+        <Route path={"/contact"} element={<ContactPage />} />
+        <Route path={"/admin/*"} element={<AdminDashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        {/* <Route path="/" element={<WelcomeLoader />} /> */}
       </Routes>
     </>
   );

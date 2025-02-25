@@ -1,9 +1,12 @@
 import gsap from "gsap";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { SidebarToggleContext } from "../../Context/SideBarToggle";
+import { FaCross } from "react-icons/fa6";
+import { RxCross2 } from "react-icons/rx";
 
-const Dropdown = ({ title, state, setState, link1, link2 }) => {
+const Dropdown = ({ title, icon, state, setState, link1, link2 }) => {
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -18,11 +21,16 @@ const Dropdown = ({ title, state, setState, link1, link2 }) => {
     <li>
       <div
         onClick={() => setState((prev) => !prev)}
-        className="py-5 px-5 text-xl transition-all duration-300 hover:bg-themePurple font-jost border-y flex justify-between items-center border-gray-500 text-white"
+        className="lg:py-[1.3vw] md:py-[1.8vw] xs:py-[2.6vw] md:px-5 xs:px-3 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] transition-all duration-300 hover:bg-themePurple font-jost border-y flex justify-between items-center border-gray-500 text-white"
       >
-        <span>{title}</span>
+        <div className="flex items-center gap-2 ">
+          <div className="lg:w-[2.5vw] md:w-[3.5vw] xs:w-[4.5vw] lg:h-[2.5vw] md:h-[3.5vw] xs:h-[4.5vw] rounded-full">
+            <img className="w-full h-full" src={icon} alt="" />
+          </div>
+          <span>{title}</span>
+        </div>
         <span
-          className={`transition-all duration-300 ${
+          className={`transition-all  duration-300 ${
             state ? "rotate-90" : "rotate-0"
           }`}
         >
@@ -30,16 +38,16 @@ const Dropdown = ({ title, state, setState, link1, link2 }) => {
         </span>
       </div>
       <div ref={dropdownRef} className="w-full overflow-hidden max-h-0">
-        <div className="w-full flex flex-col text-white">
+        <div className="w-full flex flex-col lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] text-white">
           <Link
             to={link1}
-            className="font-lexend_deca pl-10 py-4 border-b border-gray-500 transition-all duration-300 hover:bg-blueGardientEnd"
+            className="font-lexend_deca lg:pl-[1.6vw] md:pl-[2vw] xs:pl-[2.4vw] lg:py-[1.3vw] md:py-[1.8vw] xs:py-[2.6vw] border-b border-gray-500 transition-all duration-300 hover:bg-blueGardientEnd"
           >
             Add {title}
           </Link>
           <Link
             to={link2}
-            className="font-lexend_deca pl-10 py-4 transition-all duration-300 hover:bg-blueGardientEnd"
+            className="font-lexend_deca lg:pl-[1.6vw] md:pl-[2vw] xs:pl-[2.4vw] lg:py-[1.3vw] md:py-[1.8vw] xs:py-[2.6vw] transition-all duration-300 hover:bg-blueGardientEnd"
           >
             View {title}
           </Link>
@@ -55,11 +63,25 @@ const DashboardLeft = () => {
   const [isBlogOpen, setIsBlogOpen] = useState(false);
   const [isTestiOpen, setIsTestiOpen] = useState(false);
   const [isProjectOpen, setIsProjectOpen] = useState(false);
-
+  const { isSideBarOpen, setIsSideBarOpen } = useContext(SidebarToggleContext);
+  console.log(isSideBarOpen);
   return (
-    <div className="w-[25%] bg-portfolioHero bg-center bg-cover rounded-[50px]">
-      <div className="py-6">
-        <h1 className="text-4xl text-center py-3 font-semibold font-lexend_deca text-white">
+    <div
+      id="dashbaordleft"
+      className={`lg:w-[25vw] xs:z-50 sm:z-0 md:w-[30vw] sm:w-[40vw] xs:fixed md:relative ${
+        isSideBarOpen ? "xs:-translate-x-[0%]" : "xs:-translate-x-[110%]"
+      } md:translate-x-0 h-screen bg-portfolioHero bg-center overflow-auto bg-cover transition-all duration-300 rounded-[3vw]`}
+    >
+      <div className="w-full text-white p-6 md:text-[4vw] xs:text-[5vw] md:hidden xs:flex items-center justify-end">
+        <span
+          className="cursor-pointer"
+          onClick={() => setIsSideBarOpen(false)}
+        >
+          <RxCross2 />
+        </span>
+      </div>
+      <div className="md:py-6">
+        <h1 className="lg:text-[2.4vw] md:text-[3vw] xs:text-[3.8vw] text-center md:py-[0.8vw] font-semibold font-lexend_deca text-white">
           Admin <span className="text-themePurple">Dashboard</span>
         </h1>
       </div>
@@ -67,6 +89,7 @@ const DashboardLeft = () => {
         <ul className="flex flex-col">
           <Dropdown
             title="About"
+            icon={"/imgs/dashboardleft/about.png"}
             state={isAboutOpen}
             setState={setIsAboutOpen}
             link1="/admin/addAbout"
@@ -74,6 +97,7 @@ const DashboardLeft = () => {
           />
           <Dropdown
             title="Education"
+            icon={"/imgs/dashboardleft/edu.png"}
             state={isEduOpen}
             setState={setIsEduOpen}
             link1="/admin/addEducation"
@@ -81,6 +105,7 @@ const DashboardLeft = () => {
           />
           <Dropdown
             title="Blog"
+            icon={"/imgs/dashboardleft/blog.png"}
             state={isBlogOpen}
             setState={setIsBlogOpen}
             link1="/admin/addBlog"
@@ -88,6 +113,7 @@ const DashboardLeft = () => {
           />
           <Dropdown
             title="Testimonial"
+            icon={"/imgs/dashboardleft/testimonial.png"}
             state={isTestiOpen}
             setState={setIsTestiOpen}
             link1="/admin/addTestimonial"
@@ -95,6 +121,7 @@ const DashboardLeft = () => {
           />
           <Dropdown
             title="Project"
+            icon={"/imgs/dashboardleft/project.png"}
             state={isProjectOpen}
             setState={setIsProjectOpen}
             link1="/admin/addProject"
