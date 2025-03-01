@@ -199,7 +199,11 @@ const AddBlog = () => {
 
               {/* Blog Tags */}
 
-              <div className="flex w-full flex-col gap-3">
+              <div
+                className={`flex w-full flex-col ${
+                  blogTags.length > 0 ? "gap-3" : "gap-0"
+                }`}
+              >
                 <div className="flex w-full flex-col gap-1">
                   <label
                     htmlFor="tags"
@@ -339,20 +343,87 @@ const AddBlog = () => {
                 placeholder="Enter your meta discription"
               ></textarea>
             </div>
-            <div className="flex flex-col gap-1 w-full">
-              <label
-                htmlFor="author"
-                className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
+
+            {/* SEO Titles */}
+
+            <div className="flex items-center gap-3 xs:flex-col md:flex-row">
+              <div className="flex flex-col gap-1 w-full">
+                <label
+                  htmlFor="seoTitle"
+                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
+                >
+                  Seo Title*
+                </label>
+                <input
+                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                  type="text"
+                  id="seoTitle"
+                  required
+                  placeholder="Enter author name of blog"
+                />
+              </div>
+
+              {/* SEO Keywords */}
+
+              <div
+                className={`flex w-full flex-col ${
+                  blogTags.length > 0 ? "gap-3" : "gap-0"
+                }`}
               >
-                Author*
-              </label>
-              <input
-                className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
-                type="text"
-                id="author"
-                required
-                placeholder="Enter author name of blog"
-              />
+                <div className="flex w-full flex-col gap-1">
+                  <label className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca ">
+                    SEO Keywords*
+                  </label>
+                  <div className="w-full flex">
+                    <input
+                      className="w-full px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] rounded-l-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                      type="text"
+                      placeholder="Enter your keyword here"
+                      value={tag}
+                      required
+                      onChange={(e) => setTag(e.target.value)}
+                    />
+                    <span
+                      onClick={addTags}
+                      className="bg-themeBlue rounded-r-lg p-3 cursor-pointer text-white lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
+                    >
+                      Add
+                    </span>
+                  </div>
+                  <div>
+                    {error ? (
+                      <p className="flex lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] items-center gap-1 text-red-500">
+                        <span>
+                          <IoWarning />
+                        </span>
+                        {error}
+                      </p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                <div className="w-full flex flex-wrap gap-2 items-center">
+                  {blogTags.length > 0
+                    ? blogTags.map((hobby, idx) => {
+                        return (
+                          <div
+                            key={idx}
+                            className="p-2 border border-gray-400 flex gap-3 items-center rounded-lg"
+                          >
+                            {hobby}
+                            <span
+                              onClick={() => handleDelete(idx)}
+                              className="cursor-pointer text-themeBlue"
+                            >
+                              <RxCross2 />
+                            </span>
+                          </div>
+                        );
+                      })
+                    : null}
+                </div>
+              </div>
             </div>
             <div>
               <input

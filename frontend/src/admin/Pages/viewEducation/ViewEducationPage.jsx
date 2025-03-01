@@ -30,39 +30,68 @@ const ViewEducationPage = () => {
           </p>
         </div>
         <div className="py-10 px-5">
-          <h2 className="text-2xl font-semibold font-lexend_deca">Education</h2>
+          <h2 className="lg:text-[1.5vw] md:text-[2.5vw] xs:text-[3.5vw] font-semibold font-lexend_deca">
+            Education
+          </h2>
           <div className="flex flex-col gap-10 ">
             <div>
               <div>
                 <div class="relative overflow-x-auto text-center">
-                  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <table class="w-full lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
-                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                        <th
+                          scope="col"
+                          class="px-6 py-3 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.2vw] whitespace-nowrap"
+                        >
                           Degree/Qualification
                         </th>
-                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                        <th
+                          scope="col"
+                          class="px-6 py-3 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.2vw] whitespace-nowrap"
+                        >
                           Field of Study
                         </th>
-                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                        <th
+                          scope="col"
+                          class="px-6 py-3 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.2vw] whitespace-nowrap"
+                        >
                           Institute Name
                         </th>
-                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                        <th
+                          scope="col"
+                          class="px-6 py-3 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.2vw] whitespace-nowrap"
+                        >
                           Location
                         </th>
-                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                        <th
+                          scope="col"
+                          class="px-6 py-3 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.2vw] whitespace-nowrap"
+                        >
                           Start Date
                         </th>
-                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                        <th
+                          scope="col"
+                          class="px-6 py-3 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.2vw] whitespace-nowrap"
+                        >
                           End Date
                         </th>
-                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                        <th
+                          scope="col"
+                          class="px-6 py-3 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.2vw] whitespace-nowrap"
+                        >
                           Education Status
                         </th>
-                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                        <th
+                          scope="col"
+                          class="px-6 py-3 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.2vw] whitespace-nowrap"
+                        >
                           Grade/Percentage
                         </th>
-                        <th scope="col" class="px-6 py-3 whitespace-nowrap">
+                        <th
+                          scope="col"
+                          class="px-6 py-3 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.2vw] whitespace-nowrap"
+                        >
                           Certification
                         </th>
                         <th className="px-6 py-3 whitespace-nowrap" scope="col">
@@ -118,14 +147,14 @@ const ViewEducationPage = () => {
                                   <Link
                                     to={`/admin/editEducation/${items._id}`}
                                     type="button"
-                                    class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-[1.5vw] py-[0.5vw] me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+                                    class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-[0.4vw] lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] lg:px-[1.5vw] md:px-[2.5vw] xs:px-[3.9vw] py-[0.5vw] me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                                   >
                                     Edit
                                   </Link>
                                   <Link
                                     to={`/admin/editEducation/${items._id}`}
                                     type="button"
-                                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-[1.5vw] py-[0.5vw] me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                                    class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-[0.4vw] lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] lg:px-[1.5vw] md:px-[2.5vw] xs:px-[3.9vw] py-[0.5vw] me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
                                   >
                                     Delete
                                   </Link>
