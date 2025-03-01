@@ -68,7 +68,7 @@ const AddAboutForm = () => {
               About Headline
             </label>
             <input
-              className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw]  px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
               type="text"
               value={aboutHeadline}
               required

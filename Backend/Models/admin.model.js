@@ -21,7 +21,7 @@ let adminSchema = new mongoose.Schema({
   },
   profileImg: {
     type: String,
-    default: "/default.jpg",
+    default: "/default-avator.png",
   },
   aboutMe: {
     type: String,

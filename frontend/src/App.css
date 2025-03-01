@@ -241,3 +241,24 @@ button {
 #dashbaordleft::-webkit-scrollbar {
   display: none;
 }
+
+/* Define custom fonts */
+.ql-font-lexend-deca {
+  font-family: "Lexend Deca", sans-serif !important;
+}
+
+.ql-font-jost {
+  font-family: "Jost", sans-serif !important;
+}
+.ql-font-times-new-roman {
+  font-family: "Times New Roman", sans-serif !important;
+}
+
+/* Apply custom fonts to the editor */
+.ql-editor {
+  border: #120f47;
+  outline: none;
+  min-height: 100%;
+  border-radius: 10px;
+  font-family: "Lexend Deca", sans-serif !important; /* Default font */
+}

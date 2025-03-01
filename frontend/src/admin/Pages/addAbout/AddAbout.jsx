@@ -13,7 +13,7 @@ const AddAbout = () => {
       >
         <AdminHeader />
         <div className="px-5">
-          <h1 className="lg:text-[1.8vw] md:text-[2.8vw] xs:text-[4.5vw]l font-semibold font-lexend_deca pb-3">
+          <h1 className="lg:text-[1.8vw] md:text-[2.8vw] xs:text-[4.5vw] font-semibold font-lexend_deca pb-3">
             Add About
           </h1>
           <p className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-jost text-gray-500">

@@ -6,7 +6,10 @@ const GetEducation = () => {
   useEffect(() => {
     let getEducation = async () => {
       const response = await axios.get(
-        "http://localhost:3000/admin/getEducation"
+        "http://localhost:3000/admin/getEducation",
+        {
+          withCredentials: true,
+        }
       );
       setGetEducation(response.data);
     };

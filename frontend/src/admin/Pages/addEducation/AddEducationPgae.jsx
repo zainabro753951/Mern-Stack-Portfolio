@@ -60,7 +60,7 @@ const AddEducationPgae = () => {
           </p>
         </div>
         <div className="px-5">
-          <h2 className="text-2xl font-semibold font-lexend_deca py-5">
+          <h2 className="lg:text-[1.8vw] md:text-[2.8vw] xs:text-[4.4vw] font-semibold font-lexend_deca py-5">
             Education
           </h2>
           <form

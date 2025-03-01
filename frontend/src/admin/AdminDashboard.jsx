@@ -10,6 +10,8 @@ import EditEducation from "./Pages/editEducation/EditEducation";
 import AdminSignup from "./components/adminSignup";
 import { useAdminAuth } from "../Context/AdminAuthProvider";
 import ProtectAdminRoute from "../Secure/ProtectAdminRoute";
+import AddBlog from "./Pages/AddBlog/AddBlog";
+import ViewBlogs from "./Pages/ViewBlogs/ViewBlogs";
 
 const AdminDashboard = () => {
   const { isAdminAuthenticated, isAuthChecked } = useAdminAuth();
@@ -85,13 +87,24 @@ const AdminDashboard = () => {
           }
         />
         <Route
-          path="/editEducation/:id"
+          path="/addBlog/"
           element={
             <ProtectAdminRoute
               isAdminAuthenticated={isAdminAuthenticated}
               isAuthChecked={isAuthChecked}
             >
-              <EditEducation />
+              <AddBlog />
+            </ProtectAdminRoute>
+          }
+        />
+        <Route
+          path="/viewBlog"
+          element={
+            <ProtectAdminRoute
+              isAdminAuthenticated={isAdminAuthenticated}
+              isAuthChecked={isAuthChecked}
+            >
+              <ViewBlogs />
             </ProtectAdminRoute>
           }
         />
