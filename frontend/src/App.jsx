@@ -3,6 +3,7 @@ import Home from "./pages/home/Home";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import "./App.css";
+import "react-quill/dist/quill.core.css";
 import CustomeCursor from "./components/CustomeCursor";
 import MobileHeader from "./components/MobileHeader";
 import About from "./pages/about/About";

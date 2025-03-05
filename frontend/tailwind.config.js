@@ -1,4 +1,5 @@
 const flowbite = require("flowbite-react/tailwind");
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", flowbite.content()],
@@ -7,6 +8,7 @@ export default {
     extend: {
       colors: {
         themePurple: "#FF6D5A",
+        themeGolden: "#F4C430",
         gradientStart: "#5137A1",
         gradientEnd: "#DB6268",
         themeBlue: "#342EAD",
@@ -25,7 +27,7 @@ export default {
         footer: "url('imgs/footer_bg.svg')",
         aboutHero: "url('imgs/About/aboutHero.svg')",
         aboutEducation: "url('imgs/About/ed_and_skill_bg.png')",
-        portfolioHero: "url(../../imgs/Portflio/portflio.svg)",
+        portfolioHero: "url(../../../imgs/Portflio/portflio.svg)",
       },
       fontFamily: {
         jost: ["Jost", "sans-serif"],

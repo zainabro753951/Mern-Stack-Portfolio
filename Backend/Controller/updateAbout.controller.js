@@ -19,6 +19,7 @@ const upload = multer({ storage: storage });
 let updateAboutValues = async (req, res) => {
   upload.single("profileImg")(req, res, async (err) => {
     try {
+      console.log(req.body);
       const {
         aboutId,
         aboutHeadline,
@@ -28,6 +29,10 @@ let updateAboutValues = async (req, res) => {
         about,
         hobbies,
         email,
+        facebook,
+        instagram,
+        behance,
+        linkedIn,
       } = req.body;
 
       // Check if a new profile image was uploaded
@@ -65,6 +70,10 @@ let updateAboutValues = async (req, res) => {
           about,
           hobbies,
           email,
+          facebook,
+          instagram,
+          behance,
+          linkedIn,
           profileImg: profileImgPath, // Update with the new image path
         },
         { new: true } // Return the updated document

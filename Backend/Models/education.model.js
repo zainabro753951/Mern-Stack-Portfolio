@@ -1,42 +1,48 @@
 import mongoose from "mongoose";
-let educationSchema = new mongoose.Schema({
-  degree: {
-    type: String,
-    required: true,
+let educationSchema = new mongoose.Schema(
+  {
+    degree: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    fieldOfStudy: {
+      type: String,
+      required: true,
+    },
+    instituteName: {
+      type: String,
+      required: true,
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+    startDate: {
+      type: Date,
+      required: true,
+    },
+    endDate: {
+      type: Date,
+      required: true,
+    },
+    eduStatus: {
+      type: String,
+      required: false,
+    },
+    grade: {
+      type: String,
+      required: true,
+    },
+    certificate: {
+      type: String,
+      required: false,
+    },
   },
-  fieldOfStudy: {
-    type: String,
-    required: true,
-  },
-  instituteName: {
-    type: String,
-    required: true,
-  },
-  location: {
-    type: String,
-    required: true,
-  },
-  startDate: {
-    type: Date,
-    required: true,
-  },
-  endDate: {
-    type: Date,
-    required: true,
-  },
-  eduStatus: {
-    type: String,
-    required: false,
-  },
-  grade: {
-    type: String,
-    required: true,
-  },
-  certificate: {
-    type: String,
-    required: false,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 const educationModel = mongoose.model("educations", educationSchema);
 

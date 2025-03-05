@@ -1,15 +1,17 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import HireMeBtn from "../../components/HireMeBtn";
+import { IoMdNotificationsOutline } from "react-icons/io";
 import ProfilePopup from "./ProfilePopup";
 import { GetAdminData } from "../../Context/GetAdminData.jsx";
 import axios from "axios";
+import { MdOutlineArrowDropUp } from "react-icons/md";
 import { IoMenuSharp } from "react-icons/io5";
 import { SidebarToggleContext } from "../../Context/SideBarToggle.jsx";
 const AdminHeader = () => {
   const { adminData, setAdminData } = GetAdminData();
   const { setIsSideBarOpen } = useContext(SidebarToggleContext);
-
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   let handleOpen = () => {
     setIsOpen(true);
@@ -21,6 +23,10 @@ const AdminHeader = () => {
     let response = await axios.post("http://localhost:3000/admin/logout", {
       withCredentials: true,
     });
+  };
+
+  const toggleNotification = () => {
+    setIsNotificationOpen(!isNotificationOpen);
   };
   return (
     <>
@@ -36,7 +42,27 @@ const AdminHeader = () => {
             Admin <span className="text-themePurple">Dashboard</span>
           </span>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center relative gap-4">
+          <div
+            onClick={toggleNotification}
+            className="lg:text-[1.8vw] md:text-[2.8vw] cursor-pointer xs:text-[3.5vw]"
+          >
+            <IoMdNotificationsOutline />
+          </div>
+          <div
+            className={`absolute flex flex-col z-40 ${
+              isNotificationOpen
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-10"
+            } xl:-bottom-[5.3vw] lg:-bottom-[8.3vw] transition-all duration-300 md:-bottom-[9.3vw] sm:-bottom-[12vw] xs:-bottom-[90px] -left-[11.6vw] items-center justify-center`}
+          >
+            <img
+              className="rotate-180 md:translate-y-2 w-[2.5vw]"
+              src="/imgs/notification.png"
+              alt=""
+            />
+            <div className="bg-gray-200 w-[25vw] rounded-md relative z-40 py-10"></div>
+          </div>
           <div className="relative">
             <div
               onClick={handleOpen}
@@ -53,6 +79,7 @@ const AdminHeader = () => {
               />
             </div>
           </div>
+
           <Link onClick={handleLogout}>
             <HireMeBtn text={"Logout"} />
           </Link>

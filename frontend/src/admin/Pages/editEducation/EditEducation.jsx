@@ -5,6 +5,8 @@ import AdminHeader from "../../components/AdminHeader";
 import HireMeBtn from "../../../components/HireMeBtn";
 import GetEducation from "../../../Context/GetEducation";
 import axios from "axios";
+import { useMutation } from "react-query";
+import { toast, ToastContainer } from "react-toastify";
 
 const EditEducation = () => {
   let { id } = useParams();
@@ -43,10 +45,63 @@ const EditEducation = () => {
     setEduStatus(e.target.value);
   };
 
+  // ========== Create mutation ============
+  const mutation = useMutation((editEducation) => {
+    const response = axios.put(
+      "http://localhost:3000/admin/update_education",
+      editEducation,
+      {
+        withCredentials: true,
+      }
+    );
+    return response;
+  });
+
   let handleEditEducation = (e) => {
     e.preventDefault();
-    let newEducation = axios.post();
+    mutation.mutate({
+      eduId: id,
+      degree,
+      fieldOfStudy,
+      instituteName,
+      location,
+      startDate,
+      endDate,
+      eduStatus,
+      grade,
+      certificate,
+    });
   };
+
+  useEffect(() => {
+    if (mutation.isError) {
+      toast.error(mutation.error.response.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "dark",
+        style: { width: "100%" },
+      });
+    }
+  }, [mutation.isError]);
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      let newObjectOfEducation = mutation.data.data.result;
+
+      setGetEducation((prevData) =>
+        prevData._id === newObjectOfEducation._id ? newObjectOfEducation : ""
+      );
+      toast.success("About updated successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "dark",
+        style: { width: "100%" },
+      });
+    }
+  }, [mutation.isSuccess]);
+
+
+  
 
   return (
     <div className="h-screen w-full overflow-hidden flex p-2 gap-2 bg-gray-200">
@@ -57,6 +112,7 @@ const EditEducation = () => {
       >
         <AdminHeader />
         <div className="px-5">
+          <ToastContainer />
           <h1 className="lg:text-[1.8vw] md:text-[2.8vw] xs:text-[4.5vw] font-semibold font-lexend_deca pb-3">
             Edit Education
           </h1>
@@ -251,7 +307,10 @@ const EditEducation = () => {
               </div>
             </div>
             <button className="my-8 mr-auto">
-              <HireMeBtn text={"Add Education"} />
+              <HireMeBtn
+                isLoading={mutation.isLoading}
+                text={"Add Education"}
+              />
             </button>
           </form>
         </div>

@@ -15,6 +15,8 @@ const GetEducation = () => {
     };
     getEducation();
   }, []);
+  console.log(getEducation);
+
   return { getEducation, setGetEducation };
 };
 

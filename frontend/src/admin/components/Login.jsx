@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAdminAuth } from "../../Context/AdminAuthProvider";
+import { useMutation } from "react-query";
 const Login = () => {
   const { setIsAdminAuthenticated } = useAdminAuth();
   const [isShow, setIsShow] = useState(false);
@@ -13,18 +14,11 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   let navigate = useNavigate();
-  let handleSubmit = async (e) => {
-    e.preventDefault();
 
-    // Basic validation for empty fields
-    if (!username || !password) {
-      setError("Username and Password are required!");
-      return;
-    }
-
+  const mutation = useMutation((adminData) => {
     try {
       // Sending POST request to the backend
-      let response = await axios.post(
+      let response = axios.post(
         "http://localhost:3000/admin/login",
         {
           username,
@@ -34,26 +28,41 @@ const Login = () => {
           withCredentials: true,
         }
       );
-
-      console.log(response.data);
-      if (response.data) {
-        setIsAdminAuthenticated(true);
-      }
+      return response;
     } catch (err) {
-      // Handle any errors from the server
       setError("An error occurred. Please try again later.");
       console.error(err);
     }
+  });
+  let handleSubmit = async (e) => {
+    e.preventDefault();
+    // Basic validation for empty fields
+    if (!username || !password) {
+      setError("Username and Password are required!");
+      return;
+    }
+    mutation.mutate({ username, password });
   };
+
   useEffect(() => {
-    if (error) {
+    if (mutation.isError) {
       toast.error(error, {
         position: "top-right",
         autoClose: 5000,
         theme: "dark",
       });
     }
-  }, [error]);
+  }, [mutation.isError]);
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setIsAdminAuthenticated(true);
+      localStorage.setItem(
+        "adminData",
+        JSON.stringify(mutation.data.data.admin)
+      );
+    }
+  }, [mutation.isSuccess]);
 
   return (
     <div className="w-full h-screen bg-cover bg-center flex items-center justify-center bg-portfolioHero">

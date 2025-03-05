@@ -7,19 +7,26 @@ import { AdminDataProvider } from "./Context/GetAdminData.jsx";
 import { GetAboutProvider } from "./Context/GetAboutData.jsx";
 import { AdminAuthProvider } from "./Context/AdminAuthProvider.jsx";
 import { SideBarToggle } from "./Context/SideBarToggle.jsx";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { GetBlogs } from "./Context/GetBlogs.jsx";
 
+const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <AdminAuthProvider>
-      <AdminDataProvider>
-        <GetAboutProvider>
-          <SideBarToggle>
-            <StrictMode>
-              <App />
-            </StrictMode>
-          </SideBarToggle>
-        </GetAboutProvider>
-      </AdminDataProvider>
-    </AdminAuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AdminAuthProvider>
+        <AdminDataProvider>
+          <GetBlogs>
+            <GetAboutProvider>
+              <SideBarToggle>
+                <StrictMode>
+                  <App />
+                </StrictMode>
+              </SideBarToggle>
+            </GetAboutProvider>
+          </GetBlogs>
+        </AdminDataProvider>
+      </AdminAuthProvider>
+    </QueryClientProvider>
   </BrowserRouter>
 );

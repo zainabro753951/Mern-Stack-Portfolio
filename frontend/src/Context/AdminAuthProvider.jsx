@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import CheckAdminAuth from "../Secure/CheckAdminAuth";
+import CheckAdminAuth from "../Secure/CheckAdminAuth.js";
 
-const AdminAuthContext = createContext();
+export const AdminAuthContext = createContext();
 
 export const AdminAuthProvider = ({ children }) => {
   const [isAuthChecked, setIsAuthChecked] = useState(false);
@@ -9,15 +9,25 @@ export const AdminAuthProvider = ({ children }) => {
 
   useEffect(() => {
     const adminVerifyAuth = async () => {
-      const checkAuth = await CheckAdminAuth();
-
-      if (checkAuth) {
-        setIsAdminAuthenticated(true);
-        localStorage.setItem("adminData", JSON.stringify(checkAuth.adminData));
-      } else {
+      try {
+        const checkAuth = await CheckAdminAuth();
+        if (checkAuth) {
+          setIsAdminAuthenticated(true);
+          localStorage.setItem(
+            "adminData",
+            JSON.stringify(checkAuth.adminData)
+          );
+        } else {
+          setIsAdminAuthenticated(false);
+          localStorage.removeItem("adminData"); // Clear adminData if not authenticated
+        }
+      } catch (error) {
+        console.error("Error verifying admin auth:", error);
         setIsAdminAuthenticated(false);
+        localStorage.removeItem("adminData"); // Clear adminData on error
+      } finally {
+        setIsAuthChecked(true); // Ensure auth check is marked as complete
       }
-      setIsAuthChecked(true);
     };
     adminVerifyAuth();
   }, []);

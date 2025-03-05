@@ -30,7 +30,7 @@ const Dropdown = ({ title, icon, state, setState, link1, link2 }) => {
           <span>{title}</span>
         </div>
         <span
-          className={`transition-all  duration-300 ${
+          className={`transition-all duration-300 ${
             state ? "rotate-90" : "rotate-0"
           }`}
         >
@@ -38,7 +38,7 @@ const Dropdown = ({ title, icon, state, setState, link1, link2 }) => {
         </span>
       </div>
       <div ref={dropdownRef} className="w-full overflow-hidden max-h-0">
-        <div className="w-full flex flex-col lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] text-white">
+        <div className="w-full flex flex-col lg:text-[1vw] md:text-[2vw] xs:text-[2.5vw] text-white">
           <Link
             to={link1}
             className="font-lexend_deca lg:pl-[1.6vw] md:pl-[2vw] xs:pl-[2.4vw] lg:py-[1.3vw] md:py-[1.8vw] xs:py-[2.6vw] border-b border-gray-500 transition-all duration-300 hover:bg-blueGardientEnd"
@@ -64,13 +64,12 @@ const DashboardLeft = () => {
   const [isTestiOpen, setIsTestiOpen] = useState(false);
   const [isProjectOpen, setIsProjectOpen] = useState(false);
   const { isSideBarOpen, setIsSideBarOpen } = useContext(SidebarToggleContext);
-  console.log(isSideBarOpen);
   return (
     <div
       id="dashbaordleft"
-      className={`lg:w-[25vw] xs:z-50 sm:z-0 md:w-[30vw] sm:w-[40vw] xs:fixed md:relative ${
+      className={`lg:w-[25vw] xs:z-50 md:z-0 md:w-[35vw] xs:w-[50vw] xs:fixed md:relative ${
         isSideBarOpen ? "xs:-translate-x-[0%]" : "xs:-translate-x-[110%]"
-      } md:translate-x-0 h-screen bg-portfolioHero bg-center overflow-auto bg-cover transition-all duration-300 rounded-[3vw]`}
+      } md:translate-x-0 h-screen bg-portfolioHero bg-center overflow-auto bg-cover transition-all duration-300 md:rounded-[3vw]`}
     >
       <div className="w-full text-white p-6 md:text-[4vw] xs:text-[5vw] md:hidden xs:flex items-center justify-end">
         <span
@@ -92,40 +91,40 @@ const DashboardLeft = () => {
             icon={"/imgs/dashboardleft/about.png"}
             state={isAboutOpen}
             setState={setIsAboutOpen}
-            link1="/admin/addAbout"
-            link2="/admin/viewAbout"
+            link1="/admin/add-about"
+            link2="/admin/view-about"
           />
           <Dropdown
             title="Education"
             icon={"/imgs/dashboardleft/edu.png"}
             state={isEduOpen}
             setState={setIsEduOpen}
-            link1="/admin/addEducation"
-            link2="/admin/viewEducation"
+            link1="/admin/add-education"
+            link2="/admin/view-education"
           />
           <Dropdown
             title="Blog"
             icon={"/imgs/dashboardleft/blog.png"}
             state={isBlogOpen}
             setState={setIsBlogOpen}
-            link1="/admin/addBlog"
-            link2="/admin/viewBlog"
+            link1="/admin/add-blog"
+            link2="/admin/view-blog"
           />
           <Dropdown
             title="Testimonial"
             icon={"/imgs/dashboardleft/testimonial.png"}
             state={isTestiOpen}
             setState={setIsTestiOpen}
-            link1="/admin/addTestimonial"
-            link2="/admin/viewTestimonial"
+            link1="/admin/add-testimonial"
+            link2="/admin/view-testimonial"
           />
           <Dropdown
             title="Project"
             icon={"/imgs/dashboardleft/project.png"}
             state={isProjectOpen}
             setState={setIsProjectOpen}
-            link1="/admin/addProject"
-            link2="/admin/viewProject"
+            link1="/admin/add-project"
+            link2="/admin/view-project"
           />
         </ul>
       </div>

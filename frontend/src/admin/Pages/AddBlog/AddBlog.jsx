@@ -7,14 +7,28 @@ import RichTextEditor from "../../components/RichText";
 import { RxCross2 } from "react-icons/rx";
 import { IoWarning } from "react-icons/io5";
 import { useParams } from "react-router-dom";
+import { useMutation } from "react-query";
+import { toast, ToastContainer } from "react-toastify";
 
 const AddBlog = () => {
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
+  const [author, setAuthor] = useState("");
+  const [catagory, setCatagory] = useState("");
+  const [publishDate, setPublishDate] = useState("");
   const [tag, setTag] = useState("");
   const [blogTags, setBlogTags] = useState([]);
+  const [featuredImage, setFeaturedImage] = useState("");
   const [slugUrl, setSlugUrl] = useState("");
+  const [blogDiscription, setBlogDiscription] = useState("");
+  const [metaDiscription, setMetaDiscription] = useState("");
+  const [seoTitle, setSeoTitle] = useState("");
+  const [seoKeyword, setSeoKeyword] = useState("");
+  const [seoKeywords, setSeoKeywords] = useState([]);
+  const [isUserCommit, setisUserCommit] = useState(false);
+  const [isSharing, setIsSharing] = useState(false);
   const [error, setError] = useState("");
+  const [keywordError, setKeywordError] = useState("");
 
   // ========== generate Slug URL ===========
   useEffect(() => {
@@ -38,47 +52,123 @@ const AddBlog = () => {
       setTag("");
     }
   };
-  console.log(blogTags);
 
   const handleDelete = (index) => {
     let deletedHobbies = blogTags.filter((_, i) => i !== index);
     setBlogTags(deletedHobbies);
   };
 
-  let handleEudcationStatus = (e) => {
-    setEduStatus(e.target.value);
+  const addKeywords = () => {
+    if (!seoKeyword.trim()) {
+      return setKeywordError("Please fill the required tags field!");
+    }
+    const existingKeywords = seoKeywords.find(
+      (item) => item.toLowerCase() === seoKeyword.toLowerCase()
+    );
+    if (existingKeywords) {
+      setKeywordError("This tag already exists");
+    } else {
+      setSeoKeywords([...seoKeywords, seoKeyword]);
+      setSeoKeyword("");
+    }
   };
-  //   let handleSubmitEudcation = (e) => {
-  //     e.preventDefault();
-  //     let resp = axios.post(
-  //       "http://localhost:3000/admin/add_education",
-  //       {
-  //         degree,
-  //         fieldOfStudy,
-  //         instituteName,
-  //         location,
-  //         startDate,
-  //         endDate,
-  //         eduStatus,
-  //         grade,
-  //         certificate,
-  //       },
-  //       { withCredentials: true }
-  //     );
-  //   };
+
+  const deleteKeywords = (index) => {
+    let deletedKeywords = seoKeywords.filter((_, i) => i !== index);
+    setSeoKeywords(deletedKeywords);
+  };
+
+  const mutation = useMutation((formData) => {
+    const response = axios.post(
+      "http://localhost:3000/admin/add_blog",
+      formData,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return response;
+  });
+
+  const submitBlog = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("title", blogTitle);
+    formData.append("content", blogContent);
+    formData.append("author", author);
+    formData.append("date", publishDate);
+    formData.append("category", catagory);
+    formData.append("tags", blogTags);
+    formData.append("featuredImage", featuredImage);
+    formData.append("slug", slugUrl);
+    formData.append("metaDescription", metaDiscription);
+    formData.append("allowComments", isUserCommit);
+    formData.append("seoTitle", seoTitle);
+    formData.append("seoKeywords", seoKeywords);
+    formData.append("description", blogDiscription);
+    formData.append("socialMediaSharing", isSharing);
+    mutation.mutate(formData);
+  };
+
+  useEffect(() => {
+    if (mutation.isError) {
+      toast.error(
+        mutation.error.response
+          ? mutation.error.response.data.message
+          : mutation.error.message,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          theme: "dark",
+          style: { width: "130%" },
+        }
+      );
+    }
+  }, [mutation.isError]);
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setBlogTitle("");
+      setBlogContent("");
+      setAuthor("");
+      setCatagory("");
+      setBlogDiscription("");
+      setBlogTags([]);
+      setTag("");
+      setFeaturedImage(null);
+      setIsSharing(false);
+      setisUserCommit(false);
+      setSeoTitle("");
+      setSeoKeywords("");
+      setMetaDiscription("");
+      setPublishDate("");
+      setSlugUrl("");
+
+      toast.success("Blog added successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "dark",
+        style: { width: "130%" },
+      });
+    }
+  }, [mutation.isSuccess]);
+
   return (
-    <div className="h-screen w-full overflow-hidden flex p-2 gap-2 bg-gray-200">
+    <div className="h-screen w-full overflow-hidden flex md:p-2 gap-2 bg-gray-200">
       <DashboardLeft />
       <div
         id="dashboardRight"
-        className="lg:w-[75vw] md:w-[70vw] xs:w-[100%] h-full bg-[#F9FBFF] rounded-[50px] overflow-auto"
+        className="lg:w-[75vw] md:w-[70vw] xs:w-[100%] h-full bg-[#F9FBFF] md:rounded-[50px] overflow-auto"
       >
         <AdminHeader />
         <div className="px-5">
+          <ToastContainer />
           <h1 className="lg:text-[2.4vw] md:text-[3.4vw] xs:text-[5.5vw] font-semibold font-lexend_deca pb-3">
             Add Blogs
           </h1>
-          <p className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-jost text-gray-500">
+          <p className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-jost text-gray-500">
             Education is a journey that not only enriches our knowledge but also
             empowers us with skills and experiences that help us grow and
             achieve our goals. Sharing your educational background is an
@@ -96,16 +186,18 @@ const AddBlog = () => {
           </h2>
           <form
             method="post"
-            className="flex flex-col lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] pb-10 gap-3"
+            onSubmit={submitBlog}
+            enctype="multipart/form-data"
+            className="flex flex-col lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] pb-10 gap-3"
           >
             {/* Blog Title */}
 
             <div className="flex flex-col gap-1 w-full">
-              <label className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca">
+              <label className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca">
                 Blog Title*
               </label>
               <input
-                className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                 type="text"
                 value={blogTitle}
                 required
@@ -127,16 +219,14 @@ const AddBlog = () => {
 
             <div className="flex items-center gap-3 xs:flex-col md:flex-row">
               <div className="flex flex-col gap-1 w-full">
-                <label
-                  htmlFor="author"
-                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
-                >
+                <label className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca">
                   Author*
                 </label>
                 <input
-                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                  className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="text"
-                  id="author"
+                  value={author}
+                  onChange={(e) => setAuthor(e.target.value)}
                   required
                   placeholder="Enter author name of blog"
                 />
@@ -147,13 +237,14 @@ const AddBlog = () => {
               <div className="flex flex-col gap-1 w-full">
                 <label
                   htmlFor="catagory"
-                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
+                  className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca"
                 >
                   Catagory*
                 </label>
                 <select
-                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
-                  name=""
+                  className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                  value={catagory}
+                  onChange={(e) => setCatagory(e.target.value)}
                   id="catagory"
                 >
                   <option value="" disabled>
@@ -180,19 +271,15 @@ const AddBlog = () => {
 
             <div className="flex items-center gap-3 xs:flex-col md:flex-row">
               <div className="flex flex-col gap-1 w-full">
-                <label
-                  htmlFor="date"
-                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
-                >
+                <label className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca">
                   Publish Date*
                 </label>
                 <input
-                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                  className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="date"
-                  value={blogTitle}
                   required
-                  id="date"
-                  onChange={(e) => setBlogTitle(e.target.value)}
+                  value={publishDate}
+                  onChange={(e) => setPublishDate(e.target.value)}
                   placeholder="Enter publish date"
                 />
               </div>
@@ -207,30 +294,29 @@ const AddBlog = () => {
                 <div className="flex w-full flex-col gap-1">
                   <label
                     htmlFor="tags"
-                    className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca "
+                    className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca "
                   >
                     Tags*
                   </label>
-                  <div className="w-full flex">
+                  <div className="w-full flex items-center">
                     <input
-                      className="w-full px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] rounded-l-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                      className="w-full xs:px-2 py-[0.9vw] md:px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] rounded-l-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                       type="text"
                       placeholder="Enter your current location"
                       value={tag}
                       id="tags"
-                      required
                       onChange={(e) => setTag(e.target.value)}
                     />
                     <span
                       onClick={addTags}
-                      className="bg-themeBlue rounded-r-lg p-3 cursor-pointer text-white lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
+                      className="bg-themeBlue rounded-r-lg xs:p-2 md:p-3 cursor-pointer text-white lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca"
                     >
                       Add
                     </span>
                   </div>
                   <div>
                     {error ? (
-                      <p className="flex lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] items-center gap-1 text-red-500">
+                      <p className="flex lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] items-center gap-1 text-red-500">
                         <span>
                           <IoWarning />
                         </span>
@@ -267,37 +353,51 @@ const AddBlog = () => {
               {/* Featured Images */}
 
               <div className="flex flex-col gap-1 w-full">
-                <label
-                  htmlFor="featuredImage"
-                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
-                >
+                <label className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca">
                   Featured Image*
                 </label>
-                <input
-                  className="w-full rounded-md bg-slate-200 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw]"
-                  type="file"
-                  accept=".jpg,.png,.jpeg"
-                  required
-                  id="featuredImage"
-                  onChange={(e) => setBlogTitle(e.target.files[0])}
-                />
+                <div className="flex flex-col">
+                  <input
+                    hidden
+                    type="file"
+                    id="featuredImage"
+                    required
+                    accept="image/*"
+                    name="featuredImage"
+                    onChange={(e) => setFeaturedImage(e.target.files[0])}
+                  />
+                  <label
+                    htmlFor="featuredImage"
+                    className="w-full flex cursor-pointer items-center justify-center rounded-md overflow-hidden"
+                  >
+                    <div className="lg:text-[1.2vw] lg:py-[0.7vw] md:py-[1.7vw] xs:py-[2.5vw] w-[30%] flex items-center justify-center text-white bg-black  md:text-[2.2vw] sm:text-[2.8vw] xs:text-[3.2vw]">
+                      <label className="cursor-pointer" htmlFor="featuredImage">
+                        Choose File
+                      </label>
+                    </div>
+
+                    <label
+                      htmlFor="featuredImage"
+                      className="w-[80%] cursor-pointer lg:py-[0.8vw] px-[1.1vw] md:py-[1.8vw] xs:py-[2.6vw] bg-gray-200"
+                    >
+                      {featuredImage ? featuredImage.name : "No file choosen"}
+                    </label>
+                  </label>
+                </div>
               </div>
 
               {/* Slug Url */}
 
               <div className="flex flex-col gap-1 w-full">
-                <label
-                  htmlFor="Slug Url"
-                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
-                >
+                <label className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca">
                   Slug Url*
                 </label>
                 <input
-                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
-                  type="url"
-                  value={slugUrl}
+                  className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                  type="text"
                   required
                   id="date"
+                  value={slugUrl}
                   onChange={(e) => setSlugUrl(e.target.value)}
                   placeholder="Enter publish date"
                 />
@@ -307,19 +407,15 @@ const AddBlog = () => {
             {/* Blog Discription */}
 
             <div className="flex flex-col gap-1 w-full">
-              <label
-                htmlFor="blogDisc"
-                className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
-              >
+              <label className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca">
                 Blog Discription*
               </label>
               <textarea
-                className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
-                value={blogTitle}
+                className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                value={blogDiscription}
                 required
                 rows={6}
-                id="blogDisc"
-                onChange={(e) => setBlogTitle(e.target.value)}
+                onChange={(e) => setBlogDiscription(e.target.value)}
                 placeholder="Enter your meta discription"
               ></textarea>
             </div>
@@ -327,19 +423,15 @@ const AddBlog = () => {
             {/* Meta Discription */}
 
             <div className="flex flex-col gap-1 w-full">
-              <label
-                htmlFor="metaDisc"
-                className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
-              >
+              <label className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca">
                 Meta Discription*
               </label>
               <textarea
-                className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
-                value={blogTitle}
+                className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                value={metaDiscription}
                 required
                 rows={6}
-                id="metaDisc"
-                onChange={(e) => setBlogTitle(e.target.value)}
+                onChange={(e) => setMetaDiscription(e.target.value)}
                 placeholder="Enter your meta discription"
               ></textarea>
             </div>
@@ -348,17 +440,15 @@ const AddBlog = () => {
 
             <div className="flex items-center gap-3 xs:flex-col md:flex-row">
               <div className="flex flex-col gap-1 w-full">
-                <label
-                  htmlFor="seoTitle"
-                  className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
-                >
+                <label className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca">
                   Seo Title*
                 </label>
                 <input
-                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full px-5 rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                  className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="text"
-                  id="seoTitle"
                   required
+                  value={seoTitle}
+                  onChange={(e) => setSeoTitle(e.target.value)}
                   placeholder="Enter author name of blog"
                 />
               </div>
@@ -371,32 +461,31 @@ const AddBlog = () => {
                 }`}
               >
                 <div className="flex w-full flex-col gap-1">
-                  <label className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca ">
+                  <label className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca ">
                     SEO Keywords*
                   </label>
-                  <div className="w-full flex">
+                  <div className="w-full flex items-center">
                     <input
-                      className="w-full px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] rounded-l-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                      className="w-full xs:px-2 md:px-5 py-[0.9vw] lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] rounded-l-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                       type="text"
                       placeholder="Enter your keyword here"
-                      value={tag}
-                      required
-                      onChange={(e) => setTag(e.target.value)}
+                      value={seoKeyword}
+                      onChange={(e) => setSeoKeyword(e.target.value)}
                     />
                     <span
-                      onClick={addTags}
-                      className="bg-themeBlue rounded-r-lg p-3 cursor-pointer text-white lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
+                      onClick={addKeywords}
+                      className="bg-themeBlue rounded-r-lg xs:p-2 md:p-3 cursor-pointer text-white lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca"
                     >
                       Add
                     </span>
                   </div>
                   <div>
-                    {error ? (
-                      <p className="flex lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] items-center gap-1 text-red-500">
+                    {keywordError ? (
+                      <p className="flex lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] items-center gap-1 text-red-500">
                         <span>
                           <IoWarning />
                         </span>
-                        {error}
+                        {keywordError}
                       </p>
                     ) : (
                       ""
@@ -404,16 +493,16 @@ const AddBlog = () => {
                   </div>
                 </div>
                 <div className="w-full flex flex-wrap gap-2 items-center">
-                  {blogTags.length > 0
-                    ? blogTags.map((hobby, idx) => {
+                  {seoKeywords.length > 0
+                    ? seoKeywords.map((keyword, idx) => {
                         return (
                           <div
                             key={idx}
                             className="p-2 border border-gray-400 flex gap-3 items-center rounded-lg"
                           >
-                            {hobby}
+                            {keyword}
                             <span
-                              onClick={() => handleDelete(idx)}
+                              onClick={() => deleteKeywords(idx)}
                               className="cursor-pointer text-themeBlue"
                             >
                               <RxCross2 />
@@ -428,11 +517,24 @@ const AddBlog = () => {
             <div>
               <input
                 type="checkbox"
-                required
+                id="isUserCommit"
                 aria-required="true"
+                onChange={(e) => setisUserCommit(e.target.checked)}
                 className="mr-2 rounded-[4px]"
               />
-              Allow users to comment on this post
+              <label htmlFor="isUserCommit">
+                Allow users to comment on this post
+              </label>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                id="isSharing"
+                aria-required="true"
+                onChange={(e) => setIsSharing(e.target.checked)}
+                className="mr-2 rounded-[4px]"
+              />
+              <label htmlFor="isSharing">Allow users to share this post</label>
             </div>
             <button className="my-8 mr-auto">
               <HireMeBtn text={"Add Education"} />

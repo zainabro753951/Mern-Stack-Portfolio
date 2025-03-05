@@ -1,7 +1,5 @@
 button {
-  position: relative;
   overflow: hidden;
-  height: 50px; /* Adjust as needed */
 }
 .text,
 .new-text {
@@ -261,4 +259,54 @@ button {
   min-height: 100%;
   border-radius: 10px;
   font-family: "Lexend Deca", sans-serif !important; /* Default font */
+}
+.ql-toolbar button svg {
+  font-size: 2vw; /* Change icon size */
+}
+
+@media screen and (min-width: 300px) {
+  .ql-size-small {
+    font-size: 3.4vw;
+  }
+
+  .ql-size-large {
+    font-size: 5.5vw;
+  }
+  .ql-size-huge {
+    font-size: 6vw;
+  }
+}
+@media screen and (min-width: 765px) {
+  .ql-size-small {
+    font-size: 2.4vw;
+  }
+
+  .ql-size-large {
+    font-size: 4.5vw;
+  }
+  .ql-size-huge {
+    font-size: 5vw;
+  }
+}
+
+@media screen and (min-width: 1020px) {
+  .ql-size-small {
+    font-size: 1.1vw !important;
+  }
+
+  .ql-size-large {
+    font-size: 3vw !important;
+  }
+  .ql-size-huge {
+    font-size: 5vw !important;
+  }
+}
+
+.ql-editor img {
+  height: 30vw !important;
+  object-fit: cover !important;
+}
+
+#blogImg:hover ~ #blogLink {
+  text-decoration: underline;
 }

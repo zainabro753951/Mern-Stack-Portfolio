@@ -4,6 +4,8 @@ import { IoCameraReverse, IoLocationSharp } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useMutation } from "react-query";
+import { toast, ToastContainer } from "react-toastify";
 const ProfilePopup = ({ isOpen, onClose }) => {
   const { adminData, setAdminData } = GetAdminData();
   const [adminProfile, setAdminProfile] = useState(
@@ -35,6 +37,18 @@ const ProfilePopup = ({ isOpen, onClose }) => {
     }
   }, [adminData]);
 
+  const mutation = useMutation((formData) => {
+    const response = axios.put(
+      "http://localhost:3000/admin/update_admin",
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response;
+  });
+
   let handleUpdateAdmin = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -50,29 +64,38 @@ const ProfilePopup = ({ isOpen, onClose }) => {
       adminData ? adminData.profileImg : undefined
     );
     try {
-      let response = await axios.post(
-        "http://localhost:3000/admin/update_admin",
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
-      if (response.data) {
-        onClose();
-        setAdminData(response.data);
-        localStorage.setItem("admin", JSON.stringify(response.data));
-      } else {
-      }
+      mutation.mutate(formData);
     } catch (e) {
       console.error("Error updating admin profile", e);
     }
   };
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      onClose();
+      setAdminData(mutation.data.data);
+      localStorage.setItem("admin", JSON.stringify(mutation.data.data));
+    }
+  }, [mutation.isSuccess]);
+
+  useEffect(() => {
+    if (mutation.isError) {
+      toast.error(mutation.error.response.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "dark",
+        style: { width: "100%" },
+      });
+    }
+  }, [mutation.isError]);
+
   return (
     <div
       className={`${
         isOpen ? " scale-100" : " scale-0"
-      } bg-black/70 p-7 pointer-events-auto font-jost w-full h-full overflow-hidden z-20 fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all flex items-center justify-center duration-300`}
+      } bg-black/70 p-7 pointer-events-auto font-jost w-full h-full overflow-hidden z-50 fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all flex items-center justify-center duration-300`}
     >
+      <ToastContainer />
       <div
         className={`transition-all bg-white rounded-3xl flex items-center relative duration-700 ${
           isOpen ? "scale-100 p-5" : "scale-0 p-0"
@@ -136,7 +159,7 @@ const ProfilePopup = ({ isOpen, onClose }) => {
                   id="website-admin"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="rounded-none text-md w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-800 lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] outline-none"
+                  className="rounded-none lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-800 py-[0.8vw] outline-none"
                   placeholder="Bonnie Green"
                 />
               </div>
@@ -157,7 +180,7 @@ const ProfilePopup = ({ isOpen, onClose }) => {
                   id="website-admin"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="rounded-none text-md w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-800 lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] outline-none"
+                  className="rounded-none lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-800 py-[0.8vw] outline-none"
                   placeholder="Bonnie Green"
                 />
               </div>
@@ -179,45 +202,45 @@ const ProfilePopup = ({ isOpen, onClose }) => {
                 id="website-admin"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className="rounded-none text-md w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-800 lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] outline-none"
+                className="rounded-none lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-8lg:py-[0.8vw] outline-none"
                 placeholder="+244 564 4651"
               />
             </div>
-            <fieldset class="border border-gray-800 px-2 pb-2 rounded-lg">
-              <legend class="text-xl font-semibold font-lexend_deca text-gray-700">
+            <fieldset className="border border-gray-800 px-2 pb-2 rounded-lg">
+              <legend className="lg:text-[1.5vw] md:text-[2.5vw] xs:text-[4vw] font-semibold font-lexend_deca text-gray-700">
                 Gender
               </legend>
-              <div class="flex space-x-6 mt-4">
-                <label class="flex items-center">
+              <div className="flex space-x-6 mt-4">
+                <label className="flex items-center lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
                   <input
                     type="radio"
                     name="gender"
                     value="Male"
                     checked={gender === "Male"}
                     onChange={handleGenderChange}
-                    class="mr-2"
+                    className="mr-2"
                   />
                   Male
                 </label>
-                <label class="flex items-center">
+                <label className="flex items-center lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
                   <input
                     type="radio"
                     name="gender"
                     value="Female"
                     checked={gender === "Female"}
                     onChange={handleGenderChange}
-                    class="mr-2"
+                    className="mr-2"
                   />
                   Female
                 </label>
-                <label class="flex items-center">
+                <label className="flex items-center lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
                   <input
                     type="radio"
                     name="gender"
                     value="Other"
                     checked={gender === "Other"}
                     onChange={handleGenderChange}
-                    class="mr-2"
+                    className="mr-2"
                   />
                   Other
                 </label>
@@ -225,9 +248,11 @@ const ProfilePopup = ({ isOpen, onClose }) => {
             </fieldset>
             <div className="flex items-center gap-4 rounded-2xl p-2 w-full">
               <div className="flex w-full flex-col font-jost">
-                <h4 className="font-semibold">About</h4>
+                <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                  About
+                </h4>
                 <textarea
-                  className="w-full h-fit border border-gray-900 bg-transparent rounded-xl"
+                  className="w-full h-fit lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border border-gray-900 bg-transparent rounded-xl"
                   value={aboutMe}
                   rows={8}
                   placeholder="Enter your about"
@@ -235,9 +260,9 @@ const ProfilePopup = ({ isOpen, onClose }) => {
                 />
               </div>
             </div>
-            <button className="flex items-center gap-3 py-3 mx-auto px-8 rounded-lg bg-themeBlue text-white text-lg font-jost">
+            <button className="flex items-center mx-auto gap-3 lg:py-[1vw] md:py-[1.5vw] xs:py-[2.3vw] lg:px-[2vw] md:px-[3.5vw] xs:px-[5.1vw] rounded-lg bg-themeBlue text-white lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-jost">
               <span>Save</span>
-              <span className="text-xl">
+              <span className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
                 <FaRegEdit />
               </span>
             </button>

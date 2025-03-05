@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import admin from "./Routes/admin.route.js";
 import Insert from "./Routes/Insert.route.js";
 import getData from "./Routes/getData.route.js";
+import deleteData from "./Routes/delete.route.js";
 import cookieParser from "cookie-parser";
 // Dotenv Config
 dotenv.config();
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, "upload/")));
 app.use(admin);
 app.use(Insert);
 app.use(getData);
+app.use(deleteData);
 
 app.listen(port, () =>
   console.log(`Server listening on http://localhost:${port}`)

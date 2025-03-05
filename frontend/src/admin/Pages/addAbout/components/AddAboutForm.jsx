@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 import { IoWarning } from "react-icons/io5";
 import HireMeBtn from "../../../../components/HireMeBtn";
+import { useMutation } from "react-query";
+import { toast, ToastContainer } from "react-toastify";
 const AddAboutForm = () => {
   const [aboutHeadline, setAboutHeadline] = useState("");
   const [location, setLocation] = useState("");
@@ -10,7 +12,7 @@ const AddAboutForm = () => {
   const [education, setEducation] = useState("");
   const [about, setAbout] = useState("");
   const [email, setEmail] = useState("");
-  const [profileImg, setprofileImg] = useState("");
+  const [profileImg, setProfileImg] = useState(null);
   const [hobbies, setHobbies] = useState("");
   const [emptyHobby, setEmptyHobby] = useState("");
   const [moreHobbies, setMoreHobbies] = useState([]);
@@ -18,8 +20,9 @@ const AddAboutForm = () => {
   const [facebook, setFacebook] = useState("");
   const [instagram, setInstagram] = useState("");
   const [behance, setBehance] = useState("");
-  let addHobbies = () => {
-    if (hobbies.length > 0) {
+
+  const addHobbies = () => {
+    if (hobbies.trim() !== "") {
       setMoreHobbies([...moreHobbies, hobbies]);
       setHobbies("");
     } else {
@@ -27,14 +30,23 @@ const AddAboutForm = () => {
     }
   };
 
-  let handleDelete = (index) => {
-    let deletedHobbies = moreHobbies.filter((_, i) => i !== index);
+  const handleDelete = (index) => {
+    const deletedHobbies = moreHobbies.filter((_, i) => i !== index);
     setMoreHobbies(deletedHobbies);
   };
 
-  let handleAbout = async (e) => {
+  const mutation = useMutation((formData) => {
+    return axios.post("http://localhost:3000/admin/add_about", formData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  });
+
+  const handleAbout = (e) => {
     e.preventDefault();
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("aboutHeadline", aboutHeadline);
     formData.append("location", location);
     formData.append("phoneNumber", phoneNumber);
@@ -43,32 +55,66 @@ const AddAboutForm = () => {
     formData.append("email", email);
     formData.append("profileImg", profileImg);
     formData.append("hobbies", moreHobbies);
-    let response = await axios.post(
-      "http://localhost:3000/admin/add_about",
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
-    console.log(response.data);
+    formData.append("linkedIn", linkedIn);
+    formData.append("facebook", facebook);
+    formData.append("instagram", instagram);
+    formData.append("behance", behance);
+    mutation.mutate(formData);
   };
+
+  useEffect(() => {
+    if (mutation.isError) {
+      toast.error(mutation.error.response.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "dark",
+        style: { width: "100%" },
+      });
+    }
+  }, [mutation.isError]);
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setAboutHeadline("");
+      setLocation("");
+      setPhoneNumber("");
+      setEducation("");
+      setAbout("");
+      setEmail("");
+      setProfileImg(null);
+      setMoreHobbies([]);
+      setLinkedIn("");
+      setFacebook("");
+      setInstagram("");
+      setBehance("");
+
+      toast.success("Form submitted successfully", {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "dark",
+        style: { width: "100%" },
+      });
+    }
+  }, [mutation.isSuccess]);
+
   return (
     <form
       onSubmit={handleAbout}
       encType="multipart/form-data"
-      className="w-full h-fit py-10 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw]  px-8"
+      className="w-full h-fit py-10 xs:px-5 lg:px-8"
     >
+      <ToastContainer />
       <div className="grid md:grid-cols-2 xs:grid-cols-1 gap-4 w-full h-full">
         <div className="w-full flex flex-col gap-4">
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"
-              className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca"
             >
               About Headline
             </label>
             <input
-              className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              className="py-[0.8vw] xs:px-2 md:px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] md:rounded-[0.8vw] xs:rounded-[1.8vw] border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
               type="text"
               value={aboutHeadline}
               required
@@ -79,12 +125,12 @@ const AddAboutForm = () => {
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"
-              className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca "
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca "
             >
               Phone Number
             </label>
             <input
-              className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw]  px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              className="py-[0.8vw] xs:px-2 md:px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] md:rounded-[0.8vw] xs:rounded-[1.8vw] border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
               type="number"
               value={phoneNumber}
               required
@@ -95,12 +141,12 @@ const AddAboutForm = () => {
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"
-              className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca "
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca "
             >
               About
             </label>
             <textarea
-              className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw]  px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              className="py-[0.8vw] xs:px-2 md:px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] md:rounded-[0.8vw] xs:rounded-[1.8vw] border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
               type="text"
               rows={5}
               value={about}
@@ -110,32 +156,49 @@ const AddAboutForm = () => {
             ></textarea>
           </div>
           <div>
-            <label
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              htmlFor="adminPic"
-            >
+            <label className="block mb-2 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-medium text-gray-900 dark:text-white">
               Upload file
             </label>
-            <input
-              className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-              id="adminPic"
-              type="file"
-              required
-              onChange={(e) => setprofileImg(e.target.files[0])}
-              accept=".jpg,.jpeg,.png"
-            />
+            <div className="flex flex-col">
+              <input
+                hidden
+                type="file"
+                accept="image/*"
+                name="profileImg"
+                required
+                onChange={(e) => setProfileImg(e.target.files[0])}
+                id="featuredImage"
+              />
+              <label
+                htmlFor="featuredImage"
+                className="w-full flex cursor-pointer items-center justify-center rounded-md overflow-hidden"
+              >
+                <div className="lg:text-[1.2vw] lg:py-[0.7vw] md:py-[1.7vw] xs:py-[2.5vw] w-[30%] flex items-center justify-center text-white bg-black  md:text-[2.2vw] sm:text-[2.8vw] xs:text-[3.2vw]">
+                  <label className="cursor-pointer" htmlFor="featuredImage">
+                    Choose File
+                  </label>
+                </div>
+
+                <label
+                  htmlFor="featuredImage"
+                  className="w-[80%] lg:text-[1.1vw] md:text-[2.1vw] xs:text-[3.3vw] cursor-pointer lg:py-[0.8vw] px-[1.1vw] md:py-[1.8vw] xs:py-[2.6vw] bg-gray-200"
+                >
+                  {profileImg ? profileImg.name : "No file choosen"}
+                </label>
+              </label>
+            </div>
           </div>
         </div>
         <div className="w-full flex flex-col gap-4">
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"
-              className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca "
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca "
             >
               Location
             </label>
             <input
-              className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw]  px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              className="py-[0.8vw] xs:px-2 md:px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] md:rounded-[0.8vw] xs:rounded-[1.8vw] border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
               type="text"
               value={location}
               required
@@ -146,12 +209,12 @@ const AddAboutForm = () => {
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"
-              className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca "
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca "
             >
               Education
             </label>
             <input
-              className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw]  px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              className="py-[0.8vw] xs:px-2 md:px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] md:rounded-[0.8vw] xs:rounded-[1.8vw] border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
               type="text"
               value={education}
               required
@@ -162,29 +225,28 @@ const AddAboutForm = () => {
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"
-              className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca "
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca "
             >
               Hobbies
             </label>
-            <div className="w-full flex">
+            <div className="w-full flex items-center">
               <input
-                className="w-full px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] rounded-l-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                className="w-full xs:px-2 md:px-5 py-[0.8vw] lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] rounded-l-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                 type="text"
                 placeholder="Enter your current location"
                 value={hobbies}
-                required
                 onChange={(e) => setHobbies(e.target.value)}
               />
               <span
                 onClick={addHobbies}
-                className="bg-themeBlue rounded-r-lg p-3 cursor-pointer text-white lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca"
+                className="bg-themeBlue rounded-r-lg xs:p-2 md:p-3 cursor-pointer text-white lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca"
               >
                 Add
               </span>
             </div>
             <div>
               {emptyHobby ? (
-                <p className="flex lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] items-center gap-1 text-red-500">
+                <p className="flex lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] items-center gap-1 text-red-500">
                   <span>
                     <IoWarning />
                   </span>
@@ -201,7 +263,7 @@ const AddAboutForm = () => {
                   return (
                     <div
                       key={idx}
-                      className="p-2 border border-gray-400 flex gap-3 items-center rounded-lg"
+                      className="p-2 border border-gray-400 flex gap-3 items-center md:rounded-[0.8vw] xs:rounded-[1.8vw]"
                     >
                       {hobby}
                       <span
@@ -218,12 +280,12 @@ const AddAboutForm = () => {
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"
-              className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca "
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca "
             >
               Email
             </label>
             <input
-              className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw]  px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              className="py-[0.8vw] xs:px-2 md:px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] md:rounded-[0.8vw] xs:rounded-[1.8vw] border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
               type="text"
               value={email}
               required
@@ -241,7 +303,7 @@ const AddAboutForm = () => {
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"
-              className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca "
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca "
             >
               LinkedIn Profile Link
             </label>
@@ -250,13 +312,13 @@ const AddAboutForm = () => {
               placeholder="Enter your linkedin profile link"
               value={linkedIn}
               onChange={(e) => setLinkedIn(e.target.value)}
-              className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full rounded-lg   font-jost placeholder:text-gray-500 border-gray-200 border px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              className="py-[0.8vw] xs:px-2wmd:-full md:rounded-[0.8vw] xs:rounded-[1.8vw]   font-jost placeholder:text-gray-500 border-gray-200 border px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
             />
           </div>
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"
-              className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca "
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca "
             >
               Facebook Profile Link
             </label>
@@ -265,13 +327,13 @@ const AddAboutForm = () => {
               value={facebook}
               onChange={(e) => setFacebook(e.target.value)}
               placeholder="Enter your facebook profile link"
-              className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full rounded-lg   font-jost placeholder:text-gray-500 border-gray-200 border px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              className="py-[0.8vw] xs:px-2wmd:-full md:rounded-[0.8vw] xs:rounded-[1.8vw]   font-jost placeholder:text-gray-500 border-gray-200 border px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
             />
           </div>
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"
-              className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca "
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca "
             >
               Behance Profile Link
             </label>
@@ -280,13 +342,13 @@ const AddAboutForm = () => {
               value={behance}
               onChange={(e) => setBehance(e.target.value)}
               placeholder="Enter your Behance profile link"
-              className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full rounded-lg   font-jost placeholder:text-gray-500 border-gray-200 border px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              className="py-[0.8vw] xs:px-2wmd:-full md:rounded-[0.8vw] xs:rounded-[1.8vw]   font-jost placeholder:text-gray-500 border-gray-200 border px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
             />
           </div>
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"
-              className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-lexend_deca "
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca "
             >
               Instagram Profile Link
             </label>
@@ -295,14 +357,14 @@ const AddAboutForm = () => {
               value={instagram}
               onChange={(e) => setInstagram(e.target.value)}
               placeholder="Enter your Instagram profile link"
-              className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full rounded-lg   font-jost placeholder:text-gray-500 border-gray-200 border px-5 lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              className="py-[0.8vw] xs:px-2wmd:-full md:rounded-[0.8vw] xs:rounded-[1.8vw]   font-jost placeholder:text-gray-500 border-gray-200 border px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
             />
           </div>
         </div>
       </div>
       <div>
         <button>
-          <HireMeBtn text={"Submit"} />
+          <HireMeBtn text={"Submit"} isLoading={mutation.isLoading} />
         </button>
       </div>
     </form>

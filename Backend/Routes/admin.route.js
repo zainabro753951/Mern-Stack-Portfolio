@@ -10,7 +10,7 @@ import adminAuthCheck from "../Controller/AdminAuthCheck.controller.js";
 
 router.post("/admin/login", adminLogin);
 router.post("/admin/signup", AdminSignup);
-router.post("/admin/update_admin", secureAdminRoute, updateAdmin);
+router.put("/admin/update_admin", secureAdminRoute, updateAdmin);
 router.get("/admin/check-admin-auth", secureAdminRoute, adminAuthCheck);
 router.post("/admin/logout", secureAdminRoute, logout);
 

@@ -10,13 +10,12 @@ import { GetAboutData } from "../../../Context/GetAboutData.jsx";
 import { IoWarning } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-
+import { useMutation } from "react-query";
 // Popup component for editing the values
 
 // Main component
 const ViewAbout = () => {
   const { aboutData, setAboutData } = GetAboutData();
-
   const [aboutHeadline, setAboutHeadline] = useState(
     aboutData ? aboutData.aboutHeadline : ""
   );
@@ -25,6 +24,12 @@ const ViewAbout = () => {
     aboutData ? aboutData.education : ""
   );
   const [email, setEmail] = useState(aboutData ? aboutData.email : "");
+  const [facebook, setFacebook] = useState(aboutData ? aboutData.facebook : "");
+  const [linkedIn, setLinkedIn] = useState(aboutData ? aboutData.linkedIn : "");
+  const [instagram, setInstagram] = useState(
+    aboutData ? aboutData.behance : ""
+  );
+  const [behance, setBehance] = useState(aboutData ? aboutData.instagram : "");
   const [hobbies, setHobbies] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(
     aboutData ? aboutData.phoneNumber : ""
@@ -35,7 +40,6 @@ const ViewAbout = () => {
   const [imagePreview, setImagePreview] = useState(
     aboutData ? `http://localhost:3000/${aboutData.profileImg}` : ""
   );
-  console.log(profileImg);
 
   const [about, setAbout] = useState(aboutData ? aboutData.about : "");
   const [emptyHobby, setEmptyHobby] = useState("");
@@ -67,6 +71,10 @@ const ViewAbout = () => {
       setPhoneNumber(aboutData.phoneNumber);
       setAbout(aboutData.about);
       setEmail(aboutData.email);
+      setFacebook(aboutData.facebook);
+      setInstagram(aboutData.instagram);
+      setBehance(aboutData.behance);
+      setLinkedIn(aboutData.linkedIn);
       setProfileImg(aboutData.profileImg);
       setImagePreview(`http://localhost:3000/${aboutData.profileImg}`);
       setAboutHeadline(aboutData.aboutHeadline);
@@ -77,58 +85,81 @@ const ViewAbout = () => {
       }
     }
   }, [aboutData]);
-  console.log(imagePreview);
 
-  const handleSave = async (e) => {
-    e.preventDefault();
-    if (aboutHeadline) {
-      try {
-        let formData = new FormData();
-        formData.append("aboutId", aboutData ? aboutData._id : "");
-        formData.append("aboutHeadline", aboutHeadline);
-        formData.append("location", location);
-        formData.append("education", education);
-        formData.append("about", about);
-        formData.append("phoneNumber", phoneNumber);
-        formData.append("email", email);
-        formData.append("profileImg", profileImg);
-        formData.append("oldProfileImg", aboutData ? aboutData.profileImg : "");
-        formData.append("hobbies", moreHobbies);
-        if (moreHobbies.length > 0) {
-          const response = await axios.post(
-            "http://localhost:3000/admin/update_about",
-            formData,
-            {
-              withCredentials: true,
-            }
-          );
-          if (response.data) {
-            setAboutData(response.data);
-            toast.success("About data has been updated successfully", {
-              theme: "dark",
-              autoClose: 3000,
-              closeButton: false,
-            });
-          }
-        } else {
-          setEmptyHobby("Hobby fields is required!");
-        }
-      } catch (error) {
-        console.error("Error saving about data:", error);
+  const mutation = useMutation((formData) => {
+    const response = axios.put(
+      "http://localhost:3000/admin/update_about",
+      formData,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       }
+    );
+    return response;
+  });
+  const handleSave = (e) => {
+    e.preventDefault();
+    try {
+      let formData = new FormData();
+      formData.append("aboutId", aboutData ? aboutData._id : "");
+      formData.append("aboutHeadline", aboutHeadline);
+      formData.append("location", location);
+      formData.append("education", education);
+      formData.append("about", about);
+      formData.append("phoneNumber", phoneNumber);
+      formData.append("email", email);
+      formData.append("facebook", facebook);
+      formData.append("instagram", instagram);
+      formData.append("linkedIn", linkedIn);
+      formData.append("behance", behance);
+      formData.append("profileImg", profileImg);
+      formData.append("oldProfileImg", aboutData ? aboutData.profileImg : "");
+      formData.append("hobbies", moreHobbies);
+      if (moreHobbies.length > 0) {
+        mutation.mutate(formData);
+      } else {
+        setEmptyHobby("Hobby fields is required!");
+      }
+    } catch (error) {
+      console.error("Error saving about data:", error);
     }
   };
 
+  useEffect(() => {
+    if (mutation.isError) {
+      toast.error(mutation.error.response.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "dark",
+        style: { width: "100%" },
+      });
+    }
+  }, [mutation.isError]);
+
+  useEffect(() => {
+    if (mutation.isSuccess) {
+      setAboutData(mutation.data.data);
+      toast.success("About updated successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "dark",
+        style: { width: "100%" },
+      });
+    }
+  }, [mutation.isSuccess]);
+
   return (
-    <div className="h-screen w-full overflow-hidden flex p-2 gap-2 bg-gray-200">
-      <ToastContainer />
+    <div className="h-screen w-full overflow-hidden flex md:p-2 gap-2 bg-gray-200">
       <DashboardLeft />
       <div
         id="dashboardRight"
-        className="lg:w-[75vw] md:w-[70vw] xs:w-[100%] h-full bg-[#F9FBFF] relative rounded-[50px] overflow-auto"
+        className="lg:w-[75vw] md:w-[70vw] xs:w-[100%] h-full bg-[#F9FBFF] relative md:rounded-[50px] overflow-auto"
       >
         <AdminHeader />
         <div className="px-5">
+          <ToastContainer />
           <h1 className="lg:text-[2.4vw] md:text-[3.4vw] xs:text-[5.5vw] font-semibold font-lexend_deca pb-3">
             View About
           </h1>
@@ -182,7 +213,7 @@ const ViewAbout = () => {
                     </h4>
                     <input
                       type="text"
-                      className="w-full bg-transparent border-none"
+                      className="w-full bg-transparent lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border-none"
                       value={aboutHeadline}
                       onChange={(e) => setAboutHeadline(e.target.value)}
                     />
@@ -195,7 +226,7 @@ const ViewAbout = () => {
                     </h4>
                     <input
                       type="text"
-                      className="w-full bg-transparent border-none"
+                      className="w-full bg-transparent lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border-none"
                       value={location}
                       onChange={(e) => setLocation(e.target.value)}
                     />
@@ -208,7 +239,7 @@ const ViewAbout = () => {
                     </h4>
                     <input
                       type="number"
-                      className="w-full bg-transparent border-none"
+                      className="w-full bg-transparent lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border-none"
                       value={phoneNumber}
                       onChange={(e) => setPhoneNumber(e.target.value)}
                     />
@@ -221,7 +252,7 @@ const ViewAbout = () => {
                     </h4>
                     <input
                       type="text"
-                      className="w-full bg-transparent border-none"
+                      className="w-full bg-transparent lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border-none"
                       value={education}
                       onChange={(e) => setEducation(e.target.value)}
                     />
@@ -233,7 +264,7 @@ const ViewAbout = () => {
                       About
                     </h4>
                     <textarea
-                      className="w-full h-fit bg-transparent border-none"
+                      className="w-full h-fit bg-transparent lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border-none"
                       value={about}
                       rows={8}
                       onChange={(e) => setAbout(e.target.value)}
@@ -243,13 +274,13 @@ const ViewAbout = () => {
                 <div className="flex flex-col gap-1">
                   <label
                     htmlFor="about-headline"
-                    className="text-xl font-lexend_deca"
+                    className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca"
                   >
                     Hobbies
                   </label>
                   <div className="w-full flex">
                     <input
-                      className="w-full px-5 rounded-l-lg border border-gray-400 outline-none focus:border-themeBlue"
+                      className="w-full md:px-5 xs:px-2 lg:text-[1.2vw] py-[0.8vw] md:text-[2.2vw] xs:text-[3.4vw] rounded-l-lg border border-gray-400 outline-none focus:border-themeBlue"
                       type="text"
                       placeholder="Enter your current hobby"
                       value={hobbies}
@@ -275,12 +306,12 @@ const ViewAbout = () => {
                       </p>
                     )}
                   </div>
-                  <div className="w-full flex flex-wrap gap-2 items-center">
+                  <div className="w-full flex  flex-wrap gap-2 items-center">
                     {moreHobbies.length > 0 &&
                       moreHobbies.map((hobby, idx) => (
                         <div
                           key={idx}
-                          className="p-2 border border-gray-400 flex gap-3 items-center rounded-lg"
+                          className="lg:py-[0.7vw] md:py-[1.5vw] xs:py-[2.5vw] lg:px-[2vw] md:px-[3vw] xs:px-[3.5vw] lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border border-gray-400 flex gap-3 items-center rounded-lg"
                         >
                           {hobby}
                           <span
@@ -300,17 +331,69 @@ const ViewAbout = () => {
                     </h4>
                     <input
                       type="email"
-                      className="w-full bg-transparent border-none"
+                      className="w-full bg-transparent lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border-none"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
                 </div>
+                <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
+                  <div className="flex w-full flex-col font-jost">
+                    <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                      Instagram Link
+                    </h4>
+                    <input
+                      type="url"
+                      className="w-full bg-transparent lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border-none"
+                      value={instagram}
+                      onChange={(e) => setInstagram(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
+                  <div className="flex w-full flex-col font-jost">
+                    <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                      Facebook Link
+                    </h4>
+                    <input
+                      type="url"
+                      className="w-full bg-transparent lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border-none"
+                      value={facebook}
+                      onChange={(e) => setFacebook(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
+                  <div className="flex w-full flex-col font-jost">
+                    <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                      Behance Link
+                    </h4>
+                    <input
+                      type="url"
+                      className="w-full bg-transparent lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border-none"
+                      value={behance}
+                      onChange={(e) => setBehance(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
+                  <div className="flex w-full flex-col font-jost">
+                    <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                      LinkedIn Link
+                    </h4>
+                    <input
+                      type="url"
+                      className="w-full bg-transparent lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border-none"
+                      value={linkedIn}
+                      onChange={(e) => setLinkedIn(e.target.value)}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="w-full py-10 flex items-center gap-5">
-                <button className="flex items-center gap-3 py-3 px-8 rounded-lg bg-themeBlue text-white lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-jost">
+              <div className="w-full py-[2vw] flex items-center gap-5">
+                <button className="flex items-center gap-3 lg:py-[1vw] md:py-[1.5vw] xs:py-[2.3vw] lg:px-[2vw] md:px-[3.5vw] xs:px-[5.1vw] rounded-lg bg-themeBlue text-white lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-jost">
                   <span>Save</span>
-                  <span className="text-xl">
+                  <span className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
                     <FaRegEdit />
                   </span>
                 </button>

@@ -5,18 +5,18 @@ import AddAboutForm from "./components/AddAboutForm";
 
 const AddAbout = () => {
   return (
-    <div className="h-screen w-full overflow-hidden flex p-2 gap-2 bg-gray-200">
+    <div className="h-screen w-full overflow-hidden flex md:p-2 gap-2 bg-gray-200">
       <DashboardLeft />
       <div
         id="dashboardRight"
-        className="lg:w-[75vw] md:w-[70vw] xs:w-[100%] h-full bg-[#F9FBFF] rounded-[50px] overflow-auto"
+        className="lg:w-[75vw] md:w-[70vw] xs:w-[100%] h-full bg-[#F9FBFF] md:rounded-[50px] overflow-auto"
       >
         <AdminHeader />
         <div className="px-5">
           <h1 className="lg:text-[1.8vw] md:text-[2.8vw] xs:text-[4.5vw] font-semibold font-lexend_deca pb-3">
             Add About
           </h1>
-          <p className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] font-jost text-gray-500">
+          <p className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-jost text-gray-500">
             On this page, you can add detailed information to introduce yourself
             or provide relevant details about the organization. Begin by
             entering a headline that best represents the purpose or main idea.

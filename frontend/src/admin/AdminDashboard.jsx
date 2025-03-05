@@ -8,113 +8,45 @@ import AddEducationPgae from "./Pages/addEducation/AddEducationPgae";
 import ViewEducationPage from "./Pages/viewEducation/viewEducationPage";
 import EditEducation from "./Pages/editEducation/EditEducation";
 import AdminSignup from "./components/adminSignup";
-import { useAdminAuth } from "../Context/AdminAuthProvider";
 import ProtectAdminRoute from "../Secure/ProtectAdminRoute";
 import AddBlog from "./Pages/AddBlog/AddBlog";
 import ViewBlogs from "./Pages/ViewBlogs/ViewBlogs";
+import AddTestimonial from "./Pages/AddTestimonial/AddTestimonial";
+import ViewTestmonial from "./Pages/ViewTestmonial/ViewTestmonial";
+import AddProject from "./Pages/AddProject/AddProject";
+import { adminRoutes } from "./Routes/AdminRoutes.jsx";
+import { useAdminAuth } from "../Context/AdminAuthProvider.jsx";
 
 const AdminDashboard = () => {
   const { isAdminAuthenticated, isAuthChecked } = useAdminAuth();
-  console.log(isAdminAuthenticated);
 
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <ProtectAdminRoute
-              isAdminAuthenticated={isAdminAuthenticated}
-              isAuthChecked={isAuthChecked}
-            >
-              <HomeDashboard />
-            </ProtectAdminRoute>
-          }
-        />
-        <Route
-          path="/addAbout"
-          element={
-            <ProtectAdminRoute
-              isAdminAuthenticated={isAdminAuthenticated}
-              isAuthChecked={isAuthChecked}
-            >
-              <AddAbout />
-            </ProtectAdminRoute>
-          }
-        />
-        <Route
-          path="/viewAbout"
-          element={
-            <ProtectAdminRoute
-              isAdminAuthenticated={isAdminAuthenticated}
-              isAuthChecked={isAuthChecked}
-            >
-              <ViewAbout />
-            </ProtectAdminRoute>
-          }
-        />
-        <Route
-          path="/addEducation"
-          element={
-            <ProtectAdminRoute
-              isAdminAuthenticated={isAdminAuthenticated}
-              isAuthChecked={isAuthChecked}
-            >
-              <AddEducationPgae />
-            </ProtectAdminRoute>
-          }
-        />
-        <Route
-          path="/viewEducation"
-          element={
-            <ProtectAdminRoute
-              isAdminAuthenticated={isAdminAuthenticated}
-              isAuthChecked={isAuthChecked}
-            >
-              <ViewEducationPage />
-            </ProtectAdminRoute>
-          }
-        />
-        <Route
-          path="/editEducation/:id"
-          element={
-            <ProtectAdminRoute
-              isAdminAuthenticated={isAdminAuthenticated}
-              isAuthChecked={isAuthChecked}
-            >
-              <EditEducation />
-            </ProtectAdminRoute>
-          }
-        />
-        <Route
-          path="/addBlog/"
-          element={
-            <ProtectAdminRoute
-              isAdminAuthenticated={isAdminAuthenticated}
-              isAuthChecked={isAuthChecked}
-            >
-              <AddBlog />
-            </ProtectAdminRoute>
-          }
-        />
-        <Route
-          path="/viewBlog"
-          element={
-            <ProtectAdminRoute
-              isAdminAuthenticated={isAdminAuthenticated}
-              isAuthChecked={isAuthChecked}
-            >
-              <ViewBlogs />
-            </ProtectAdminRoute>
-          }
-        />
+        {adminRoutes.map((route, idx) => (
+          <Route
+            key={idx}
+            path={route.path}
+            element={
+              <ProtectAdminRoute
+                isAdminAuthenticated={isAdminAuthenticated}
+                isAuthChecked={isAuthChecked}
+              >
+                {route.element}
+              </ProtectAdminRoute>
+            }
+          />
+        ))}
         <Route
           path="/login"
           element={
-            isAdminAuthenticated ? <Navigate to={"/admin"} /> : <Login />
+            isAdminAuthenticated ? (
+              <Navigate to={"/admin"} replace />
+            ) : (
+              <Login />
+            )
           }
         />
-
         <Route path="/admin-signup/:key" element={<AdminSignup />} />
       </Routes>
     </>
