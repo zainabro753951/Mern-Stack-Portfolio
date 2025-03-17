@@ -9,24 +9,48 @@ import { AdminAuthProvider } from "./Context/AdminAuthProvider.jsx";
 import { SideBarToggle } from "./Context/SideBarToggle.jsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { GetBlogs } from "./Context/GetBlogs.jsx";
+import { SocketProvider } from "./Context/SocketIO.jsx";
+import { UserAuthProvider } from "./Context/UserAuthProvider.jsx";
+import { GetTestimonial } from "./Context/GetTestimonial.jsx";
+import GetProject from "./Context/GetProject.jsx";
+import { GetAllBlogComments } from "./Context/GetAllBlogComments.jsx";
+import { GetAllBlogLikes } from "./Context/GetAllBlogLikes.jsx";
+import { GetAllBlogCommentNoti } from "./Context/GetAllBlogCommentNoti.jsx";
+import { GetChatBotConversation } from "./Context/GetChatBotConversation.jsx";
 
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
-      <AdminAuthProvider>
-        <AdminDataProvider>
-          <GetBlogs>
-            <GetAboutProvider>
-              <SideBarToggle>
-                <StrictMode>
-                  <App />
-                </StrictMode>
-              </SideBarToggle>
-            </GetAboutProvider>
-          </GetBlogs>
-        </AdminDataProvider>
-      </AdminAuthProvider>
+      <UserAuthProvider>
+        <AdminAuthProvider>
+          <SocketProvider>
+            <AdminDataProvider>
+              <GetProject>
+                <GetBlogs>
+                  <GetAllBlogComments>
+                    <GetAllBlogCommentNoti>
+                      <GetAllBlogLikes>
+                        <GetTestimonial>
+                          <GetAboutProvider>
+                            <SideBarToggle>
+                              <GetChatBotConversation>
+                                <StrictMode>
+                                  <App />
+                                </StrictMode>
+                              </GetChatBotConversation>
+                            </SideBarToggle>
+                          </GetAboutProvider>
+                        </GetTestimonial>
+                      </GetAllBlogLikes>
+                    </GetAllBlogCommentNoti>
+                  </GetAllBlogComments>
+                </GetBlogs>
+              </GetProject>
+            </AdminDataProvider>
+          </SocketProvider>
+        </AdminAuthProvider>
+      </UserAuthProvider>
     </QueryClientProvider>
   </BrowserRouter>
 );

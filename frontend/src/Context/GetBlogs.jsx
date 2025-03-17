@@ -1,7 +1,14 @@
 import axios from "axios";
-import React, { createContext, useContext, useState } from "react";
-import { useQuery } from "react-query";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useMemo,
+  useEffect,
+} from "react";
+import { useQuery, useQueryClient } from "react-query";
 import { useAdminAuth } from "./AdminAuthProvider";
+import { useUserAuth } from "./UserAuthProvider";
 
 export const GetBlogContext = createContext();
 
@@ -9,37 +16,57 @@ export const useBlogPosts = () => useContext(GetBlogContext);
 
 export const GetBlogs = ({ children }) => {
   const { isAdminAuthenticated } = useAdminAuth();
+  const { isUserAuthenticated } = useUserAuth();
   const [blogPosts, setBlogPosts] = useState([]);
+  const queryClient = useQueryClient();
 
-  const getData = useQuery(
-    "blogPosts",
-    async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:3000/admin/getBlogData",
-          {
-            withCredentials: true,
-          }
-        );
-        return response.data;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    {
-      enabled: isAdminAuthenticated,
-      retry: 3,
-      staleTime: 10000,
-      onSuccess: (fetchedData) => {
-        setBlogPosts(fetchedData || []); // Ensure default value
-      },
-      onError: (error) => console.log(error),
+  const fetchBlogPosts = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/admin/getBlogData",
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching blog posts:", error);
+      throw new Error("Failed to fetch blog posts");
     }
+  };
+
+  const { isLoading, isError, data } = useQuery("blogPosts", fetchBlogPosts, {
+    enabled: isUserAuthenticated || isAdminAuthenticated,
+    retry: 3,
+    staleTime: 10000,
+    onSuccess: (fetchedData) => {
+      setBlogPosts(fetchedData || []);
+    },
+    onError: (error) => {
+      console.error("Error in useQuery:", error);
+    },
+  });
+
+  useEffect(() => {
+    if (data) {
+      queryClient.invalidateQueries("blogPosts");
+    }
+  }, [data, queryClient]);
+
+  const contextValue = useMemo(
+    () => ({ blogPosts, setBlogPosts }),
+    [blogPosts]
   );
 
   return (
-    <GetBlogContext.Provider value={{ blogPosts, setBlogPosts }}>
-      {children}
+    <GetBlogContext.Provider value={contextValue}>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : isError ? (
+        <p>Error fetching blog posts</p>
+      ) : (
+        children
+      )}
     </GetBlogContext.Provider>
   );
 };

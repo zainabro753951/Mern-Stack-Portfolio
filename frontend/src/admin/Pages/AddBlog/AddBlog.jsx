@@ -9,8 +9,10 @@ import { IoWarning } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 import { useMutation } from "react-query";
 import { toast, ToastContainer } from "react-toastify";
+import { useBlogPosts } from "../../../Context/GetBlogs";
 
 const AddBlog = () => {
+  const { blogPosts, setBlogPosts } = useBlogPosts();
   const [blogTitle, setBlogTitle] = useState("");
   const [blogContent, setBlogContent] = useState("");
   const [author, setAuthor] = useState("");
@@ -130,6 +132,9 @@ const AddBlog = () => {
 
   useEffect(() => {
     if (mutation.isSuccess) {
+      console.log(mutation.data.data);
+
+      setBlogPosts(mutation.data.data);
       setBlogTitle("");
       setBlogContent("");
       setAuthor("");
@@ -250,13 +255,13 @@ const AddBlog = () => {
                   <option value="" disabled>
                     Select any Catagory
                   </option>
-                  <option value="Blogging">Blogging</option>
-                  <option value="Travel">Travel</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="Music">Music</option>
-                  <option value="Sports">Sports</option>
-                  <option value="Alternative topics">Alternative topics</option>
-                  <option value="Business blogs">Business blogs</option>
+                  <option value="Blogging">Web Design</option>
+                  <option value="Travel">UI/UX</option>
+                  <option value="Marketing">WordPress</option>
+                  <option value="Music">Branding Design</option>
+                  <option value="Sports">Responsive Design</option>
+                  <option value="Alternative topics">Mobile Interface</option>
+                  <option value="Business blogs">Web Development</option>
                   <option value="Exercise">Exercise</option>
                   <option value="Lifestyle">Lifestyle</option>
                   <option value="Movie blogger">Movie blogger</option>

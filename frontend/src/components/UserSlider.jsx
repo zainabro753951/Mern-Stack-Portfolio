@@ -36,9 +36,9 @@ const UserSlider = () => {
         loop={true} // Make the slider loop indefinitely
         className="mySwiper w-full h-full"
       >
-        {sliderImgs.map((img) => {
+        {sliderImgs.map((img, idx) => {
           return (
-            <SwiperSlide className="w-full h-full">
+            <SwiperSlide key={idx} className="w-full h-full">
               <img className="w-full h-full object-cover" src={img} alt="" />
             </SwiperSlide>
           );

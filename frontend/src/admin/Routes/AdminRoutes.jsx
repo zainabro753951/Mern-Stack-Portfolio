@@ -13,6 +13,9 @@ import ViewProject from "../Pages/ViewProject/ViewProject";
 import EditEducation from "../Pages/editEducation/EditEducation";
 import EditBlogs from "../Pages/EditBlogs/EditBlogs";
 import EditBlogForm from "../Pages/EditBlogFrom/EditBlogForm";
+import EditTestimonial from "../Pages/editTestimonial/EditTestimonial";
+import EditProject from "../Pages/EditProject/EditProject";
+import EditProjectFrom from "../Pages/EditProject/EditProjectFrom";
 
 export const adminRoutes = [
   {
@@ -65,11 +68,23 @@ export const adminRoutes = [
     element: <ViewProject />,
   },
   {
+    path: "/view-project/:projectSlug/:id",
+    element: <EditProject />,
+  },
+  {
+    path: "/edit-project/:id",
+    element: <EditProjectFrom />,
+  },
+  {
     path: "/edit-blogs/:slug/:id",
     element: <EditBlogs />,
   },
   {
     path: "/edit-blogs/blog",
     element: <EditBlogForm />,
+  },
+  {
+    path: "/edit-testimonial/:id",
+    element: <EditTestimonial />,
   },
 ];

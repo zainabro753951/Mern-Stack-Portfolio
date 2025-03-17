@@ -52,7 +52,7 @@ const Header = () => {
         <div>
           <img
             className="lg:w-[6vw] md:w-[7vw] xs:w-[8vw]"
-            src="imgs/logo.png"
+            src="/imgs/logo.png"
             alt="Logo"
           />
         </div>

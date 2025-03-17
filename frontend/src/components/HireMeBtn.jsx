@@ -46,7 +46,11 @@ const HireMeBtn = ({ text, isLoading }) => {
           <span>{text}</span>
         </div>
       )}
-      <div className="xl:hidden font-bold md:text-[1.5vw] sm:text-[2.3vw] xs:text-[3.3vw] text-white">
+      <div
+        className={`${
+          isLoading ? "hidden" : "xl:hidden"
+        } font-bold md:text-[1.5vw] sm:text-[2.3vw] xs:text-[3.3vw] text-white`}
+      >
         {text}
       </div>
     </button>

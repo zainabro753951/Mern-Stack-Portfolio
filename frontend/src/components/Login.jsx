@@ -2,10 +2,63 @@ import React, { useState } from "react";
 import UserSlider from "./UserSlider";
 import { FaFacebookF } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
+import { useForm } from "react-hook-form";
 import { BiHide, BiShow } from "react-icons/bi";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
+import axios from "axios";
+import { IoIosWarning } from "react-icons/io";
+import { toast, ToastContainer } from "react-toastify";
+import { BeatLoader } from "react-spinners";
+import { useUserAuth } from "../Context/UserAuthProvider";
 const Login = () => {
+  const { setIsUserAuthenticated } = useUserAuth();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
   const [isShow, setIsShow] = useState(false);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Create Mutation fro posting data
+  const mutation = useMutation(
+    (loginData) => {
+      const response = axios.post(
+        "http://localhost:3000/user/login",
+        loginData,
+        {
+          withCredentials: true,
+        }
+      );
+      return response;
+    },
+    {
+      onSuccess: (data) => {
+        setIsUserAuthenticated(true);
+        const redirectPath = location.state?.from?.pathname || "/";
+        navigate(redirectPath, { replace: true });
+        localStorage.setItem("logedInUser", JSON.stringify(data.data.user));
+      },
+      onError: (error) => {
+        console.log(error.response.data.message);
+        toast.error(error.response.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          theme: "dark",
+          style: { width: "130%" },
+        });
+      },
+    }
+  );
+
+  const onSubmit = (data) => {
+    mutation.mutate(data);
+  };
+
   return (
     <div className="w-full h-screen lg:grid grid-cols-2">
       <UserSlider />
@@ -14,6 +67,7 @@ const Login = () => {
           className="lg:w-[30vw] md:w-[50vw] xs:w-[70vw] h-fit relative overflow-hidden  md:p-[1.5vw] pointer-events-auto xs:p-[2.8vw] lg:rounded-[1.2vw] md:rounded-[1.5vw] xs:rounded-[2vw] bg-white"
           style={{ boxShadow: "0 0 10px #FEEBEA" }}
         >
+          <ToastContainer />
           <div className="absolute lg:w-[20vw] lg:h-[20vw] md:w-[30vw] md:h-[30vw] xs:w-[40vw] xs:h-[40vw] flex items-center justify-center left-1/2 overflow-hidden -translate-x-1/2 rounded-full top-0 -translate-y-[40%] ">
             <div
               className="w-[50%] h-[50%] opacity- bg-blue-600/60 rounded-full blur-xl"
@@ -187,54 +241,69 @@ const Login = () => {
               <div className="w-full h-0.5 bg-gray-300 rounded-full"></div>
             </div>
             <form
-              action=""
+              onSubmit={handleSubmit(onSubmit)}
               method="post"
               className="flex flex-col md:gap-[1.2vw] xs:gap-[4vw] w-full py-3"
             >
-              <input
-                type="email"
-                placeholder="Enter your email..."
-                className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full rounded-lg lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw]  font-jost placeholder:text-gray-500 border-gray-200 border px-5 outline-none focus:border-themeBlue"
-              />
-              <div className="flex items-center rounded-lg border-gray-200 border w-full">
+              <div>
                 <input
-                  type={isShow ? "text" : "password"}
+                  type="email"
                   placeholder="Enter your email..."
-                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] border-none rounded-l-lg w-full lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw]  font-jost placeholder:text-gray-500 outline-none focus:border-themeBlue"
+                  {...register("email", { required: true })}
+                  className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full rounded-lg lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw]  font-jost placeholder:text-gray-500 border-gray-200 border px-5 outline-none focus:border-themeBlue"
                 />
-                <span
-                  onClick={() => setIsShow(!isShow)}
-                  className="px-3 cursor-pointer select-none"
-                >
-                  {isShow ? <BiShow /> : <BiHide />}
-                </span>
+                {errors.email && (
+                  <span className="lg:text-[1vw] md:text-[2vw] xs:text-[2.5vw] flex items-center gap-2 text-red-600">
+                    <IoIosWarning className="text-[1.3vw] text-[#f7c600]" />{" "}
+                    This field is required
+                  </span>
+                )}
               </div>
-              <div className="w-full flex justify-between items-center">
-                <div className="flex items-center gap-1">
+              <div>
+                <div className="flex items-center rounded-lg border-gray-200 border w-full">
                   <input
-                    className="rounded-full lg:text-[1.1vw]  md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw]"
-                    type="checkbox"
+                    type={isShow ? "text" : "password"}
+                    placeholder="Enter your password "
+                    {...register("password", { required: true })}
+                    className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] border-none rounded-l-lg w-full lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw]  font-jost placeholder:text-gray-500 outline-none focus:border-themeBlue"
                   />
-                  <label
-                    className="font-jost lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] "
-                    htmlFor=""
+                  <span
+                    onClick={() => setIsShow(!isShow)}
+                    className="px-3 cursor-pointer select-none"
                   >
-                    Remember me
-                  </label>
+                    {isShow ? <BiShow /> : <BiHide />}
+                  </span>
                 </div>
+                {errors.password && (
+                  <span className="lg:text-[1vw] md:text-[2vw] xs:text-[2.5vw] flex items-center gap-2 text-red-600">
+                    <IoIosWarning className="text-[1.3vw] text-[#f7c600]" />{" "}
+                    This field is required
+                  </span>
+                )}
+              </div>
+              <div className="w-full flex justify-end items-center">
                 <h3 className="lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw]  font-jost underline">
                   Forget Password?
                 </h3>
               </div>
-              <input
-                type="button"
-                className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full rounded-[0.7vw] lg:text-[1.2vw] md:text-[2.2vw] sm:text-[2.8vw] xs:text-[3.4vw] bg-black text-white"
-                value="Login"
-              />
+              <label
+                htmlFor="submit"
+                className="lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] w-full rounded-[0.7vw] lg:text-[1.2vw] md:text-[2.2vw] sm:text-[2.8vw] xs:text-[3.4vw] bg-black text-white flex items-center justify-center"
+              >
+                {mutation.isLoading ? (
+                  <BeatLoader
+                    color="#F4C430"
+                    size={10}
+                    className="lg:py-[0.5vw] md:py-[1.3vw] xs:py-[2vw]"
+                  />
+                ) : (
+                  <input type="submit" id="submit" value="Login" />
+                )}
+              </label>
             </form>
             <p className="font-jost lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] ">
               Don't have an account?{" "}
-              <Link className="text-blue-500" to={"/signup"}>
+              <Link className="text-blue-500" to={"/register"}>
                 Sign up
               </Link>
             </p>

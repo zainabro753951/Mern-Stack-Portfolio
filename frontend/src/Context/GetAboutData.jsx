@@ -2,12 +2,14 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useAdminAuth } from "./AdminAuthProvider";
 import { useQuery, useQueryClient } from "react-query";
+import { useUserAuth } from "./UserAuthProvider";
 
 export const AboutDataContext = createContext();
 
 export const GetAboutData = () => useContext(AboutDataContext);
 
 export const GetAboutProvider = ({ children }) => {
+  const { isUserAuthenticated } = useUserAuth();
   const { isAdminAuthenticated } = useAdminAuth();
   const [aboutData, setAboutData] = useState("");
   const queryClient = useQueryClient();
@@ -29,13 +31,13 @@ export const GetAboutProvider = ({ children }) => {
       }
     },
     {
-      enabled: isAdminAuthenticated,
+      enabled: isAdminAuthenticated || isUserAuthenticated,
       retry: 3,
       staleTime: 10000,
       onSuccess: (fetchedData) => {
-        setAboutData(fetchedData || {}); // Ensure default value
+        setAboutData(fetchedData ?? {});
       },
-      onError: (error) => console.log(error),
+      onError: (error) => console.error("Error fetching about data:", error),
     }
   );
 
@@ -44,6 +46,8 @@ export const GetAboutProvider = ({ children }) => {
       queryClient.invalidateQueries("aboutData");
     }
   }, [isAdminAuthenticated, queryClient]);
+
+  console.log(aboutData);
 
   return (
     <AboutDataContext.Provider value={{ aboutData, setAboutData }}>

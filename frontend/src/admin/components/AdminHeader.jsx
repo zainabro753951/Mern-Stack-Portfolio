@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { data, Link, Navigate } from "react-router-dom";
 import HireMeBtn from "../../components/HireMeBtn";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import ProfilePopup from "./ProfilePopup";
@@ -8,28 +8,77 @@ import axios from "axios";
 import { MdOutlineArrowDropUp } from "react-icons/md";
 import { IoMenuSharp } from "react-icons/io5";
 import { SidebarToggleContext } from "../../Context/SideBarToggle.jsx";
+import { useSocketContext } from "../../Context/SocketIO.jsx";
+import { useMutation } from "react-query";
+import { useAdminAuth } from "../../Context/AdminAuthProvider.jsx";
+import { useGetNotification } from "./AdminNotification";
+import { toast, ToastContainer, Bounce } from "react-toastify";
+import { useBlogCommentNotification } from "../../Context/GetAllBlogCommentNoti.jsx";
+
 const AdminHeader = () => {
+  const { setIsAdminAuthenticated } = useAdminAuth();
+  const { socket } = useSocketContext();
   const { adminData, setAdminData } = GetAdminData();
   const { setIsSideBarOpen } = useContext(SidebarToggleContext);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [notification, setNotification] = useState("");
+  const { newNotification, enableAudio } = useBlogCommentNotification();
   let handleOpen = () => {
     setIsOpen(true);
   };
   let handleClose = () => {
     setIsOpen(false);
   };
-  let handleLogout = async () => {
-    let response = await axios.post("http://localhost:3000/admin/logout", {
-      withCredentials: true,
-    });
+  const mutation = useMutation(
+    async () => {
+      const response = await axios.post(
+        "http://localhost:3000/admin/logout",
+        null,
+        {
+          withCredentials: true,
+        }
+      );
+      return response;
+    },
+    {
+      onSuccess: (data) => {
+        setIsAdminAuthenticated(false);
+        // Handle success response
+      },
+      onError: (error) => {
+        console.log(error);
+
+        // Handle error response
+      },
+    }
+  );
+
+  let handleLogout = () => {
+    mutation.mutate();
   };
 
   const toggleNotification = () => {
     setIsNotificationOpen(!isNotificationOpen);
   };
+
+  // Prevew All Notifciations
+  useEffect(() => {
+    if (newNotification) {
+      toast.info(newNotification.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        theme: "dark",
+      });
+    }
+  }, [newNotification]);
+
   return (
     <>
+      <ToastContainer />
       <div className="w-full flex py-7 px-8 justify-between">
         <div className="lg:text-[1.3vw] md:text-[2.3vw] text-center flex items-center gap-2 font-semibold font-lexend_deca text-black">
           <span
@@ -44,12 +93,12 @@ const AdminHeader = () => {
         </div>
         <div className="flex items-center relative gap-4">
           <div
-            onClick={toggleNotification}
+            onClick={enableAudio}
             className="lg:text-[1.8vw] md:text-[2.8vw] cursor-pointer xs:text-[3.5vw]"
           >
             <IoMdNotificationsOutline />
           </div>
-          <div
+          {/* <div
             className={`absolute flex flex-col z-40 ${
               isNotificationOpen
                 ? "opacity-100 translate-y-0"
@@ -61,8 +110,10 @@ const AdminHeader = () => {
               src="/imgs/notification.png"
               alt=""
             />
-            <div className="bg-gray-200 w-[25vw] rounded-md relative z-40 py-10"></div>
-          </div>
+            <div className="bg-gray-200 w-[25vw] rounded-md relative z-40 py-10">
+              <p>{notification}</p>
+            </div>
+          </div> */}
           <div className="relative">
             <div
               onClick={handleOpen}

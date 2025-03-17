@@ -15,7 +15,7 @@ const testimonialSchema = new mongoose.Schema(
       required: true,
     },
     rating: {
-      type: String,
+      type: Number,
       required: false,
     },
     message: {
@@ -25,6 +25,10 @@ const testimonialSchema = new mongoose.Schema(
     profileImg: {
       type: String,
       required: true,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
     date: {
       type: Date,

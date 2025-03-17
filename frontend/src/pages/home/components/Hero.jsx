@@ -178,16 +178,20 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollToPlugin);
-const Hero = () => {
+const Hero = ({ content }) => {
   const textRef = useRef(null);
   const myName = useRef(null);
   const webDev = useRef(null);
   const backBanner = useRef(null);
   const iconsRef = useRef([]);
 
-  const [About, setAbout] = useState(
-    "I build all kinds of websites including WordPress themes and plugins that scale up company businesses and meet their needs. Currently, I'm living in Tando Muhammad Khan"
-  );
+  const [About, setAbout] = useState(content ? content.about : "");
+
+  useEffect(() => {
+    if (content) {
+      setAbout(content.about);
+    }
+  }, [content]);
 
   gsap.config({ nullTargetWarn: false, force3D: true });
   useEffect(() => {
@@ -322,7 +326,9 @@ const Hero = () => {
               style={{ willChange: "transform, opacity" }}
               className="lg:text-[5.5vw] md:text-[6.5vw] xs:text-[8vw] lg:leading-[6vw] md:leading-[7vw] xs:leading-[8.5vw] md:py-0 xs:py-[3vw] font-lexend_deca font-bold"
             >
-              <span className="gardient-text">Zain</span>
+              <span className="gardient-text">
+                {content ? content.firstName : ""}
+              </span>
               &nbsp;
               <span
                 className="gradient-stroke-text px-2"

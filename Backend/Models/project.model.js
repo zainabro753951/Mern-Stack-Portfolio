@@ -26,11 +26,11 @@ const projectSchema = new mongoose.Schema(
     },
     projectUrl: {
       type: String,
-      required: true,
+      required: false,
     },
     githubUrl: {
       type: String,
-      required: true,
+      required: false,
     },
     poster: {
       type: String,
@@ -38,12 +38,12 @@ const projectSchema = new mongoose.Schema(
     },
     video: {
       type: String,
-      required: true,
+      required: false,
     },
     screenshots: [
       {
         type: String,
-        required: true,
+        required: false,
       },
     ],
     tags: [
@@ -59,6 +59,14 @@ const projectSchema = new mongoose.Schema(
     seoTitle: {
       type: String,
       required: true,
+    },
+    metaDescription: {
+      type: String,
+      required: false,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
     seoKeywords: [
       {

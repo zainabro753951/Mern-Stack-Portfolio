@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import CheckAdminAuth from "../Secure/CheckAdminAuth.js";
-
 export const AdminAuthContext = createContext();
 
 export const AdminAuthProvider = ({ children }) => {

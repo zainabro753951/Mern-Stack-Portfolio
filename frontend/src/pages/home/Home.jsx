@@ -10,17 +10,22 @@ import Header from "../../components/Header";
 import MobileHeader from "../../components/MobileHeader";
 import CustomeCursor from "../../components/CustomeCursor";
 import { useAdminAuth } from "../../Context/AdminAuthProvider";
+import ChatbotButton from "../../components/ChatbotButton";
+import { GetAboutData } from "../../Context/GetAboutData";
 
 const Home = () => {
   const { isAdminAuthenticated } = useAdminAuth();
   console.log(isAdminAuthenticated);
+
+  const { aboutData } = GetAboutData();
 
   return (
     <>
       <Header />
       <MobileHeader />
       <CustomeCursor />
-      <Hero />
+      <ChatbotButton />
+      <Hero content={aboutData} />
       <About />
       <Portfolio />
       <Projects />

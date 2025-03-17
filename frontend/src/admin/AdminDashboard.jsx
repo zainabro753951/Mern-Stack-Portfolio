@@ -16,9 +16,11 @@ import ViewTestmonial from "./Pages/ViewTestmonial/ViewTestmonial";
 import AddProject from "./Pages/AddProject/AddProject";
 import { adminRoutes } from "./Routes/AdminRoutes.jsx";
 import { useAdminAuth } from "../Context/AdminAuthProvider.jsx";
+import { useBlogCommentNotification } from "../Context/GetAllBlogCommentNoti.jsx";
 
 const AdminDashboard = () => {
   const { isAdminAuthenticated, isAuthChecked } = useAdminAuth();
+  const { blogCommentNotfi } = useBlogCommentNotification();
 
   return (
     <>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import DashboardLeft from "../../components/DashboardLeft";
+import DashboardLeft from "../../components/DashboardLeft.jsx";
 import { toast, ToastContainer } from "react-toastify";
-import AdminHeader from "../../components/AdminHeader";
+import AdminHeader from "../../components/AdminHeader.jsx";
 import { useMutation } from "react-query";
-import RichTextEditor from "../../components/RichText";
-import HireMeBtn from "../../../components/HireMeBtn";
+import RichTextEditor from "../../components/RichText.jsx";
+import HireMeBtn from "../../../components/HireMeBtn.jsx";
 import { useLocation } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
@@ -129,7 +129,7 @@ const EditBlogForm = () => {
   };
 
   const mutation = useMutation((formData) => {
-    const response = axios.post(
+    const response = axios.put(
       "http://localhost:3000/admin/update_blog",
       formData,
       {

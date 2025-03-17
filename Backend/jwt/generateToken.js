@@ -7,10 +7,10 @@ export const createTokenAndSaveCookie = (data, key, res) => {
     });
     res.cookie(key, token, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "Strict",
+      path: "/", // Same path for both cookies
     });
-    console.log("cookie set successfully");
     return token;
   } catch (err) {
     console.error(err);

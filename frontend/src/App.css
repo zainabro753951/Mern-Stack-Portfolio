@@ -1,3 +1,4 @@
+
 button {
   overflow: hidden;
 }
@@ -10,6 +11,9 @@ button {
 }
 .new-text {
   transform: translateY(100%);
+}
+#chatScrollBar::-webkit-scrollbar{
+  display: none;
 }
 
 .gardient-text {
@@ -270,10 +274,10 @@ button {
   }
 
   .ql-size-large {
-    font-size: 5.5vw;
+    font-size: 4.5vw;
   }
   .ql-size-huge {
-    font-size: 6vw;
+    font-size: 5.7vw;
   }
 }
 @media screen and (min-width: 765px) {
@@ -282,10 +286,10 @@ button {
   }
 
   .ql-size-large {
-    font-size: 4.5vw;
+    font-size: 3vw;
   }
   .ql-size-huge {
-    font-size: 5vw;
+    font-size: 3.7vw;
   }
 }
 
@@ -295,10 +299,10 @@ button {
   }
 
   .ql-size-large {
-    font-size: 3vw !important;
+    font-size: 2vw !important;
   }
   .ql-size-huge {
-    font-size: 5vw !important;
+    font-size: 2.7vw !important;
   }
 }
 
@@ -309,4 +313,78 @@ button {
 
 #blogImg:hover ~ #blogLink {
   text-decoration: underline;
+}
+
+.blogpopImgHover:hover img{
+  scale: 1.2;
+}
+
+/* Custom CSS for boxes */
+.text-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+.chatTrasnEffect{
+  background: linear-gradient(to right, #ff6d5a9d, #ff6d5a69, #ff6d5a00) !important;
+}
+
+
+/* Blinking cursor effect */
+.blinking-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: currentColor;
+  margin-left: 2px;
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Custom styling for markdown tables */
+.markdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+}
+
+.markdown-table th,
+.markdown-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.markdown-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+/* Custom styling for markdown blockquotes */
+.markdown-blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 1em;
+  margin: 1em 0;
+  color: #666;
+  font-style: italic;
+}
+
+#chatHoverAble:hover #chatHover{
+  max-width: 500px;
+  border: 1px solid #d3d3d3;
 }

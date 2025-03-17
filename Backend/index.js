@@ -1,22 +1,25 @@
 import express from "express";
-const app = express();
 import cors from "cors";
+import { app, server } from "./Socket/server.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-import admin from "./Routes/admin.route.js";
-import Insert from "./Routes/Insert.route.js";
-import getData from "./Routes/getData.route.js";
-import deleteData from "./Routes/delete.route.js";
+import admin from "./Routes/AdminRoutes/admin.route.js";
+import Insert from "./Routes/AdminRoutes/Insert.route.js";
+import getData from "./Routes/AdminRoutes/getData.route.js";
+import deleteData from "./Routes/AdminRoutes/delete.route.js";
+import user from "./Routes/UserRoutes/user.route.js";
+import likes from "./Routes/UserRoutes/likes.router.js";
+import DeepSeek from "./Routes/UserRoutes/DeepSeek.route.js";
+import commentsRoute from "./Routes/UserRoutes/comments.route.js";
 import cookieParser from "cookie-parser";
+
 // Dotenv Config
-dotenv.config();
-const port = process.env.PORT || 4500;
+
 // Cors configuration
 app.use(
   cors({
-    origin: `http://localhost:5173`,
+    origin: process.env.FRONTEND_PORT,
     credentials: true,
   })
 );
@@ -24,26 +27,34 @@ app.use(
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Monogdb Connection String
-let mongooseUrl = process.env.MONGODBURL;
+// MongoDB Connection String
+const mongooseUrl = process.env.MONGODBURL;
 try {
   mongoose.connect(mongooseUrl);
-  console.log("connected");
+  console.log("Connected to MongoDB");
 } catch (e) {
-  console.log("error connecting to mongodb", e);
+  console.log("Error connecting to MongoDB", e);
 }
 
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "upload/")));
 
-// Routes here
+// Admin Routes
 app.use(admin);
 app.use(Insert);
 app.use(getData);
 app.use(deleteData);
 
-app.listen(port, () =>
-  console.log(`Server listening on http://localhost:${port}`)
-);
+// User Routes
+app.use(user);
+
+// Comments Route
+app.use(commentsRoute);
+
+// DeepSeek Model Integrating
+app.use(DeepSeek);
+
+app.use(likes);
