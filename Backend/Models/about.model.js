@@ -2,6 +2,14 @@ import mongoose from "mongoose";
 
 let aboutSchema = new mongoose.Schema(
   {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
+    },
     aboutHeadline: {
       type: String,
       required: true,

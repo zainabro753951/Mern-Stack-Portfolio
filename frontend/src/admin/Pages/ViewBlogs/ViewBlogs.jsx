@@ -90,77 +90,85 @@ const ViewBlogs = () => {
           <h2 className="text-2xl font-semibold font-lexend_deca">Blogs</h2>
           <div className="max-w-[100%]">
             <div class="relative py-[2vw] flex flex-col gap-3">
-              {blogPosts.map((post, idx) => {
-                const createdAt = new Date(post.createdAt).toLocaleDateString();
-                const updatedAt = new Date(post.updatedAt).toLocaleDateString();
-                if (!post.isDeleted) {
-                  return (
-                    <div className="w-full py-[3vw] bg-themeGolden/30 transition-all duration-300 hover:border-themeBlue md:border-2 xs:border border-themeGolden hover:bg-themeGolden/50   px-5 rounded-lg ">
-                      <div className="w-full grid lg:grid-cols-2 lg:gap-[1.4vw] md:gap-[2.4vw] xs:gap-[3.8vw] place-items-center">
-                        <Link
-                          to={`/admin/edit-blogs/${post.slug}/${post._id}`}
-                          className="w-full lg:h-[25vw] md:h-[50vw]"
-                        >
-                          <img
-                            id="blogImg"
-                            onMouseEnter={() =>
-                              (document.getElementById(
-                                "blogLink"
-                              ).style.textDecoration = "underline")
-                            }
-                            onMouseLeave={() =>
-                              (document.getElementById(
-                                "blogLink"
-                              ).style.textDecoration = "none")
-                            }
-                            className="w-full h-full object-cover rounded-md"
-                            src={`http://localhost:3000/${post.featuredImage}`}
-                            alt=""
-                          />
-                        </Link>
-                        <div>
-                          <Link
-                            id="blogLink"
-                            to={`/admin/edit-blogs/${post.slug}/${post._id}`}
-                            className="lg:text-[1.8vw] transition-all duration-300 md:text-[2.8vw] xs:text-[3.5vw] cursor-pointer hover:underline lg:leading-[2.4vw] md:leading-[3.4vw] xs:leading-[3.8vw] font-semibold font-lexend_deca pb-3"
-                          >
-                            {post.title}
-                          </Link>
-                          <p className="lg:text-[1.2vw] py-[1.5vw] md:text-[2.2vw] xs:text-[3.4vw] font-jost text-gray-500">
-                            {post.description}
-                          </p>
-                          <div className="flex items-center justify-around text-center w-full ">
-                            <div className="flex flex-col">
-                              <h3 className="lg:text-[1.3vw] md:text-[2.3vw] font-semibold xs:text-[3.3vw]">
-                                Created At
-                              </h3>
-                              <p className="lg:text-[1.2vw]  md:text-[2.2vw] xs:text-[3.4vw] font-jost text-gray-500">
-                                {createdAt}
+              {blogPosts
+                ? blogPosts.map((post, idx) => {
+                    const createdAt = new Date(
+                      post.createdAt
+                    ).toLocaleDateString();
+                    const updatedAt = new Date(
+                      post.updatedAt
+                    ).toLocaleDateString();
+                    if (!post.isDeleted) {
+                      return (
+                        <div className="w-full py-[3vw] bg-themeGolden/30 transition-all duration-300 hover:border-themeBlue md:border-2 xs:border border-themeGolden hover:bg-themeGolden/50   px-5 rounded-lg ">
+                          <div className="w-full grid lg:grid-cols-2 lg:gap-[1.4vw] md:gap-[2.4vw] xs:gap-[3.8vw] place-items-center">
+                            <Link
+                              to={`/admin/edit-blogs/${post.slug}/${post._id}`}
+                              className="w-full lg:h-[25vw] md:h-[50vw]"
+                            >
+                              <img
+                                id="blogImg"
+                                onMouseEnter={() =>
+                                  (document.getElementById(
+                                    "blogLink"
+                                  ).style.textDecoration = "underline")
+                                }
+                                onMouseLeave={() =>
+                                  (document.getElementById(
+                                    "blogLink"
+                                  ).style.textDecoration = "none")
+                                }
+                                className="w-full h-full object-cover rounded-md"
+                                src={`http://localhost:3000/${post.featuredImage}`}
+                                alt=""
+                              />
+                            </Link>
+                            <div>
+                              <Link
+                                id="blogLink"
+                                to={`/admin/edit-blogs/${post.slug}/${post._id}`}
+                                className="lg:text-[1.8vw] transition-all duration-300 md:text-[2.8vw] xs:text-[3.5vw] cursor-pointer hover:underline lg:leading-[2.4vw] md:leading-[3.4vw] xs:leading-[3.8vw] font-semibold font-lexend_deca pb-3"
+                              >
+                                {post.title}
+                              </Link>
+                              <p className="lg:text-[1.2vw] py-[1.5vw] md:text-[2.2vw] xs:text-[3.4vw] font-jost text-gray-500">
+                                {post.description}
                               </p>
-                            </div>
-                            <div className="flex flex-col">
-                              <h3 className="lg:text-[1.3vw] md:text-[2.3vw] font-semibold xs:text-[3.3vw]">
-                                Updated At
-                              </h3>
-                              <p className="lg:text-[1.2vw]  md:text-[2.2vw] xs:text-[3.4vw] font-jost text-gray-500">
-                                {updatedAt}
-                              </p>
+                              <div className="flex items-center justify-around text-center w-full ">
+                                <div className="flex flex-col">
+                                  <h3 className="lg:text-[1.3vw] md:text-[2.3vw] font-semibold xs:text-[3.3vw]">
+                                    Created At
+                                  </h3>
+                                  <p className="lg:text-[1.2vw]  md:text-[2.2vw] xs:text-[3.4vw] font-jost text-gray-500">
+                                    {createdAt}
+                                  </p>
+                                </div>
+                                <div className="flex flex-col">
+                                  <h3 className="lg:text-[1.3vw] md:text-[2.3vw] font-semibold xs:text-[3.3vw]">
+                                    Updated At
+                                  </h3>
+                                  <p className="lg:text-[1.2vw]  md:text-[2.2vw] xs:text-[3.4vw] font-jost text-gray-500">
+                                    {updatedAt}
+                                  </p>
+                                </div>
+                              </div>
                             </div>
                           </div>
+                          <div className="flex items-center gap-3 py-[2vw]">
+                            <button
+                              onClick={() =>
+                                handleDeleteEducationData(post._id)
+                              }
+                              class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-[0.4vw] lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] lg:px-[1.5vw] md:px-[2.5vw] xs:px-[3.9vw] py-[0.5vw] me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                            >
+                              Delete
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-3 py-[2vw]">
-                        <button
-                          onClick={() => handleDeleteEducationData(post._id)}
-                          class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-[0.4vw] lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] lg:px-[1.5vw] md:px-[2.5vw] xs:px-[3.9vw] py-[0.5vw] me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
-                  );
-                }
-              })}
+                      );
+                    }
+                  })
+                : ""}
             </div>
           </div>
         </div>

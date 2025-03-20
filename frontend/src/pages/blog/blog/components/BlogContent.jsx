@@ -20,6 +20,8 @@ const BlogContent = ({ content }) => {
   const blogId = content._id;
   const [totalCommentsOfThisPost, setTotalCommentsOfThisPost] = useState(0);
   const { socket } = useSocketContext();
+  const [selectedCommentId, setSelectedCommentId] = useState("");
+
   const { likes, setLikes } = useContext(LikesContext);
 
   useEffect(() => {
@@ -99,6 +101,32 @@ const BlogContent = ({ content }) => {
     addLike();
   };
 
+  useEffect(() => {
+    // URL se comment ID extract karen
+    const queryParams = new URLSearchParams(location.search);
+    const commentId = queryParams.get("commentId");
+    console.log(commentId);
+
+    if (commentId) {
+      setSelectedCommentId(commentId);
+    }
+  }, [location]);
+
+  useEffect(() => {
+    if (selectedCommentId) {
+
+      const response = axios.put("")
+
+      const commentElement = document.getElementById(
+        `comment-${selectedCommentId}`
+      );
+      setIsCommentOpen(true);
+      if (commentElement) {
+        commentElement.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [selectedCommentId]);
+
   return (
     <>
       <div className="bg-[#f9fbff]">
@@ -133,6 +161,7 @@ const BlogContent = ({ content }) => {
       <LeaveCommentPop
         blogId={content ? content._id : null}
         isCommentOpen={isCommentOpen}
+        selectedCommentId={selectedCommentId}
         setIsCommentOpen={setIsCommentOpen}
       />
     </>

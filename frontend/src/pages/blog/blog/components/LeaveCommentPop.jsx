@@ -4,7 +4,12 @@ import AllComentsPop from "./AllComentsPop";
 import { RxCross2 } from "react-icons/rx";
 import { useComments } from "../../../../Context/GetAllBlogComments";
 
-const LeaveCommentPop = ({ setIsCommentOpen, isCommentOpen, blogId }) => {
+const LeaveCommentPop = ({
+  setIsCommentOpen,
+  isCommentOpen,
+  blogId,
+  selectedCommentId,
+}) => {
   const { allBlogComments, setAllBlogComments } = useComments();
   const [logedInUser, setlogedInUser] = useState({});
   useEffect(() => {
@@ -33,6 +38,7 @@ const LeaveCommentPop = ({ setIsCommentOpen, isCommentOpen, blogId }) => {
           <RxCross2 />
         </div>
         <AllComentsPop
+          selectedCommentId={selectedCommentId}
           logedInUser={logedInUser}
           isCommentOpen={isCommentOpen}
           allBlogComments={allBlogComments}

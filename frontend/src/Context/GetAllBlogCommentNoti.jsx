@@ -60,10 +60,6 @@ export const GetAllBlogCommentNoti = ({ children }) => {
 
   useEffect(() => {
     if (socket && notificationSound) {
-      const handleAllNotifications = (pendingNotifications) => {
-        setNewNotification(pendingNotifications);
-      };
-
       const handleNewCommentNotification = (notification) => {
         setBlogCommentNotfi((prev) => [...prev, notification]);
         setNewNotification(notification);
@@ -86,7 +82,11 @@ export const GetAllBlogCommentNoti = ({ children }) => {
     };
   }, [notificationSound]);
 
-  console.log(blogCommentNotfi);
+  useEffect(() => {
+    if (blogCommentNotfi) {
+      setAudioEnabled(true);
+    }
+  }, [blogCommentNotfi]);
 
   return (
     <BlogCommentNotificationContext.Provider

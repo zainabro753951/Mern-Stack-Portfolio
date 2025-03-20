@@ -16,6 +16,10 @@ import { useMutation } from "react-query";
 // Main component
 const ViewAbout = () => {
   const { aboutData, setAboutData } = GetAboutData();
+  const [firstName, setFirstName] = useState(
+    aboutData ? aboutData.firstName : ""
+  );
+  const [lastName, setLastName] = useState(aboutData ? aboutData.lastName : "");
   const [aboutHeadline, setAboutHeadline] = useState(
     aboutData ? aboutData.aboutHeadline : ""
   );
@@ -66,6 +70,8 @@ const ViewAbout = () => {
 
   useEffect(() => {
     if (aboutData) {
+      setFirstName(aboutData.firstName);
+      setLastName(aboutData.lastName);
       setLocation(aboutData.location);
       setEducation(aboutData.education);
       setPhoneNumber(aboutData.phoneNumber);
@@ -206,6 +212,32 @@ const ViewAbout = () => {
                 About Me
               </h2>
               <div className="grid md:grid-cols-2 gap-5 w-full">
+                <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
+                  <div className="flex w-full flex-col font-jost">
+                    <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                      First Name
+                    </h4>
+                    <input
+                      type="text"
+                      className="w-full bg-transparent lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border-none"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
+                  <div className="flex w-full flex-col font-jost">
+                    <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">
+                      Last Name
+                    </h4>
+                    <input
+                      type="text"
+                      className="w-full bg-transparent lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] border-none"
+                      value={lastName}
+                      onChange={(e) => setLastName(e.target.value)}
+                    />
+                  </div>
+                </div>
                 <div className="flex items-center gap-4 border-y border-gray-200 rounded-2xl p-2 w-full">
                   <div className="flex w-full flex-col font-jost">
                     <h4 className="font-semibold lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]">

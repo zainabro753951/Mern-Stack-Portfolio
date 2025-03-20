@@ -3,6 +3,7 @@ import BlogHero from "./components/BlogHero";
 import Header from "../../components/Header";
 import MobileHeader from "../../components/MobileHeader";
 import CustomeCursor from "../../components/CustomeCursor";
+import BlogComming from "./components/BlogComming";
 import AllBlogs from "./components/AllBlogs";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
@@ -41,15 +42,15 @@ const BlogPage = () => {
       <Header />
       <MobileHeader />
       <CustomeCursor />
-      {blogPosts ? (
+      {blogPosts.length > 0 ? (
         <>
           <BlogHero content={heroBlog} />
           <AllBlogs blogPosts={mainBlogs} />
+          <Footer footerText={"Have a project"} text={"Lets Talk"} />
         </>
       ) : (
-        ""
+        <BlogComming />
       )}
-      <Footer footerText={"Have a project"} text={"Lets Talk"} />
     </>
   );
 };

@@ -10,8 +10,8 @@ import { toast, ToastContainer } from "react-toastify";
 import { PulseLoader } from "react-spinners";
 
 const ViewEducationPage = () => {
-  const { getEducation, setGetEducation } = GetEducation();
-  console.log(getEducation);
+  const { educationData, setEducationData, isLoading, isError, error } =
+    GetEducation();
 
   // Creating Mutation of Deleting
   const mutation = useMutation((id) => {
@@ -42,7 +42,7 @@ const ViewEducationPage = () => {
 
   useEffect(() => {
     if (mutation.isSuccess) {
-      setGetEducation(mutation.data.data.remainingEducations);
+      setEducationData(mutation.data.data.remainingEducations);
       toast.success("Education Deleted Successfully!", {
         position: "top-right",
         autoClose: 5000,
@@ -83,7 +83,7 @@ const ViewEducationPage = () => {
             <div>
               <div>
                 <div class="relative  overflow-x-auto">
-                  {mutation.isLoading ? (
+                  {isLoading || mutation.isLoading ? (
                     <div className="w-full py-[3vw] flex items-center justify-center">
                       <PulseLoader color="#F4C430" size={16} />
                     </div>
@@ -166,8 +166,8 @@ const ViewEducationPage = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {getEducation
-                          ? getEducation.map((items, idx) => {
+                        {educationData
+                          ? educationData.map((items, idx) => {
                               let startDate = new Date(
                                 items.startDate
                               ).toLocaleDateString();

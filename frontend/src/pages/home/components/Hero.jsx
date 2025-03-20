@@ -329,14 +329,13 @@ const Hero = ({ content }) => {
               <span className="gardient-text">
                 {content ? content.firstName : ""}
               </span>
-              &nbsp;
               <span
                 className="gradient-stroke-text px-2"
-                data-text="Abro"
+                data-text={content ? content.lastName : ""}
               ></span>
             </h1>
             <h3 className="lg:text-[2vw] md:text-[3vw]  xs:text-[4.5vw] font-lexend_deca font-bold tracking-wide leading-[2.5vw]">
-              <span className="text-themeGray ">Full-stack</span>{" "}
+              <span className="text-themeGray ">MERN Stack</span>{" "}
               <span ref={webDev} className="text-themeBlue">
                 Web Developer
               </span>
@@ -376,18 +375,23 @@ const Hero = ({ content }) => {
           </div>
         </div>
         <div>
-          <div className="lg:w-[35vw] md:w-[40vw] xs:w-[80vw] relative">
+          <div className="lg:w-[20vw] md:w-[30vw] xs:w-[50vw] relative">
             <img
               ref={backBanner}
+              className="w-full h-full"
               style={{ willChange: "scale, opacity" }}
-              src="/imgs/myBanner.svg"
+              src="/imgs/myBanner.png"
               alt=""
             />
             <img
               id="meAnimate"
               style={{ willChange: "opacity" }}
-              className="absolute bottom-0 left-0"
-              src="/imgs/me.png"
+              className="absolute top-20 w-full h-full object-cover  left-0"
+              src={
+                content.profileImg
+                  ? `http://localhost:3000/${content.profileImg}`
+                  : "/imgs/me.png"
+              }
               alt=""
             />
           </div>

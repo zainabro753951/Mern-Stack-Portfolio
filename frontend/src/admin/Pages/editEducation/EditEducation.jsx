@@ -10,7 +10,8 @@ import { toast, ToastContainer } from "react-toastify";
 
 const EditEducation = () => {
   let { id } = useParams();
-  const { getEducation, setGetEducation } = GetEducation();
+  const { educationData, setEducationData, isLoading, isError, error } =
+    GetEducation();
   const [degree, setDegree] = useState("");
   const [fieldOfStudy, setFieldOfStudy] = useState("");
   const [instituteName, setInstituteName] = useState("");
@@ -22,8 +23,8 @@ const EditEducation = () => {
   const [certificate, setCertificate] = useState("");
 
   useEffect(() => {
-    if (getEducation) {
-      getEducation.map((edu) => {
+    if (educationData) {
+      educationData.map((edu) => {
         let startDate = new Date(edu.startDate).toISOString().split("T")[0];
         let endDate = new Date(edu.endDate).toISOString().split("T")[0];
         if (edu._id === id) {
@@ -39,7 +40,7 @@ const EditEducation = () => {
         }
       });
     }
-  }, [getEducation]);
+  }, [educationData]);
 
   let handleEudcationStatus = (e) => {
     setEduStatus(e.target.value);
@@ -88,7 +89,7 @@ const EditEducation = () => {
     if (mutation.isSuccess) {
       let newObjectOfEducation = mutation.data.data.result;
 
-      setGetEducation((prevData) =>
+      setEducationData((prevData) =>
         prevData._id === newObjectOfEducation._id ? newObjectOfEducation : ""
       );
       toast.success("About updated successfully!", {
@@ -99,9 +100,6 @@ const EditEducation = () => {
       });
     }
   }, [mutation.isSuccess]);
-
-
-  
 
   return (
     <div className="h-screen w-full overflow-hidden flex p-2 gap-2 bg-gray-200">

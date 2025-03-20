@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { FaUserLock } from "react-icons/fa";
 import HireMeBtn from "../../components/HireMeBtn";
 import { BiHide, BiShow } from "react-icons/bi";
@@ -11,9 +11,9 @@ const AdminSignup = () => {
   useEffect(() => {
     if (key) {
       const myKey = "admin-zain";
-      key !== myKey ? navigate("/admin/login") : "";
+      key !== myKey ? <Navigate to={"admin/login"} /> : "";
     } else {
-      navigate("/admin/login");
+      <Navigate to={"admin/login"} />;
     }
   }, []);
 

@@ -31,7 +31,6 @@ export const GetAboutProvider = ({ children }) => {
       }
     },
     {
-      enabled: isAdminAuthenticated || isUserAuthenticated,
       retry: 3,
       staleTime: 10000,
       onSuccess: (fetchedData) => {

@@ -5,8 +5,10 @@ import HireMeBtn from "../../../components/HireMeBtn";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
+import { useTestimonial } from "../../../Context/GetTestimonial";
 
 const AddTestimonial = () => {
+  const { setTestimonialData } = useTestimonial();
   const [name, setName] = useState("");
   const [designation, setDesignation] = useState("");
   const [company, setCompany] = useState("");
@@ -61,6 +63,8 @@ const AddTestimonial = () => {
       setDesignation();
       setProfileImg("");
       setRating("");
+      console.log(mutation.data.data);
+      setTestimonialData((prev) => [...prev, mutation.data.data]);
       toast.success("Form submitted successfully!", {
         position: "top-right",
         autoClose: 5000,

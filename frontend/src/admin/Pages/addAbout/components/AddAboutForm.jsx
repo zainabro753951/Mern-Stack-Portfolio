@@ -6,6 +6,8 @@ import HireMeBtn from "../../../../components/HireMeBtn";
 import { useMutation } from "react-query";
 import { toast, ToastContainer } from "react-toastify";
 const AddAboutForm = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [aboutHeadline, setAboutHeadline] = useState("");
   const [location, setLocation] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -47,6 +49,8 @@ const AddAboutForm = () => {
   const handleAbout = (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
     formData.append("aboutHeadline", aboutHeadline);
     formData.append("location", location);
     formData.append("phoneNumber", phoneNumber);
@@ -106,6 +110,22 @@ const AddAboutForm = () => {
       <ToastContainer />
       <div className="grid md:grid-cols-2 xs:grid-cols-1 gap-4 w-full h-full">
         <div className="w-full flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor="firstName"
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca"
+            >
+              First Name
+            </label>
+            <input
+              className="py-[0.8vw] xs:px-2 md:px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] md:rounded-[0.8vw] xs:rounded-[1.8vw] border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              type="text"
+              value={firstName}
+              required
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="Enter your about headline"
+            />
+          </div>
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"
@@ -190,6 +210,22 @@ const AddAboutForm = () => {
           </div>
         </div>
         <div className="w-full flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor="lastName"
+              className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca"
+            >
+              Last Name
+            </label>
+            <input
+              className="py-[0.8vw] xs:px-2 md:px-5 lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] md:rounded-[0.8vw] xs:rounded-[1.8vw] border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+              type="text"
+              value={lastName}
+              required
+              onChange={(e) => setLastName(e.target.value)}
+              placeholder="Enter your about headline"
+            />
+          </div>
           <div className="flex flex-col gap-1">
             <label
               htmlFor="about-headline"

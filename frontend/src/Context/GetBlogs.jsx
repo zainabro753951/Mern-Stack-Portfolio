@@ -9,6 +9,7 @@ import React, {
 import { useQuery, useQueryClient } from "react-query";
 import { useAdminAuth } from "./AdminAuthProvider";
 import { useUserAuth } from "./UserAuthProvider";
+import WelcomeLoader from "../components/WelcomeLoader";
 
 export const GetBlogContext = createContext();
 
@@ -61,7 +62,7 @@ export const GetBlogs = ({ children }) => {
   return (
     <GetBlogContext.Provider value={contextValue}>
       {isLoading ? (
-        <p>Loading...</p>
+        <WelcomeLoader />
       ) : isError ? (
         <p>Error fetching blog posts</p>
       ) : (

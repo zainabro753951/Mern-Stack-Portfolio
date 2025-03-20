@@ -80,9 +80,12 @@ const DashboardLeft = () => {
         </span>
       </div>
       <div className="md:py-6">
-        <h1 className="lg:text-[2.4vw] md:text-[3vw] xs:text-[3.8vw] text-center md:py-[0.8vw] font-semibold font-lexend_deca text-white">
+        <Link
+          to={"/admin"}
+          className="lg:text-[2.4vw] block md:text-[3vw] xs:text-[3.8vw] text-center md:py-[0.8vw] font-semibold font-lexend_deca text-white"
+        >
           Admin <span className="text-themePurple">Dashboard</span>
-        </h1>
+        </Link>
       </div>
       <div className="w-full h-full pt-10">
         <ul className="flex flex-col">

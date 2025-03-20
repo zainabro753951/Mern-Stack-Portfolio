@@ -1,8 +1,21 @@
 import React from "react";
 
-const Comments = ({ content, idx, totalObjects, lastComment, logedInUser }) => {
+const Comments = ({
+  content,
+  idx,
+  totalObjects,
+  lastComment,
+  logedInUser,
+  selectedCommentId,
+}) => {
   return (
-    <div ref={idx === totalObjects ? lastComment : null} className="flex gap-2">
+    <div
+      ref={idx === totalObjects ? lastComment : null}
+      id={`comment-${content._id}`}
+      className={`flex gap-2 ${
+        selectedCommentId === content._id ? "bg-themeGolden/20" : ""
+      }`}
+    >
       <div className="w-[3vw] h-[3vw] overflow-hidden rounded-full">
         <img
           className="w-full h-full object-cover"

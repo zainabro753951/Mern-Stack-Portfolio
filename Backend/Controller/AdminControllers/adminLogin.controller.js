@@ -20,7 +20,9 @@ const adminLogin = async (req, res) => {
     let token = createTokenAndSaveCookie(admin._id, key, res);
     res.status(200).json({ message: "Login Successfully!", admin });
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error!" });
+    console.log(error);
+
+    res.status(500).json({ message: "Internal Server Error!" + error });
   }
 };
 export default adminLogin;

@@ -27,6 +27,8 @@ const setAboutData = async (req, res) => {
     const actualPath = profileImg.slice(7);
 
     const {
+      firstName,
+      lastName,
       aboutHeadline,
       location,
       education,
@@ -39,20 +41,19 @@ const setAboutData = async (req, res) => {
       behance,
       instagram,
     } = req.body;
+    console.log(req.body);
 
     // Agar koi field missing hai
     if (
+      !firstName ||
+      !lastName ||
       !aboutHeadline ||
       !location ||
       !education ||
       !phoneNumber ||
       !about ||
       !hobbies ||
-      !email ||
-      !linkedIn ||
-      !facebook ||
-      !behance ||
-      !instagram
+      !email
     ) {
       if (profileImg) {
         // Agar image upload hui hai, to use delete karein
@@ -83,6 +84,8 @@ const setAboutData = async (req, res) => {
 
     // About data create karein
     const aboutData = new aboutModel({
+      firstName,
+      lastName,
       aboutHeadline,
       location,
       education,

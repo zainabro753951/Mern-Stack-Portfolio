@@ -5,6 +5,7 @@ const AllComentsPop = ({
   allBlogComments,
   isCommentOpen,
   blogId,
+  selectedCommentId,
   logedInUser,
 }) => {
   const [thisBlogComments, setthisBlogComments] = useState([]);
@@ -25,7 +26,14 @@ const AllComentsPop = ({
     if (isCommentOpen) {
       // Wait for the next render cycle to ensure all elements are rendered
       setTimeout(() => {
-        if (lastComment.current) {
+        if (selectedCommentId) {
+          const commentElement = document.getElementById(
+            `comment-${selectedCommentId}`
+          );
+          if (commentElement) {
+            commentElement.scrollIntoView({ behavior: "smooth" });
+          }
+        } else {
           lastComment.current.scrollIntoView({
             behavior: "smooth",
             block: "end",
@@ -40,6 +48,7 @@ const AllComentsPop = ({
       {thisBlogComments.map((comment, idx) => {
         return (
           <Comments
+            selectedCommentId={selectedCommentId}
             logedInUser={logedInUser}
             lastComment={lastComment}
             totalObjects={thisBlogComments.length - 1}
