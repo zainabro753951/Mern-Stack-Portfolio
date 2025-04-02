@@ -9,7 +9,7 @@ import MobileHeader from "./components/MobileHeader";
 import About from "./pages/about/About";
 import PortfolioPage from "./pages/Portfolio/PortfolioPage";
 import TestimonialPage from "./pages/Testimonial/TestimonialPage";
-import ContactPage from "./pages/contact/contactPage";
+import ContactPage from "./pages/contact/ContactPage";
 import BlogPage from "./pages/blog/BlogPage";
 import AdminDashboard from "./admin/AdminDashboard";
 import WelcomeLoader from "./components/WelcomeLoader";
