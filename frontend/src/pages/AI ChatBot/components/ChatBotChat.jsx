@@ -10,13 +10,12 @@ import ChatBubble from "./ChatBubble";
 const ChatBotChat = () => {
   const [message, setMessage] = useState("");
   const [aiMessage, setAiMessage] = useState("");
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   // Create mutation
   const mutation = useMutation(
     (content) => {
-      const response = axios.post(
-        "http://localhost:3000/user/deepSeek",
-        content
-      );
+      const response = axios.post(`${backendUrl}/user/deepSeek`, content);
       return response;
     },
     {

@@ -10,6 +10,7 @@ const AboutMe = () => {
   const { aboutData, isLoading } = GetAboutData();
   const aboutPic = useRef(null);
   const aboutText = useRef(null);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   gsap.config({ force3D: true });
 
@@ -120,7 +121,7 @@ const AboutMe = () => {
                 >
                   <img
                     className=" w-full h-full object-cover rounded-2xl"
-                    src={`http://localhost:3000/${aboutData.profileImg}`}
+                    src={`${backendUrl}/${aboutData.profileImg}`}
                     loading="lazy"
                     alt=""
                   />

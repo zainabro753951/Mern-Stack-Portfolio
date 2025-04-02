@@ -21,6 +21,7 @@ const BlogContent = ({ content }) => {
   const [totalCommentsOfThisPost, setTotalCommentsOfThisPost] = useState(0);
   const { socket } = useSocketContext();
   const [selectedCommentId, setSelectedCommentId] = useState("");
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const { likes, setLikes } = useContext(LikesContext);
 
@@ -36,7 +37,7 @@ const BlogContent = ({ content }) => {
   const mutation = useMutation(
     async (likeData) => {
       const response = await axios.post(
-        "http://localhost:3000/user/like/blogLikes",
+        `${backendUrl}/user/like/blogLikes`,
         likeData,
         {
           withCredentials: true,
@@ -72,7 +73,7 @@ const BlogContent = ({ content }) => {
   const getLikeMutation = useMutation(
     async (blogId) => {
       const response = await axios.get(
-        `http://localhost:3000/user/like/getBlogLikes/${blogId}`,
+        `${backendUrl}/user/like/getBlogLikes/${blogId}`,
         {
           withCredentials: true,
         }
@@ -114,8 +115,7 @@ const BlogContent = ({ content }) => {
 
   useEffect(() => {
     if (selectedCommentId) {
-
-      const response = axios.put("")
+      const response = axios.put("");
 
       const commentElement = document.getElementById(
         `comment-${selectedCommentId}`

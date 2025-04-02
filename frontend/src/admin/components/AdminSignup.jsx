@@ -6,6 +6,8 @@ import { BiHide, BiShow } from "react-icons/bi";
 import axios from "axios";
 
 const AdminSignup = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const navigate = useNavigate();
   const { key } = useParams();
   useEffect(() => {
@@ -36,7 +38,7 @@ const AdminSignup = () => {
     try {
       // Sending POST request to the backend
       let response = await axios.post(
-        "http://localhost:3000/admin/signup",
+        `${backendUrl}/admin/signup`,
         {
           username,
           password,

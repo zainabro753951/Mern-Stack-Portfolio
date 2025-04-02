@@ -10,6 +10,8 @@ const EditProject = () => {
   const [project, setproject] = useState({});
   const [projectTags, setprojectTags] = useState([]);
   const [seoKeywords, setSeoKeywords] = useState([]);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -69,7 +71,7 @@ const EditProject = () => {
                 <div className="w-full lg:h-[25vw] md:h-[50vw]">
                   <img
                     className="w-full h-full object-cover rounded-md"
-                    src={`http://localhost:3000/${project.poster}`}
+                    src={`${backendUrl}/${project.poster}`}
                     alt=""
                   />
                 </div>
@@ -125,7 +127,7 @@ const EditProject = () => {
                       return (
                         <img
                           className="w-full lg:h-[30vw] md:h-[40vw] xs:h-[50vw] object-cover rounded-md"
-                          src={`http://localhost:3000/${img}`}
+                          src={`${backendUrl}/${img}`}
                           alt=""
                         />
                       );

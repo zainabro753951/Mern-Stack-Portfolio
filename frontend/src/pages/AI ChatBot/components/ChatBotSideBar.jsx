@@ -13,11 +13,13 @@ import { useChatBotConversation } from "../../../Context/GetChatBotConversation"
 const ChatBotSideBar = () => {
   const { setAllConversations, setSessionId, setMessages } =
     useChatBotConversation();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const deleteConversationMutation = useMutation(
     async () => {
       try {
         const response = await axios.delete(
-          "http://localhost:3000/user/deepseek/delete_conversation",
+          `${backendUrl}/user/deepseek/delete_conversation`,
           {
             withCredentials: true,
           }

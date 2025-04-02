@@ -56,7 +56,7 @@ export const GetChatBotConversation = ({ children }) => {
     if (!sessionId) return;
     try {
       const response = await axios.get(
-        "http://localhost:3000/user/deepseek/conversation_history",
+        `${backendUrl}/user/deepseek/conversation_history`,
         { params: { sessionId }, withCredentials: true }
       );
       return response.data;
@@ -94,7 +94,7 @@ export const GetChatBotConversation = ({ children }) => {
 
   const fetchAllConversations = async () => {
     const response = await axios.get(
-      "http://localhost:3000/user/deepseek/all_conversations",
+      `${backendUrl}/user/deepseek/all_conversations`,
       {
         withCredentials: true,
       }

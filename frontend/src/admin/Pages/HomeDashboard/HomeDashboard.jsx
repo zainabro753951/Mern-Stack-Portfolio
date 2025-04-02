@@ -7,6 +7,8 @@ import GetAllUsers from "../../../Context/GetAllUsers";
 import GetProjectCounts from "../../../Context/GetProjectCounts";
 import getBlogCounts from "../../../Context/getBlogCounts";
 const HomeDashboard = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const { testimonialData, setTestimonialData } = useTestimonial();
   const { users } = GetAllUsers();
   const { deletedProjects, availableProjects } = GetProjectCounts();
@@ -112,7 +114,7 @@ const HomeDashboard = () => {
                                 {item.profilePicture ? (
                                   <img
                                     className="lg:w-[3vw] md:w-[4vw] xs:w-[5vw] lg:h-[3vw] md:h-[4vw] xs:h-[5vw] rounded-full"
-                                    src={`http://localhost:3000/${item.profilePicture}`}
+                                    src={`${backendUrl}/${item.profilePicture}`}
                                     alt=""
                                   />
                                 ) : (
@@ -253,7 +255,7 @@ const HomeDashboard = () => {
                                   {data.profileImg ? (
                                     <img
                                       className="w-[3vw] h-[3vw] rounded-full"
-                                      src={`http://localhost:3000/${data.profileImg}`}
+                                      src={`${backendUrl}/${data.profileImg}`}
                                       alt=""
                                     />
                                   ) : (

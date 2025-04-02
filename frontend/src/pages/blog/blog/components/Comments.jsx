@@ -8,6 +8,8 @@ const Comments = ({
   logedInUser,
   selectedCommentId,
 }) => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   return (
     <div
       ref={idx === totalObjects ? lastComment : null}
@@ -19,11 +21,7 @@ const Comments = ({
       <div className="w-[3vw] h-[3vw] overflow-hidden rounded-full">
         <img
           className="w-full h-full object-cover"
-          src={
-            logedInUser
-              ? `http://localhost:3000/${logedInUser.profilePicture}`
-              : ""
-          }
+          src={logedInUser ? `${backendUrl}/${logedInUser.profilePicture}` : ""}
           alt=""
         />
       </div>

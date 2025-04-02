@@ -16,11 +16,12 @@ const ChatBotHome = () => {
   const [realtimeMessage, setRealtimeMessage] = useState("");
   const [readyToSendMessage, setReadyToSendMessage] = useState(false);
   const chatContainerRef = useRef(null);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   // create mutation for posting message
   const mutation = useMutation((data) => {
     const response = axios.post(
-      "http://localhost:3000/user/deepseek/send_message",
+      `${backendUrl}/user/deepseek/send_message`,
       data,
       { withCredentials: true }
     );

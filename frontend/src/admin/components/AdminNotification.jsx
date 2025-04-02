@@ -7,6 +7,7 @@ import axios from "axios";
 
 const AdminNotification = ({ isNotiOpen, NotiRef }) => {
   const { blogCommentNotfi } = useBlogCommentNotification();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const [blogCommentData, setBlogCommentData] = useState([]);
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const AdminNotification = ({ isNotiOpen, NotiRef }) => {
       const promises = blogCommentNotfi.map((commentNoti) => {
         if (commentNoti.commentId && commentNoti.userId) {
           return axios.get(
-            "http://localhost:3000/admin/get_all_blog_comment_data",
+            `${backendUrl}/admin/get_all_blog_comment_data`,
             {
               params: {
                 commentId: commentNoti.commentId,
@@ -98,7 +99,7 @@ const AdminNotification = ({ isNotiOpen, NotiRef }) => {
                     <div className="relative inline-block shrink-0">
                       <img
                         className="w-12 h-12 rounded-full"
-                        src={`http://localhost:3000/${data.data.userId.profilePicture}`}
+                        src={`${backendUrl}/${data.data.userId.profilePicture}`}
                         alt="Jese Leos image"
                       />
                       <span className="absolute bottom-0 right-0 inline-flex items-center justify-center w-6 h-6 bg-blue-600 rounded-full">

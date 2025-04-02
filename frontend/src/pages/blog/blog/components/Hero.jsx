@@ -5,6 +5,8 @@ import BlogContent from "./BlogContent";
 import Button from "../../../../components/Button";
 
 const Hero = ({ content }) => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const [publishDate, setPublishDate] = useState(null);
   useEffect(() => {
     if (content) {
@@ -37,9 +39,7 @@ const Hero = ({ content }) => {
         <div className="w-full h-[30vw] md:my-[6vw] xs:my-[6vw] rounded-[0.5vw] overflow-hidden">
           <img
             className="w-full h-full object-cover"
-            src={
-              content ? `http://localhost:3000/${content.featuredImage}` : ""
-            }
+            src={content ? `${backendUrl}/${content.featuredImage}` : ""}
             alt=""
           />
         </div>

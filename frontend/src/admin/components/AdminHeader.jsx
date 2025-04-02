@@ -16,6 +16,8 @@ import AdminNotification from "./AdminNotification.jsx";
 
 const AdminHeader = () => {
   const { socket } = useSocketContext();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const { setIsAdminAuthenticated } = useAdminAuth();
   const { adminData, setAdminData } = GetAdminData();
   const { setIsSideBarOpen } = useContext(SidebarToggleContext);
@@ -35,13 +37,9 @@ const AdminHeader = () => {
 
   const mutation = useMutation(
     async () => {
-      const response = await axios.post(
-        "http://localhost:3000/admin/logout",
-        null,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.post(`${backendUrl}/admin/logout`, null, {
+        withCredentials: true,
+      });
       return response;
     },
     {
@@ -124,11 +122,7 @@ const AdminHeader = () => {
             >
               <img
                 className="w-full h-full object-cover"
-                src={
-                  adminData
-                    ? `http://localhost:3000/${adminData.profileImg}`
-                    : ""
-                }
+                src={adminData ? `${backendUrl}/${adminData.profileImg}` : ""}
                 alt=""
               />
             </div>

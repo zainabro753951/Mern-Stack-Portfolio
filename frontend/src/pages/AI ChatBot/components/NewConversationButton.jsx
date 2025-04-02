@@ -6,11 +6,13 @@ import { useChatBotConversation } from "../../../Context/GetChatBotConversation"
 
 const NewConversationButton = () => {
   const { setSessionId, setMessages } = useChatBotConversation();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const mutation = useMutation(
     async () => {
       try {
         const response = await axios.post(
-          "http://localhost:3000/user/deepseek/create_conversation",
+          `${backendUrl}/user/deepseek/create_conversation`,
           null,
           {
             withCredentials: true,

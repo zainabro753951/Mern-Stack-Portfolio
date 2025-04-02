@@ -24,6 +24,7 @@ const Hero = ({ content, isLoading }) => {
   const backBanner = useRef(null);
   const iconsRef = useRef([]);
   const { isDarkMode } = ToggleTheme();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const [About, setAbout] = useState(content ? content.about : "");
 
@@ -297,7 +298,7 @@ const Hero = ({ content, isLoading }) => {
                   loading="lazy"
                   src={
                     content.profileImg
-                      ? `http://localhost:3000/${content.profileImg}`
+                      ? `${backendUrl}/${content.profileImg}`
                       : "/imgs/me.png"
                   }
                   alt=""

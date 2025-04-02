@@ -6,7 +6,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useMutation } from "react-query";
 import { toast, ToastContainer } from "react-toastify";
+
 const ProfilePopup = ({ isOpen, onClose }) => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const { adminData, setAdminData } = GetAdminData();
   const [adminProfile, setAdminProfile] = useState(
     adminData ? adminData.profileImg : ""
@@ -19,7 +22,7 @@ const ProfilePopup = ({ isOpen, onClose }) => {
   );
   const [gender, setGender] = useState(adminData ? adminData.gender : "");
   const [adminPreview, setAdminPreview] = useState(
-    adminData ? `http://localhost:3000/${adminData.profileImg}` : ""
+    adminData ? `${backendUrl}/${adminData.profileImg}` : ""
   );
   let handleGenderChange = (e) => {
     setGender(e.target.value);
@@ -33,18 +36,14 @@ const ProfilePopup = ({ isOpen, onClose }) => {
       setAdminProfile(adminData.profileImg);
       setGender(adminData.gender);
       setEmail(adminData.email);
-      setAdminPreview(`http://localhost:3000/${adminData.profileImg}`);
+      setAdminPreview(`${backendUrl}/${adminData.profileImg}`);
     }
   }, [adminData]);
 
   const mutation = useMutation((formData) => {
-    const response = axios.put(
-      "http://localhost:3000/admin/update_admin",
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = axios.put(`${backendUrl}/admin/update_admin`, formData, {
+      withCredentials: true,
+    });
 
     return response;
   });

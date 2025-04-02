@@ -14,12 +14,13 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   let navigate = useNavigate();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const mutation = useMutation((adminData) => {
     try {
       // Sending POST request to the backend
       let response = axios.post(
-        "http://localhost:3000/admin/login",
+        `${backendUrl}/admin/login`,
         {
           username,
           password,

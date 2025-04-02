@@ -11,13 +11,14 @@ const CommentInputAvator = ({ blogId, setAllBlogComments, logedInUser }) => {
   const { socket } = useSocketContext();
   const [comment, setComment] = useState(null);
   const [error, setError] = useState("");
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   // Create Mutation of Sending Comments /user/blog/comment
   const mutation = useMutation(
     async (commentData) => {
       try {
         const response = await axios.post(
-          "http://localhost:3000/user/blog/comment",
+          `${backendUrl}/user/blog/comment`,
           commentData,
           {
             withCredentials: true,
@@ -72,11 +73,7 @@ const CommentInputAvator = ({ blogId, setAllBlogComments, logedInUser }) => {
       <div className="w-[3vw] h-[3vw] overflow-hidden rounded-full">
         <img
           className="w-full h-full object-cover"
-          src={
-            logedInUser
-              ? `http://localhost:3000${logedInUser.profilePicture}`
-              : ""
-          }
+          src={logedInUser ? `${backendUrl}${logedInUser.profilePicture}` : ""}
           alt=""
         />
       </div>

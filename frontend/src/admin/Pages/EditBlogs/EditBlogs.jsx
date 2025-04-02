@@ -11,6 +11,7 @@ const EditBlogs = () => {
   const [tags, setTags] = useState([]);
   const [keywords, setKeywords] = useState([]);
   const publishDate = new Date(SelectedBlogPost.date).toLocaleDateString();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const blogPost = blogPosts.find(
@@ -67,7 +68,7 @@ const EditBlogs = () => {
                 <div className="w-full lg:h-[25vw] md:h-[50vw]">
                   <img
                     className="w-full h-full object-cover rounded-md"
-                    src={`http://localhost:3000/${SelectedBlogPost.featuredImage}`}
+                    src={`${backendUrl}/${SelectedBlogPost.featuredImage}`}
                     alt=""
                   />
                 </div>
