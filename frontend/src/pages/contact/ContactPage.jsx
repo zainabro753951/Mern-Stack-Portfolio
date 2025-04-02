@@ -1,5 +1,5 @@
 import React from "react";
-import ContactHero from "./components/contactHero";
+import ContactHero from "./components/ContactHero";
 import ContactInfo from "./components/ContactInfo";
 import ContactForm from "./components/ContactForm";
 import Footer from "../../components/Footer";
