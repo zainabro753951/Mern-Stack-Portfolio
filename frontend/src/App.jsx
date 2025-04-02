@@ -22,7 +22,7 @@ import Blog from "./pages/blog/blog/Blog";
 import ChatBot from "./pages/AI ChatBot/ChatBot";
 
 const App = () => {
-  const { isAuthChecked, isUserAuthenticated } = useUserAuth();
+  const { isLoading, isUserAuthenticated } = useUserAuth();
   return (
     <>
       <Routes>
@@ -36,7 +36,7 @@ const App = () => {
             path=":categoryName"
             element={
               <ProtectUserRoute
-                isAuthChecked={isAuthChecked}
+                isLoading={isLoading}
                 isUserAuthenticated={isUserAuthenticated}
               >
                 <BlogPage />
@@ -48,7 +48,7 @@ const App = () => {
           path="/blog/:blogSlug/:blogId"
           element={
             <ProtectUserRoute
-              isAuthChecked={isAuthChecked}
+              isLoading={isLoading}
               isUserAuthenticated={isUserAuthenticated}
             >
               <Blog />
@@ -59,7 +59,7 @@ const App = () => {
           path="/chat-bot"
           element={
             <ProtectUserRoute
-              isAuthChecked={isAuthChecked}
+              isLoading={isLoading}
               isUserAuthenticated={isUserAuthenticated}
             >
               <ChatBot />
@@ -68,7 +68,10 @@ const App = () => {
         />
         <Route path={"/contact"} element={<ContactPage />} />
         <Route path={"/admin/*"} element={<AdminDashboard />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={!isUserAuthenticated ? <Login /> : <Navigate to="/" />}
+        />
         <Route path="/register" element={<Signup />} />
         <Route path="/register/verify-email/:token" element={<VerifyEmail />} />
         {/* <Route path="/" element={<WelcomeLoader />} /> */}

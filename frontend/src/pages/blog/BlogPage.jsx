@@ -11,10 +11,10 @@ import { useBlogPosts } from "../../Context/GetBlogs";
 
 const BlogPage = () => {
   const { categoryName } = useParams();
-  console.log(categoryName);
-  const { blogPosts } = useBlogPosts();
+  const { blogPosts, isLoading, isError } = useBlogPosts();
   const [mainBlogs, setMainBlogs] = useState(null);
   const [heroBlog, setHeroBlog] = useState(null);
+  console.log(blogPosts);
 
   useEffect(() => {
     if (categoryName === "all") {
@@ -36,16 +36,17 @@ const BlogPage = () => {
       }
     }
   }, [categoryName, heroBlog]);
+  console.log(blogPosts);
 
   return (
     <>
       <Header />
       <MobileHeader />
       <CustomeCursor />
-      {blogPosts.length > 0 ? (
+      {blogPosts.length > 0 || isLoading ? (
         <>
-          <BlogHero content={heroBlog} />
-          <AllBlogs blogPosts={mainBlogs} />
+          <BlogHero content={heroBlog} isLoading={isLoading} />
+          <AllBlogs blogPosts={mainBlogs} isLoading={isLoading} />
           <Footer footerText={"Have a project"} text={"Lets Talk"} />
         </>
       ) : (

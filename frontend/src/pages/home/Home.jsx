@@ -12,21 +12,23 @@ import CustomeCursor from "../../components/CustomeCursor";
 import { useAdminAuth } from "../../Context/AdminAuthProvider";
 import ChatbotButton from "../../components/ChatbotButton";
 import { GetAboutData } from "../../Context/GetAboutData";
+import PageProgressBar from "../../components/PageProgressBar";
 
 const Home = () => {
   const { isAdminAuthenticated } = useAdminAuth();
   console.log(isAdminAuthenticated);
 
-  const { aboutData } = GetAboutData();
+  const { aboutData, isLoading } = GetAboutData();
 
   return (
     <>
+      <PageProgressBar />
       <Header />
       <MobileHeader />
       <CustomeCursor />
       <ChatbotButton />
-      <Hero content={aboutData} />
-      <About />
+      <Hero content={aboutData} isLoading={isLoading} />
+      <About content={aboutData} isLoading={isLoading} />
       <Portfolio />
       <Projects />
       <Testimonial />

@@ -1,6 +1,7 @@
 import axios from "axios";
+import { useQuery } from "react-query";
 
-const CheckUserAuth = async () => {
+const fetchUserAuth = async () => {
   try {
     const response = await axios.get(
       "http://localhost:3000/user/verify-user-auth",
@@ -10,8 +11,20 @@ const CheckUserAuth = async () => {
     );
     return response.data;
   } catch (error) {
-    console.log(error);
+    throw new Error(error.message);
   }
 };
 
-export default CheckUserAuth;
+const useCheckUserAuth = () => {
+  return useQuery({
+    queryKey: ["userAuth"],
+    queryFn: fetchUserAuth,
+    staleTime: 7_200_000, // 2 hours
+    cacheTime: 7_200_000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    retry: 1,
+  });
+};
+
+export default useCheckUserAuth;

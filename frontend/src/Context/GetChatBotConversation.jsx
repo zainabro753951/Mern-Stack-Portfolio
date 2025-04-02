@@ -37,8 +37,10 @@ export const GetChatBotConversation = ({ children }) => {
     {
       enabled: isUserAuthenticated,
       retry: 3,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
+      staleTime: 7_200_000, // Data 2 hours tak stale nahi hoga
+      cacheTime: 7_200_000, // Data 2 hours tak cache mein rahega
+      refetchOnMount: false, // Component mount hone par dobara fetch nahi hoga
+      refetchOnWindowFocus: false, // Window focus hone par dobara fetch nahi hoga
       refetchOnReconnect: false,
       onSuccess: (data) => {
         setSessionId(data.sessionId);
@@ -71,8 +73,8 @@ export const GetChatBotConversation = ({ children }) => {
       retry: 3,
       staleTime: 10000,
       onSuccess: (data) => {
-        setAllConversations((prev) => [...prev, data ? data[0] : []]);
-        setMessages(data[0].messages);
+        setAllConversations((prev) => [...(prev || []), data ? data[0] : []]);
+        setMessages(data?.[0].messages || null);
       },
       onError: (error) => {
         console.error("Error fetching conversation data:", error);
@@ -117,8 +119,6 @@ export const GetChatBotConversation = ({ children }) => {
       refetchAllConversations();
     }
   }, [messages, isUserAuthenticated, refetchAllConversations]);
-
-  console.log(allConversations);
 
   return (
     <ChatBotConversationContext.Provider

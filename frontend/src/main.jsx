@@ -17,6 +17,7 @@ import { GetAllBlogComments } from "./Context/GetAllBlogComments.jsx";
 import { GetAllBlogLikes } from "./Context/GetAllBlogLikes.jsx";
 import { GetAllBlogCommentNoti } from "./Context/GetAllBlogCommentNoti.jsx";
 import { GetChatBotConversation } from "./Context/GetChatBotConversation.jsx";
+import { LenisProvider } from "./Context/lenisProvider.jsx";
 
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")).render(
@@ -36,7 +37,9 @@ createRoot(document.getElementById("root")).render(
                             <SideBarToggle>
                               <GetChatBotConversation>
                                 <StrictMode>
-                                  <App />
+                                  <LenisProvider>
+                                    <App />
+                                  </LenisProvider>
                                 </StrictMode>
                               </GetChatBotConversation>
                             </SideBarToggle>

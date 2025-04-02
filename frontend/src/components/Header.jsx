@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import HireMeBtn from "./HireMeBtn";
 import gsap from "gsap";
+import { LuSun } from "react-icons/lu";
+import { IoMoonOutline } from "react-icons/io5";
+import ToggleTheme from "../Context/ToggleTheme";
+
 const Header = () => {
   const [scrollDirection, setScrollDirection] = useState("up");
   const [lastScrollTop, setLastScrollTop] = useState(0);
   const [scrollDown, setScrollDown] = useState(false);
+  const { isDarkMode, setIsDarkMode } = ToggleTheme();
   useEffect(() => {
     const handleScroll = () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -42,6 +47,12 @@ const Header = () => {
       context.revert();
     };
   }, []);
+
+  // Toggle Theme
+  const toggleTheme = (setIsDarkMode) => {
+    setIsDarkMode(!isDarkMode);
+    localStorage.setItem("theme", isDarkMode ? "light" : "dark");
+  };
   return (
     <nav
       className={`fixed z-50 w-full xs:hidden lg:block text-gray-500 transition-all duration-700 px-10 py-1 font-lexend_deca left-1/2 -translate-x-1/2  ${
@@ -74,7 +85,13 @@ const Header = () => {
             }
           )}
         </ul>
-        <div>
+        <div className="flex items-center gap-[1.8vw]">
+          <div
+            onClick={() => toggleTheme(setIsDarkMode)}
+            className="cursor-pointer lg:text-[1.5vw] md:text-[1.9vw]"
+          >
+            <LuSun />
+          </div>
           <Link to={"/login"}>
             {" "}
             <HireMeBtn text={"Login"} />{" "}

@@ -6,7 +6,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 
+
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+
 const AboutHero = () => {
   const aboutRef = useRef(null);
   const { targetSection } = GetTop();

@@ -27,7 +27,10 @@ export const GetAllBlogComments = ({ children }) => {
     {
       enabled: isUserAuthenticated,
       retry: 3,
-      staleTime: 10000,
+      staleTime: 7_200_000, // Data 2 hours tak stale nahi hoga
+      cacheTime: 7_200_000, // Data 2 hours tak cache mein rahega
+      refetchOnMount: false, // Component mount hone par dobara fetch nahi hoga
+      refetchOnWindowFocus: false, // Window focus hone par dobara fetch nahi hoga
       onSuccess: (data) => {
         setAllBlogComments(data);
       },

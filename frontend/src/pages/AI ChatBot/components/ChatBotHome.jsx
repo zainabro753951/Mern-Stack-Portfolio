@@ -80,7 +80,7 @@ const ChatBotHome = () => {
   }, [messages, realtimeMessage]);
 
   useEffect(() => {
-    setReadyToSendMessage(messages.length > 0);
+    setReadyToSendMessage(messages?.length > 0);
   }, [messages]);
 
   console.log(readyToSendMessage);
@@ -115,7 +115,7 @@ const ChatBotHome = () => {
               readyToSendMessage ? "h-full" : "hidden h-0"
             } w-full transition-all duration-500 overflow-auto`}
           >
-            {messages.map((item, index) => (
+            {messages?.map((item, index) => (
               <ChatBubble
                 key={index}
                 message={item.message}

@@ -4,23 +4,11 @@ import { ScrollTrigger } from "gsap/all";
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import TestimonialCard from "./TestimonialCard";
+import { useTestimonial } from "../Context/GetTestimonial";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 const Testimonial = () => {
-  let testimonialData = [
-    {
-      img: "/imgs/testimonial/a4.jpg",
-      disc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque",
-      name: "Jonathon Doe",
-      designation: "Business Owner",
-    },
-    {
-      img: "/imgs/testimonial/a5.jpg",
-      disc: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque",
-      name: "Ruki-Yead",
-      designation: "WordPress Developer",
-    },
-  ];
+  const { testimonialData } = useTestimonial();
 
   const testiText = useRef(null);
   gsap.config({ nullTargetWarn: false, force3D: true });
@@ -55,6 +43,7 @@ const Testimonial = () => {
       force3D: true,
     });
   }, []);
+
   return (
     <div className="bg-[#F9FBFF]">
       <div className="md:max-w-[80vw] mx-auto pt-[14vw] lg:pt-[15vw] md:py-[9vw] xs:py-[15vw] px-5 font-jost">
@@ -105,13 +94,11 @@ const Testimonial = () => {
             style={{ willChange: "opacity, scale" }}
             className="grid lg:grid-cols-2 lg:gap-[2.5vw] md:gap-[3.9vw] xs:gap-[5.4vw] w-full place-items-center items-center mt-16"
           >
-            {testimonialData.map((data, idx) => {
-              return (
-                <div key={idx} className="testimonialCard">
-                  <TestimonialCard data={data} />
-                </div>
-              );
-            })}
+            {testimonialData?.slice(1, 3).map((data, idx) => (
+              <div key={idx} className="testimonialCard">
+                <TestimonialCard data={data} />
+              </div>
+            )) || null}
           </div>
         </div>
       </div>

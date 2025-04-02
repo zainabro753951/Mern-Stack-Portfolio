@@ -26,9 +26,13 @@ export const GetTestimonial = ({ children }) => {
       }
     },
     {
-      enabled: isAdminAuthenticated,
       retry: 3,
-      staleTime: 10000,
+      retryDelay: 1000,
+      staleTime: 0, // Always consider data stale
+      cacheTime: 7_200_000,
+      refetchOnMount: true, // Always refetch when component mounts
+      refetchOnWindowFocus: false, // Disable refetch on window focus
+      initialData: [], // Provide initial empty array
       onSuccess: (data) => {
         setTestimonialData(data);
       },
@@ -43,9 +47,15 @@ export const GetTestimonial = ({ children }) => {
       queryClient.invalidateQueries("testimonialData");
     }
   }, [isAdminAuthenticated, queryClient]);
+  console.log(testimonialData);
+
   return (
     <TestimonialContext.Provider
-      value={{ testimonialData, setTestimonialData }}
+      value={{
+        testimonialData,
+        setTestimonialData,
+        isLoading: getData.isFetching || getData.isLoading,
+      }}
     >
       {children}
     </TestimonialContext.Provider>

@@ -30,7 +30,7 @@ const ConversationHistory = () => {
         >
           <TbMessageCircle className="lg:text-[1.4vw] md:text-[2.4vw] xs:text-[3.8vw]" />
           <p className="lg:text-[1.2vw] whitespace-nowrap xs:hidden lg:block overflow-hidden md:text-[2.2vw] xs:text-[3.4vw] text-gray-700">
-            {conversation.messages[0]?.message || "No message found"}
+            {conversation?.messages[0]?.message || "No message found"}
           </p>
         </div>
       ))}

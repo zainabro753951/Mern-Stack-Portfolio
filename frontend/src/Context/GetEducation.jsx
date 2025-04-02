@@ -1,10 +1,7 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 const GetEducation = () => {
-  const [educationData, setEducationData] = useState([]);
-
   const fetchEducation = async () => {
     const response = await axios.get(
       "http://localhost:3000/admin/getEducation",
@@ -15,22 +12,30 @@ const GetEducation = () => {
     return response.data;
   };
 
-  const { isLoading, isError, error } = useQuery(
-    "educationData",
-    fetchEducation,
-    {
-      retry: 3,
-      retryDelay: 10000,
-      onSuccess: (data) => {
-        setEducationData(data);
-      },
-      onError: (error) => {
-        console.error("Error fetching education data:", error);
-      },
-    }
-  );
+  const {
+    data: educationData = [], // Default empty array
+    isLoading,
+    isError,
+    error,
+    isFetching,
+  } = useQuery({
+    queryKey: ["educationData"], // Using object syntax for better TypeScript support
+    queryFn: fetchEducation,
+    retry: 3,
+    retryDelay: 1000,
+    staleTime: 0, // Always consider data stale
+    cacheTime: 7_200_000,
+    refetchOnMount: true, // Always refetch when component mounts
+    refetchOnWindowFocus: false, // Disable refetch on window focus
+    initialData: [], // Provide initial empty array
+  });
 
-  return { educationData, setEducationData, isLoading, isError, error };
+  return {
+    educationData,
+    isLoading: isLoading || isFetching, // Show loading during background updates
+    isError,
+    error,
+  };
 };
 
 export default GetEducation;

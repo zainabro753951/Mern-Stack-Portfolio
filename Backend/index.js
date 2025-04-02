@@ -30,7 +30,9 @@ const __dirname = path.dirname(__filename);
 // MongoDB Connection String
 const mongooseUrl = process.env.MONGODBURL;
 try {
-  mongoose.connect(mongooseUrl);
+  await mongoose.connect(mongooseUrl, {
+    maxPoolSize: 10, // Connection pool size
+  });
   console.log("Connected to MongoDB");
 } catch (e) {
   console.log("Error connecting to MongoDB", e);

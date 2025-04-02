@@ -14,7 +14,9 @@ const getAllBlogCommentData = async (req, res) => {
       .populate({
         path: "userId", // User ko populate karen
         select: "firstName lastName profilePicture email", // Sirf user ki name aur email select karen
-      });
+      })
+      .lean() // Convert to plain JS object for faster serialization
+      .catch(300); // Cache results for 5 minutes;
 
     // Agar data nahi mila to error return karen
     if (!blogCommentData) {

@@ -3,7 +3,7 @@ import BlogSearchBar from "./BlogSearchBar";
 import CategroyFilter from "./CategroyFilter";
 import BlogPop from "./BlogPop";
 
-const AllBlogs = ({ blogPosts }) => {
+const AllBlogs = ({ blogPosts, isLoading }) => {
   const [filteredBlogPosts, setFilteredBlogPosts] = useState(null);
 
   return (
@@ -19,6 +19,7 @@ const AllBlogs = ({ blogPosts }) => {
             <BlogPop
               filteredBlogPosts={filteredBlogPosts}
               blogPosts={blogPosts}
+              isLoading={isLoading}
             />
           </div>
         </div>

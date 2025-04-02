@@ -1,15 +1,17 @@
 import React from "react";
 
 const TestimonialCard = ({ data }) => {
+  console.log(data);
+
   return (
     <div
       id="testiBoxes"
       className="flex sm:flex-nowrap justify-center xs:flex-wrap lg:gap-[1.5vw] md:gap-[3vw] xs:gap-[3.5vw] transition-all items-center duration-500 lg:p-[1.9vw] md:p-[2vw] xs:p-[3.5vw] rounded-[2vw] bg-white lg:w-[34vw] border border-gray-100"
     >
-      <div className="lg:w-[50vw] lg:h-[16vw] sm:w-full sm:h-full">
+      <div className="w-full lg:h-[16vw] sm:w-full sm:h-full">
         <img
-          className="sm:rounded-l-[2vw] xs:rounded-full sm:rounded-none object-cover sm:h-full sm:w-full xs:w-[50vw] xs:h-[50vw] lg:-translate-x-20"
-          src={data.img}
+          className="sm:rounded-l-[2vw] lg:w-full lg:h-full xs:rounded-full sm:rounded-none object-cover sm:h-full sm:w-full xs:w-[50vw] xs:h-[50vw] lg:-translate-x-20"
+          src={`http://localhost:3000/${data.profileImg}`}
           alt=""
         />
       </div>
@@ -23,7 +25,7 @@ const TestimonialCard = ({ data }) => {
         </div>
         <div>
           <p className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] lg:leading-[1.9vw] md:leading-[2.9vw] xs:leading-[5.5vw] text-gray-500">
-            {data.disc}
+            {data.message}
           </p>
         </div>
         <div className="flex flex-col gap-2">

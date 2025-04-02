@@ -2,10 +2,10 @@ import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import WelcomeLoader from "../components/WelcomeLoader";
 
-const ProtectUserRoute = ({ isUserAuthenticated, isAuthChecked, children }) => {
+const ProtectUserRoute = ({ isUserAuthenticated, isLoading, children }) => {
   const location = useLocation();
 
-  if (!isAuthChecked) {
+  if (isLoading) {
     return (
       <div>
         <WelcomeLoader />

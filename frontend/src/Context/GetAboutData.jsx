@@ -1,18 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useAdminAuth } from "./AdminAuthProvider";
 import { useQuery, useQueryClient } from "react-query";
-import { useUserAuth } from "./UserAuthProvider";
 
 export const AboutDataContext = createContext();
 
 export const GetAboutData = () => useContext(AboutDataContext);
 
 export const GetAboutProvider = ({ children }) => {
-  const { isUserAuthenticated } = useUserAuth();
-  const { isAdminAuthenticated } = useAdminAuth();
-  const [aboutData, setAboutData] = useState("");
-  const queryClient = useQueryClient();
+  const [aboutData, setAboutData] = useState(null);
 
   const getData = useQuery(
     "aboutData",
@@ -32,7 +27,10 @@ export const GetAboutProvider = ({ children }) => {
     },
     {
       retry: 3,
-      staleTime: 10000,
+      staleTime: 7_200_000, // Data 2 hours tak stale nahi hoga
+      cacheTime: 7_200_000, // Data 2 hours tak cache mein rahega
+      refetchOnMount: false, // Component mount hone par dobara fetch nahi hoga
+      refetchOnWindowFocus: false, // Window focus hone par dobara fetch nahi hoga
       onSuccess: (fetchedData) => {
         setAboutData(fetchedData ?? {});
       },
@@ -40,16 +38,10 @@ export const GetAboutProvider = ({ children }) => {
     }
   );
 
-  useEffect(() => {
-    if (isAdminAuthenticated) {
-      queryClient.invalidateQueries("aboutData");
-    }
-  }, [isAdminAuthenticated, queryClient]);
-
-  console.log(aboutData);
-
   return (
-    <AboutDataContext.Provider value={{ aboutData, setAboutData }}>
+    <AboutDataContext.Provider
+      value={{ aboutData, setAboutData, isLoading: getData.isLoading }}
+    >
       {children}
     </AboutDataContext.Provider>
   );

@@ -24,17 +24,19 @@ const Projects = () => {
   // Gsap animations here
   gsap.config({ nullTargetWarn: false, force3D: true });
 
-  const animation = useGSAP(() => {
+  useGSAP(() => {
     gsap.from(".counter", {
       scrollTrigger: {
         trigger: ".counter",
-        start: "center 80%",
-        end: "bottom 10%",
+        markers: true,
+        start: "top 110%",
+        scrub: true,
+        end: "bottom 0%",
         toggleActions: "play none none reverse",
       },
-      scale: 0,
+      y: 100,
       duration: 0.5,
-      transformOrigin: "center",
+      transformOrigin: "top",
       stagger: 0.1,
       force3D: true,
     });
@@ -45,7 +47,7 @@ const Projects = () => {
       className="w-full bg-projects bg-cover bg-no-repeat"
     >
       <div className="md:max-w-[80vw] mx-auto xs:h-full lg:h-[40vh] xs:px-20 lg:py-0 xs:py-[5vw] lg:px-0">
-        <div className="w-full h-full grid lg:grid-cols-3 lg:gap-[3vw] lg:items-end xs:items-center lg:translate-y-20">
+        <div className="w-full h-full grid lg:grid-cols-3 lg:gap-[3vw] items-center">
           {projectData.map((data, idx) => {
             return (
               <div

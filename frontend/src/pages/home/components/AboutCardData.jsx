@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ArroIcon from "../../../components/ArroIcon";
+import { motion } from "motion/react";
 
 const AboutCardData = ({ data, idx }) => {
   return (
-    <div
-      id="aboutCard"
-      className="flex items-center gap-4 transition-all duration-500 bg-white rounded-xl border-b-2 border-gray-200 border-r border-l lg:p-[1vw] md:p-[2vw] xs:p-[4.5vw]"
+    <motion.div
+      whileHover={{
+        rotateZ: -12,
+        boxShadow: "0 0 20px #d1d1d1, 0 0 80px #d1d1d1",
+      }}
+      style={{
+        willChange: "transform", // Informs browser to optimize
+        backfaceVisibility: "hidden", // Helps on mobile devices
+      }}
+      transition={{
+        duration: 0.6,
+        ease: "easeInOut",
+        stiffness: 100, // Controls speed
+        type: "spring",
+      }}
+      className="flex items-center gap-4 elem bg-white rounded-xl border-b-2 border-gray-200 border-r border-l lg:p-[1vw] md:p-[2vw] xs:p-[4.5vw]"
     >
       <div className="lg:p-[3vw] md:p-[4vw] xs:p-[5.5vw]">
         <img
@@ -39,7 +53,7 @@ const AboutCardData = ({ data, idx }) => {
           </Link>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
