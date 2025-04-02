@@ -6,10 +6,12 @@ export const createTokenAndSaveCookie = (data, key, res) => {
       expiresIn: "2d",
     });
     res.cookie(key, token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "Strict",
-      path: "/", // Same path for both cookies
+      httpOnly: true, // Prevent XSS
+      secure: true, // HTTPS only
+      sameSite: "Strict", // or 'Lax' for cross-site
+      path: "/",
+      maxAge: 900000, // 15 minutes in ms
+      signed: true,
     });
     return token;
   } catch (err) {

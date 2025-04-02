@@ -17,12 +17,15 @@ import cookieParser from "cookie-parser";
 // Dotenv Config
 
 // Cors configuration
-app.use(
-  cors({
-    origin: process.env.FRONTEND_PORT,
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: process.env.FRONTEND_PORT,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // if you need cookies/auth
+  maxAge: 86400, // cache preflight requests for 1 day
+};
+
+app.use(cors(corsOptions));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
