@@ -1,5 +1,5 @@
 import React from "react";
-import PortfolioHero from "./components/portfolioHero";
+import PortfolioHero from "./components/PortfolioHero";
 import PortfolioProjects from "./components/PortfolioProjects";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
