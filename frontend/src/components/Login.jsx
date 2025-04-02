@@ -29,7 +29,7 @@ const Login = () => {
   // Create Mutation fro posting data
   const mutation = useMutation(
     (loginData) => {
-      const response = axios.post(`{backendUrl}/user/login`, loginData, {
+      const response = axios.post(`${backendUrl}/user/login`, loginData, {
         withCredentials: true,
       });
       return response;
