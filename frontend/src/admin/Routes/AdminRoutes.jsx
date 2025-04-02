@@ -3,7 +3,7 @@ import HomeDashboard from "../Pages/HomeDashboard/HomeDashboard";
 import AddAbout from "../Pages/addAbout/AddAbout";
 import ViewAbout from "../Pages/ViewAbout/ViewAbout";
 import AddEducationPgae from "../Pages/addEducation/AddEducationPgae";
-import ViewEducationPage from "../Pages/viewEducation/viewEducationPage";
+import ViewEducationPage from "../Pages/viewEducation/ViewEducationPage";
 import AddBlog from "../Pages/AddBlog/AddBlog";
 import ViewBlogs from "../Pages/ViewBlogs/ViewBlogs";
 import AddTestimonial from "../Pages/AddTestimonial/AddTestimonial";
