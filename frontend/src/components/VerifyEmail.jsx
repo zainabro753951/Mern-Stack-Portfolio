@@ -9,12 +9,13 @@ const VerifyEmail = () => {
   const navigate = useNavigate();
   const { token } = useParams();
   const [user, setUser] = useState(null);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const mutation = useMutation(
     async (token) => {
       try {
         const response = await axios.post(
-          `http://localhost:3000/user/verify-email/${token}`,
+          `${backendUrl}/user/verify-email/${token}`,
           null,
           {
             withCredentials: true,

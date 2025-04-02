@@ -21,13 +21,14 @@ export const SocketProvider = ({ children }) => {
   const { isUserAuthenticated } = useUserAuth();
   const { isAdminAuthenticated } = useAdminAuth();
   const socketRef = useRef(null); // Ref to track the current socket instance
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   // Effect to handle socket connection
   useEffect(() => {
     if (isUserAuthenticated && !socketRef.current) {
       setIsConnecting(true);
       // Initialize the socket connection
-      const socketInstance = io("http://localhost:3000/", {
+      const socketInstance = io(backendUrl, {
         withCredentials: true,
       });
 

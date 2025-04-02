@@ -13,6 +13,8 @@ import { BeatLoader } from "react-spinners";
 import { useUserAuth } from "../Context/UserAuthProvider";
 const Login = () => {
   const { setIsUserAuthenticated } = useUserAuth();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   const {
     register,
     handleSubmit,
@@ -27,13 +29,9 @@ const Login = () => {
   // Create Mutation fro posting data
   const mutation = useMutation(
     (loginData) => {
-      const response = axios.post(
-        "http://localhost:3000/user/login",
-        loginData,
-        {
-          withCredentials: true,
-        }
-      );
+      const response = axios.post(`{backendUrl}/user/login`, loginData, {
+        withCredentials: true,
+      });
       return response;
     },
     {

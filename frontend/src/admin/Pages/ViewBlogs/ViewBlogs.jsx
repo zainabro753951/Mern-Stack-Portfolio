@@ -10,13 +10,13 @@ import { toast } from "react-toastify";
 
 const ViewBlogs = () => {
   const { blogPosts, setBlogPosts } = useBlogPosts();
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   // Create Mutation for Delete Blog Post
   const mutation = useMutation(
     async (blogId) => {
       try {
         const response = await axios.put(
-          `http://localhost:3000/admin/delete_blog/${blogId}`,
+          `${backendUrl}/admin/delete_blog/${blogId}`,
           null,
           {
             withCredentials: true,
@@ -119,7 +119,7 @@ const ViewBlogs = () => {
                                   ).style.textDecoration = "none")
                                 }
                                 className="w-full h-full object-cover rounded-md"
-                                src={`http://localhost:3000/${post.featuredImage}`}
+                                src={`${backendUrl}/${post.featuredImage}`}
                                 alt=""
                               />
                             </Link>

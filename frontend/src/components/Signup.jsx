@@ -25,16 +25,12 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   // Create Mutation of posting data
   const mutation = useMutation(async (user) => {
-    const response = await axios.post(
-      "http://localhost:3000/user/signup",
-      user,
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.post(`${backendUrl}/user/signup`, user, {
+      withCredentials: true,
+    });
     return response;
   });
 

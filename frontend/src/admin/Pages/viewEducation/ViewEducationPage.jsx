@@ -11,11 +11,11 @@ import { PulseLoader } from "react-spinners";
 
 const ViewEducationPage = () => {
   const { educationData, setEducationData, isLoading } = GetEducation();
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   // Creating Mutation of Deleting
   const mutation = useMutation((id) => {
     const response = axios.delete(
-      `http://localhost:3000/admin/delete_education/${id}`,
+      `${backendUrl}/admin/delete_education/${id}`,
       {
         withCredentials: true,
       }

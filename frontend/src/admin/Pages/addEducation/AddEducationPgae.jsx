@@ -7,6 +7,7 @@ import { useMutation } from "react-query";
 import { toast, ToastContainer } from "react-toastify";
 
 const AddEducationPgae = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [degree, setDegree] = useState("");
   const [fieldOfStudy, setFieldOfStudy] = useState("");
   const [instituteName, setInstituteName] = useState("");
@@ -22,7 +23,7 @@ const AddEducationPgae = () => {
 
   const Mutation = useMutation((education) => {
     return axios.post(
-      "http://localhost:3000/admin/add_education",
+      `${backendUrl}/admin/add_education`,
       {
         education,
       },

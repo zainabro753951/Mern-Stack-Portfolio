@@ -9,6 +9,7 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 
 const AddProject = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const technologies = [
     "Select Technology",
     "HTML",
@@ -176,7 +177,7 @@ const AddProject = () => {
   // ========== Create Mutation ============
   const mutation = useMutation((FormData) => {
     const response = axios.post(
-      "http://localhost:3000/admin/add_project",
+      `${backendUrl}/admin/add_project`,
       FormData,
       {
         withCredentials: true,

@@ -2,13 +2,11 @@ import axios from "axios";
 import { useQuery } from "react-query";
 
 const GetEducation = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const fetchEducation = async () => {
-    const response = await axios.get(
-      "http://localhost:3000/admin/getEducation",
-      {
-        withCredentials: true,
-      }
-    );
+    const response = await axios.get(`${backendUrl}/admin/getEducation`, {
+      withCredentials: true,
+    });
     return response.data;
   };
 

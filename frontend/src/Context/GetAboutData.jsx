@@ -8,13 +8,13 @@ export const GetAboutData = () => useContext(AboutDataContext);
 
 export const GetAboutProvider = ({ children }) => {
   const [aboutData, setAboutData] = useState(null);
-
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const getData = useQuery(
     "aboutData",
     async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/admin/getAbout",
+          `${backendUrl}/admin/getAbout`,
           {
             withCredentials: true,
           }

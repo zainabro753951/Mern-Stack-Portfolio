@@ -15,11 +15,12 @@ export const GetChatBotConversation = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [sessionId, setSessionId] = useState(null);
   const [allConversations, setAllConversations] = useState([]);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const fetchDefaultConversation = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/user/deepseek/default_conversation",
+        `${backendUrl}/user/deepseek/default_conversation`,
         {
           withCredentials: true,
         }

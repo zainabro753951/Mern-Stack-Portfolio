@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useTestimonial } from "../../../Context/GetTestimonial";
 
 const AddTestimonial = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const { setTestimonialData } = useTestimonial();
   const [name, setName] = useState("");
   const [designation, setDesignation] = useState("");
@@ -19,7 +20,7 @@ const AddTestimonial = () => {
 
   const mutation = useMutation((formData) => {
     const response = axios.post(
-      "http://localhost:3000/admin/add_testimonial",
+      `${backendUrl}/admin/add_testimonial`,
       formData,
       {
         withCredentials: true,

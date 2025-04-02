@@ -10,6 +10,7 @@ import axios from "axios";
 
 const EditTestimonial = () => {
   const { id } = useParams();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [testimonial, setTestimonial] = useState({});
   const { testimonialData, setTestimonialData } = useTestimonial();
   useEffect(() => {
@@ -57,7 +58,7 @@ const EditTestimonial = () => {
 
   const mutation = useMutation((formData) => {
     const response = axios.put(
-      `http://localhost:3000/admin/edit_testimonial/${id}`,
+      `${backendUrl}/admin/edit_testimonial/${id}`,
       formData,
       {
         withCredentials: true,

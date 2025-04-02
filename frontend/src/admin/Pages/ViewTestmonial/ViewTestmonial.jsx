@@ -9,12 +9,13 @@ import axios from "axios";
 
 const ViewTestmonial = () => {
   const { testimonialData, setTestimonialData } = useTestimonial();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   // Create mutation for deleting testimonial data
   const mutation = useMutation(
     (id) => {
       const response = axios.put(
-        `http://localhost:3000/admin/delete_testimonial/${id}`,
+        `${backendUrl}/admin/delete_testimonial/${id}`,
         null,
         {
           withCredentials: true,
@@ -153,7 +154,7 @@ const ViewTestmonial = () => {
                               {data.profileImg ? (
                                 <img
                                   className="w-[3vw] h-[3vw] rounded-full"
-                                  src={`http://localhost:3000/${data.profileImg}`}
+                                  src={`${backendUrl}/${data.profileImg}`}
                                   alt=""
                                 />
                               ) : (

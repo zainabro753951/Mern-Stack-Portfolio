@@ -31,6 +31,7 @@ const AddBlog = () => {
   const [isSharing, setIsSharing] = useState(false);
   const [error, setError] = useState("");
   const [keywordError, setKeywordError] = useState("");
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   // ========== generate Slug URL ===========
   useEffect(() => {
@@ -81,16 +82,12 @@ const AddBlog = () => {
   };
 
   const mutation = useMutation((formData) => {
-    const response = axios.post(
-      "http://localhost:3000/admin/add_blog",
-      formData,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = axios.post(`${backendUrl}/admin/add_blog`, formData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response;
   });
 

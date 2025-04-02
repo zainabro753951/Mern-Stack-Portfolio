@@ -7,16 +7,14 @@ const getBlogCounts = () => {
   const { isAdminAuthenticated } = useAdminAuth();
   const [deletedBlogs, setDeletedBlogs] = useState(0);
   const [availableBlogs, setavailableBlogs] = useState(0);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const getBlogCounts = useQuery(
     "getBlogCounts",
     async () => {
-      const response = await axios.get(
-        "http://localhost:3000/admin/getBlogCounts",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`${backendUrl}/admin/getBlogCounts`, {
+        withCredentials: true,
+      });
       return response.data;
     },
     {

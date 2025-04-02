@@ -11,6 +11,7 @@ import axios from "axios";
 import { useBlogPosts } from "../../../Context/GetBlogs.jsx";
 
 const EditBlogForm = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const { setBlogPosts } = useBlogPosts();
   const location = useLocation();
   const [blogData, setBlogData] = useState(null);
@@ -129,16 +130,12 @@ const EditBlogForm = () => {
   };
 
   const mutation = useMutation((formData) => {
-    const response = axios.put(
-      "http://localhost:3000/admin/update_blog",
-      formData,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = axios.put(`${backendUrl}/admin/update_blog`, formData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response;
   });
 

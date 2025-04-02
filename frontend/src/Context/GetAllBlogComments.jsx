@@ -12,12 +12,13 @@ export const GetAllBlogComments = ({ children }) => {
   const [allBlogComments, setAllBlogComments] = useState([]);
   const { socket } = useSocketContext();
   const { isUserAuthenticated } = useUserAuth();
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const getAllBlogComments = useQuery(
     "allBlogComments",
     async () => {
       const response = await axios.get(
-        "http://localhost:3000/user/blog/all_comments",
+        `${backendUrl}/user/blog/all_comments`,
         {
           withCredentials: true,
         }

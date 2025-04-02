@@ -6,6 +6,7 @@ import HireMeBtn from "../../../../components/HireMeBtn";
 import { useMutation } from "react-query";
 import { toast, ToastContainer } from "react-toastify";
 const AddAboutForm = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [aboutHeadline, setAboutHeadline] = useState("");
@@ -38,7 +39,7 @@ const AddAboutForm = () => {
   };
 
   const mutation = useMutation((formData) => {
-    return axios.post("http://localhost:3000/admin/add_about", formData, {
+    return axios.post(`${backendUrl}/admin/add_about`, formData, {
       withCredentials: true,
       headers: {
         "Content-Type": "multipart/form-data",

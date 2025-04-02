@@ -9,12 +9,13 @@ const GetProject = ({ children }) => {
   const { isAdminAuthenticated } = useAdminAuth();
   const [projects, setProjects] = useState("");
   const queryClient = useQueryClient();
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const getProjectsData = useQuery(
     "projectData",
     async () => {
       const response = await axios.get(
-        "http://localhost:3000/admin/getProjects",
+        `${backendUrl}/admin/getProjects`,
         {
           withCredentials: true,
         }

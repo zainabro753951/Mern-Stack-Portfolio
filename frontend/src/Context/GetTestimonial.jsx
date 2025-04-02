@@ -9,13 +9,15 @@ export const GetTestimonial = ({ children }) => {
   const { isAdminAuthenticated } = useAdminAuth();
   const [testimonialData, setTestimonialData] = useState([]);
   const queryClient = useQueryClient();
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
   // Getting Testimonial Data with useQuery Hook
   const getData = useQuery(
     "testimonialData",
     async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3000/admin/getTestimonial",
+          `${backendUrl}/admin/getTestimonial`,
           {
             withCredentials: true,
           }

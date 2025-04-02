@@ -1,6 +1,7 @@
 import React from "react";
 
 const TestimonialCard = ({ data }) => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   console.log(data);
 
   return (
@@ -11,7 +12,7 @@ const TestimonialCard = ({ data }) => {
       <div className="w-full lg:h-[16vw] sm:w-full sm:h-full">
         <img
           className="sm:rounded-l-[2vw] lg:w-full lg:h-full xs:rounded-full sm:rounded-none object-cover sm:h-full sm:w-full xs:w-[50vw] xs:h-[50vw] lg:-translate-x-20"
-          src={`http://localhost:3000/${data.profileImg}`}
+          src={`${backendUrl}/${data.profileImg}`}
           alt=""
         />
       </div>

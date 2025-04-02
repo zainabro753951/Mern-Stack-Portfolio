@@ -6,10 +6,11 @@ import { useAdminAuth } from "./AdminAuthProvider";
 const GetAllUsers = () => {
   const { isAdminAuthenticated } = useAdminAuth();
   const [users, setUsers] = useState([]);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const getUsers = useQuery(
     "getUsers",
     async () => {
-      const response = await axios.get("http://localhost:3000/admin/getUsers", {
+      const response = await axios.get(`${backendUrl}/admin/getUsers`, {
         withCredentials: true,
       });
       return response.data;

@@ -15,6 +15,7 @@ import { useMutation } from "react-query";
 
 // Main component
 const ViewAbout = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const { aboutData, setAboutData } = GetAboutData();
   const [firstName, setFirstName] = useState(
     aboutData ? aboutData.firstName : ""
@@ -42,7 +43,7 @@ const ViewAbout = () => {
     aboutData ? aboutData.profileImg : ""
   );
   const [imagePreview, setImagePreview] = useState(
-    aboutData ? `http://localhost:3000/${aboutData.profileImg}` : ""
+    aboutData ? `${backendUrl}/${aboutData.profileImg}` : ""
   );
 
   const [about, setAbout] = useState(aboutData ? aboutData.about : "");
@@ -82,7 +83,7 @@ const ViewAbout = () => {
       setBehance(aboutData.behance);
       setLinkedIn(aboutData.linkedIn);
       setProfileImg(aboutData.profileImg);
-      setImagePreview(`http://localhost:3000/${aboutData.profileImg}`);
+      setImagePreview(`${backendUrl}/${aboutData.profileImg}`);
       setAboutHeadline(aboutData.aboutHeadline);
       if (aboutData.hobbies && aboutData.hobbies.length > 0) {
         aboutData.hobbies.filter((item) => {
@@ -93,16 +94,12 @@ const ViewAbout = () => {
   }, [aboutData]);
 
   const mutation = useMutation((formData) => {
-    const response = axios.put(
-      "http://localhost:3000/admin/update_about",
-      formData,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = axios.put("${backendUrl}/admin/update_about", formData, {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response;
   });
   const handleSave = (e) => {

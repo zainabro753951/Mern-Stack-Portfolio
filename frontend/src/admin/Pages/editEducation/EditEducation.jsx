@@ -21,6 +21,7 @@ const EditEducation = () => {
   const [eduStatus, setEduStatus] = useState("");
   const [grade, setGrade] = useState("");
   const [certificate, setCertificate] = useState("");
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     if (educationData) {
@@ -49,7 +50,7 @@ const EditEducation = () => {
   // ========== Create mutation ============
   const mutation = useMutation((editEducation) => {
     const response = axios.put(
-      "http://localhost:3000/admin/update_education",
+      `${backendUrl}/admin/update_education`,
       editEducation,
       {
         withCredentials: true,

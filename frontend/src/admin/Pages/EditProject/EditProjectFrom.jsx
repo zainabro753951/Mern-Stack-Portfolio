@@ -11,6 +11,7 @@ import { useProjects } from "../../../Context/GetProject";
 import { useParams } from "react-router-dom";
 
 const EditProjectFrom = () => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const { projects, setProjects } = useProjects();
   const [project, setProject] = useState({});
   const { id } = useParams();
@@ -235,7 +236,7 @@ const EditProjectFrom = () => {
   // ========== Create Mutation ============
   const mutation = useMutation((FormData) => {
     const response = axios.put(
-      `http://localhost:3000/admin/update_project/${id}`,
+      `${backendUrl}/admin/update_project/${id}`,
       FormData,
       {
         withCredentials: true,

@@ -18,12 +18,13 @@ export const GetAllBlogCommentNoti = ({ children }) => {
   const { socket } = useSocketContext();
   const [audioEnabled, setAudioEnabled] = useState(false);
   const [notificationSound, setNotificationSound] = useState(null);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const getCommentNotificaionts = useQuery(
     "getBlogCommentNotification",
     async () => {
       const response = await axios.get(
-        "http://localhost:3000/admin/get_blog_comments_notification",
+        `${backendUrl}/admin/get_blog_comments_notification`,
         {
           withCredentials: true,
         }

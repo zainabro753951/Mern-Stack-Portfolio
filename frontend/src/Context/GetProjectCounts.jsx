@@ -7,16 +7,14 @@ const GetProjectCounts = () => {
   const { isAdminAuthenticated } = useAdminAuth();
   const [deletedProjects, setDeletedProjects] = useState(0);
   const [availableProjects, setAvailableProjects] = useState(0);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const getProjectCounts = useQuery(
     "getProjectCounts",
     async () => {
-      const response = await axios.get(
-        "http://localhost:3000/admin/getProjectCounts",
-        {
-          withCredentials: true,
-        }
-      );
+      const response = await axios.get(`${backendUrl}/admin/getProjectCounts`, {
+        withCredentials: true,
+      });
       return response.data;
     },
     {

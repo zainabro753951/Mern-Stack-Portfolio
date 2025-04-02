@@ -19,21 +19,19 @@ export const GetBlogs = ({ children }) => {
   const { isAdminAuthenticated } = useAdminAuth();
   const { isUserAuthenticated } = useUserAuth();
   const [blogPosts, setBlogPosts] = useState([]);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const queryClient = useQueryClient();
 
   // Memoize the fetch function to prevent unnecessary re-renders
   const fetchBlogPosts = useMemo(
     () => async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/admin/getBlogData",
-          {
-            withCredentials: true,
-            headers: {
-              "Cache-Control": "max-age=7200",
-            },
-          }
-        );
+        const response = await axios.get(`${backendUrl}/admin/getBlogData`, {
+          withCredentials: true,
+          headers: {
+            "Cache-Control": "max-age=7200",
+          },
+        });
         return response.data;
       } catch (error) {
         console.error("Error fetching blog posts:", error);

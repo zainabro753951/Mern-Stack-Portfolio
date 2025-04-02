@@ -6,7 +6,7 @@ import { useProjects } from "../../../Context/GetProject";
 
 const ViewProject = () => {
   const { projects, setProjects } = useProjects();
-  console.log(projects);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   return (
     <div className="h-screen w-full overflow-hidden flex p-2 gap-2 bg-gray-200">
@@ -61,7 +61,7 @@ const ViewProject = () => {
                               ).style.textDecoration = "none")
                             }
                             className="w-full h-full object-cover rounded-md"
-                            src={`http://localhost:3000/${project.poster}`}
+                            src={`${backendUrl}/${project.poster}`}
                             alt=""
                           />
                         </Link>
