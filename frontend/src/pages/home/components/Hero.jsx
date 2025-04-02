@@ -1,9 +1,9 @@
 let icons = [
-  "../../../../public/imgs/LInks/facebook.png",
-  "../../../../public/imgs/LInks/youtube.png",
-  "../../../../public/imgs/LInks/email.png",
-  "../../../../public/imgs/LInks/behance.png",
-  "../../../../public/imgs/LInks/linkedin.png",
+  "/imgs/LInks/facebook.png",
+  "/imgs/LInks/youtube.png",
+  "/imgs/LInks/email.png",
+  "/imgs/LInks/behance.png",
+  "/imgs/LInks/linkedin.png",
 ];
 
 import React, { useState, useRef, useEffect } from "react";

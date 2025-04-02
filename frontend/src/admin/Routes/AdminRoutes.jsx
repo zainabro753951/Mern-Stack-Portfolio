@@ -1,21 +1,39 @@
-import React from "react";
-import HomeDashboard from "../Pages/HomeDashboard/HomeDashboard";
-import AddAbout from "../Pages/addAbout/AddAbout";
-import ViewAbout from "../Pages/ViewAbout/ViewAbout";
-import AddEducationPgae from "../Pages/addEducation/AddEducationPgae";
-import ViewEducationPage from "../Pages/viewEducation/ViewEducationPage";
-import AddBlog from "../Pages/AddBlog/AddBlog";
-import ViewBlogs from "../Pages/ViewBlogs/ViewBlogs";
-import AddTestimonial from "../Pages/AddTestimonial/AddTestimonial";
-import ViewTestmonial from "../Pages/ViewTestmonial/ViewTestmonial";
-import AddProject from "../Pages/AddProject/AddProject";
-import ViewProject from "../Pages/ViewProject/ViewProject";
-import EditEducation from "../Pages/editEducation/EditEducation";
-import EditBlogs from "../Pages/EditBlogs/EditBlogs";
-import EditBlogForm from "../Pages/EditBlogFrom/EditBlogForm";
-import EditTestimonial from "../Pages/editTestimonial/EditTestimonial";
-import EditProject from "../Pages/EditProject/EditProject";
-import EditProjectFrom from "../Pages/EditProject/EditProjectFrom";
+import { lazy } from "react";
+
+// Lazy load all admin components
+const HomeDashboard = lazy(() =>
+  import("../Pages/HomeDashboard/HomeDashboard")
+);
+const AddAbout = lazy(() => import("../Pages/addAbout/AddAbout"));
+const ViewAbout = lazy(() => import("../Pages/ViewAbout/ViewAbout"));
+const AddEducationPgae = lazy(() =>
+  import("../Pages/addEducation/AddEducationPgae")
+);
+const ViewEducationPage = lazy(() =>
+  import("../Pages/viewEducation/ViewEducationPage")
+);
+const AddBlog = lazy(() => import("../Pages/AddBlog/AddBlog"));
+const ViewBlogs = lazy(() => import("../Pages/ViewBlogs/ViewBlogs"));
+const AddTestimonial = lazy(() =>
+  import("../Pages/AddTestimonial/AddTestimonial")
+);
+const ViewTestmonial = lazy(() =>
+  import("../Pages/ViewTestmonial/ViewTestmonial")
+);
+const AddProject = lazy(() => import("../Pages/AddProject/AddProject"));
+const ViewProject = lazy(() => import("../Pages/ViewProject/ViewProject"));
+const EditEducation = lazy(() =>
+  import("../Pages/editEducation/EditEducation")
+);
+const EditBlogs = lazy(() => import("../Pages/EditBlogs/EditBlogs"));
+const EditBlogForm = lazy(() => import("../Pages/EditBlogFrom/EditBlogForm"));
+const EditTestimonial = lazy(() =>
+  import("../Pages/editTestimonial/EditTestimonial")
+);
+const EditProject = lazy(() => import("../Pages/EditProject/EditProject"));
+const EditProjectFrom = lazy(() =>
+  import("../Pages/EditProject/EditProjectFrom")
+);
 
 export const adminRoutes = [
   {
