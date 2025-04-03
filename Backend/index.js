@@ -19,7 +19,7 @@ import cookieParser from "cookie-parser";
 const corsOptions = {
   origin:
     process.env.NODE_ENV === "development"
-      ? ["http://localhost:5173"]
+      ? "http://localhost:5173"
       : [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT2],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
   allowedHeaders: [
@@ -27,11 +27,19 @@ const corsOptions = {
     "Authorization",
     "Cache-Control",
     "Set-Cookie",
+    "Accept",
+    "X-Requested-With",
   ],
-  exposedHeaders: ["Set-Cookie"],
+  exposedHeaders: [
+    "Set-Cookie",
+    "Authorization",
+    "Content-Length",
+    "X-Request-ID",
+  ],
   credentials: true,
   optionsSuccessStatus: 200,
-  maxAge: 3600,
+  maxAge: 86400,
+  preflightContinue: true,
 };
 
 app.use(cors(corsOptions));
@@ -52,7 +60,7 @@ try {
 
 // Middleware
 app.use(express.json());
-app.use(cookieParser(process.env.JWT_KEY));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "upload/")));
 

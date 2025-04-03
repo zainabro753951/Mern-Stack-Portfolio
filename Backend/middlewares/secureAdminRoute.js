@@ -3,7 +3,8 @@ import adminModel from "../Models/admin.model.js";
 
 const secureAdminRoute = async (req, res, next) => {
   try {
-    const token = req.cookies.admintoken;
+    const token = req.signedCookies.admintoken;
+    console.log(token);
 
     if (!token) {
       return res.status(401).json({ msg: "No token, found" });

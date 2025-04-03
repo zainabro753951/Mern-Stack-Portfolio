@@ -7,8 +7,6 @@ const getTestimonial = async (req, res) => {
       .lean() // Convert to plain JS object for faster serialization
       .catch(300); // Cache results for 5 minutes;
 
-    console.log(testimonial);
-
     res.status(200).json(testimonial);
   } catch (error) {
     console.log(error);

@@ -3,9 +3,6 @@ dotenv.config();
 import { Server } from "socket.io";
 import { createServer } from "http";
 import express from "express";
-import { getAdminId } from "../admin/config.js";
-import { BlogCommentNotification } from "../Models/blog.model.js";
-import { pendingNotifications } from "../Controller/UserControllers/SendComment.controller.js";
 const app = express();
 const server = createServer(app);
 const port = process.env.PORT;
@@ -13,13 +10,20 @@ const port = process.env.PORT;
 const ioOptions = {
   cors: {
     origin:
-      process.env.NODE_ENV === "production"
-        ? [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT]
-        : "http://localhost:3000",
+      process.env.NODE_ENV === "development"
+        ? ["http://localhost:5173"]
+        : [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT],
 
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Cache-Control",
+      "Set-Cookie",
+      "Accept",
+      "X-Requested-With",
+    ],
   },
   connectionStateRecovery: {
     maxDisconnectionDuration: 2 * 60 * 1000,

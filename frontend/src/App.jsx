@@ -28,7 +28,6 @@ const ChatBot = lazy(() => import("./pages/AI ChatBot/ChatBot"));
 const App = () => {
   const { isLoading, isUserAuthenticated } = useUserAuth();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  console.log(backendUrl);
 
   return (
     <>
