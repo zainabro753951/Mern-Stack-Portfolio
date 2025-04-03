@@ -4,6 +4,7 @@ import { app, server } from "./Socket/server.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
+import rateLimit from "express-rate-limit";
 import admin from "./Routes/AdminRoutes/admin.route.js";
 import Insert from "./Routes/AdminRoutes/Insert.route.js";
 import getData from "./Routes/AdminRoutes/getData.route.js";
@@ -13,6 +14,9 @@ import likes from "./Routes/UserRoutes/likes.router.js";
 import DeepSeek from "./Routes/UserRoutes/DeepSeek.route.js";
 import commentsRoute from "./Routes/UserRoutes/comments.route.js";
 import cookieParser from "cookie-parser";
+import helmet from "helmet";
+import compression from "compression";
+import morgan from "morgan";
 
 // Dotenv Config
 
@@ -80,8 +84,25 @@ try {
 // Middleware
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(morgan("dev")); // Or 'tiny' for less verbose logging
+app.use(compression());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "upload/")));
+app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "trusted-cdn.com"],
+      // Add other directives as needed
+    },
+  })
+);
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
+app.use(limiter);
 
 // Admin Routes
 app.use(admin);
@@ -99,3 +120,16 @@ app.use(commentsRoute);
 app.use(DeepSeek);
 
 app.use(likes);
+
+// After all routes
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Something went wrong!" });
+});
+
+// Handle unhandled promise rejections
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled Rejection:", err);
+  // Optionally exit the process
+  // process.exit(1);
+});

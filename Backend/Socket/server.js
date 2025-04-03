@@ -49,7 +49,8 @@ const ioOptions = {
     skipMiddlewares: true, // Improves recovery performance
   },
   // Production-specific optimizations
-  transports: ["websocket", "polling"], // Explicitly specify transports
+  transports: ["websocket"], // Explicitly specify transports
+  serveClient: false, // Don't serve client files
   perMessageDeflate: {
     threshold: 1024, // Size threshold for compression
     zlibDeflateOptions: {
