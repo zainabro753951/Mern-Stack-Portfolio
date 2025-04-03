@@ -19,7 +19,7 @@ import cookieParser from "cookie-parser";
 const corsOptions = {
   origin:
     process.env.NODE_ENV === "development"
-      ? "http://localhost:5173"
+      ? ["http://localhost:5173"]
       : [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT2],
   credentials: true, // REQUIRED for cookies
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],

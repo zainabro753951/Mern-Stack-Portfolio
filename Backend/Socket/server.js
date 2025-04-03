@@ -14,7 +14,6 @@ const ioOptions = {
         ? ["http://localhost:5173"]
         : [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT2],
     credentials: true, // REQUIRED for cookies
-
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: [
       "Content-Type",
@@ -39,16 +38,6 @@ const ioOptions = {
   },
   pingTimeout: 60000, // 60 seconds
   pingInterval: 25000, // 25 seconds
-  cookie:
-    process.env.NODE_ENV === "production"
-      ? {
-          name: "io",
-          httpOnly: true,
-          path: "/",
-          secure: true,
-          sameSite: "none",
-        }
-      : false,
 };
 
 const io = new Server(server, ioOptions);
