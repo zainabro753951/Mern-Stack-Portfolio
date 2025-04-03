@@ -16,17 +16,22 @@ import cookieParser from "cookie-parser";
 
 // Dotenv Config
 
-// Cors configuration
 const corsOptions = {
-  origin: [
-    process.env.FRONTEND_PORT,
-    "http://localhost:5173", // for development
-    process.env.FRONTEND_PORT2,
+  origin:
+    process.env.NODE_ENV === "development"
+      ? ["http://localhost:5173"]
+      : [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT2],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "Cache-Control",
+    "Set-Cookie",
   ],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "Cache-Control"],
+  exposedHeaders: ["Set-Cookie"],
   credentials: true,
   optionsSuccessStatus: 200,
+  maxAge: 3600,
 };
 
 app.use(cors(corsOptions));
