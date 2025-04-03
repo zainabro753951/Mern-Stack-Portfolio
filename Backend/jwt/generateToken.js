@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 export const createTokenAndSaveCookie = (data, key, res) => {
   try {
     const token = jwt.sign({ data }, process.env.JWT_KEY, {
-      expiresIn: "2d",
+      expiresIn: "15m",
     });
     res.cookie(key, token, {
       httpOnly: true, // Prevent XSS

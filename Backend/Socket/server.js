@@ -12,13 +12,39 @@ const port = process.env.PORT;
 
 const ioOptions = {
   cors: {
-    origin: process.env.FRONTEND_PORT,
+    origin:
+      process.env.NODE_ENV === "production"
+        ? [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT]
+        : "http://localhost:3000",
+
     methods: ["GET", "POST"],
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
   },
   connectionStateRecovery: {
     maxDisconnectionDuration: 2 * 60 * 1000,
+    skipMiddlewares: true, // Improves recovery performance
   },
+  // Production-specific optimizations
+  transports: ["websocket", "polling"], // Explicitly specify transports
+  perMessageDeflate: {
+    threshold: 1024, // Size threshold for compression
+    zlibDeflateOptions: {
+      level: 3, // Compression level (1-9)
+    },
+  },
+  pingTimeout: 60000, // 60 seconds
+  pingInterval: 25000, // 25 seconds
+  cookie:
+    process.env.NODE_ENV === "production"
+      ? {
+          name: "io",
+          httpOnly: true,
+          path: "/",
+          secure: true,
+          sameSite: "none",
+        }
+      : false,
 };
 
 const io = new Server(server, ioOptions);

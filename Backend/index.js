@@ -18,11 +18,15 @@ import cookieParser from "cookie-parser";
 
 // Cors configuration
 const corsOptions = {
-  origin: process.env.FRONTEND_PORT,
+  origin: [
+    process.env.FRONTEND_PORT,
+    "http://localhost:5173", // for development
+    process.env.FRONTEND_PORT2,
+  ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true, // if you need cookies/auth
-  maxAge: 86400, // cache preflight requests for 1 day
+  allowedHeaders: ["Content-Type", "Authorization", "Cache-Control"],
+  credentials: true,
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
@@ -43,7 +47,7 @@ try {
 
 // Middleware
 app.use(express.json());
-app.use(cookieParser());
+app.use(cookieParser(process.env.JWT_KEY));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "upload/")));
 
