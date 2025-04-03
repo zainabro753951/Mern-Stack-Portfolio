@@ -84,7 +84,7 @@ try {
 // Middleware
 app.use(express.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(morgan("dev")); // Or 'tiny' for less verbose logging
+app.use(morgan("combined")); // Or 'tiny' for less verbose logging
 app.use(compression());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "upload/")));
