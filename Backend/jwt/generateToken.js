@@ -6,11 +6,11 @@ export const createTokenAndSaveCookie = (data, key, res) => {
       expiresIn: "15m",
     });
     res.cookie(key, token, {
-      httpOnly: true, // Prevent XSS
-      secure: true, // HTTPS only
-      sameSite: "Strict", // or 'Lax' for cross-site
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // HTTPS only in production
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Adjust for cross-site
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
       path: "/",
-      maxAge: 900000, // 15 minutes in ms
       signed: true,
     });
     return token;
