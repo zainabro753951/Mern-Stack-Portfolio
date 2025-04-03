@@ -21,6 +21,7 @@ const corsOptions = {
     process.env.NODE_ENV === "development"
       ? "http://localhost:5173"
       : [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT2],
+  credentials: true, // REQUIRED for cookies
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
   allowedHeaders: [
     "Content-Type",
@@ -36,7 +37,6 @@ const corsOptions = {
     "Content-Length",
     "X-Request-ID",
   ],
-  credentials: true,
   optionsSuccessStatus: 200,
   maxAge: 86400,
   preflightContinue: true,
