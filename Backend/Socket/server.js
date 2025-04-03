@@ -7,12 +7,32 @@ const app = express();
 const server = createServer(app);
 const port = process.env.PORT;
 
+const allowedOrigins = [
+  process.env.FRONTEND_PORT,
+  process.env.FRONTEND_PORT2,
+  "http://localhost:5173",
+  /\.vercel\.app$/,
+];
+
 const ioOptions = {
   cors: {
-    origin:
-      process.env.NODE_ENV === "development"
-        ? ["http://localhost:5173"]
-        : [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT2],
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+
+      if (
+        allowedOrigins.some((allowedOrigin) => {
+          if (typeof allowedOrigin === "string") {
+            return origin === allowedOrigin;
+          } else {
+            return allowedOrigin.test(origin);
+          }
+        })
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true, // REQUIRED for cookies
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: [

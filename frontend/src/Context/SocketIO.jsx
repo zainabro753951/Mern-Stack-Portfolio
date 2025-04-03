@@ -21,7 +21,7 @@ export const SocketProvider = ({ children }) => {
   const { isUserAuthenticated } = useUserAuth();
   const { isAdminAuthenticated } = useAdminAuth();
   const socketRef = useRef(null); // Ref to track the current socket instance
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   // Effect to handle socket connection
   useEffect(() => {
@@ -30,6 +30,7 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
       // Initialize the socket connection
       const socketInstance = io(backendUrl, {
         withCredentials: true,
+        transports: ["websocket", "polling"],
       });
 
       // Set the socket state and ref
