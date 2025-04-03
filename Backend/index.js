@@ -23,49 +23,50 @@ import morgan from "morgan";
 const allowedOrigins = [
   process.env.FRONTEND_PORT,
   process.env.FRONTEND_PORT2,
-  "http://localhost:5173",
-  /\.vercel\.app$/,
-];
+].filter(Boolean);
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-
-    if (
-      allowedOrigins.some((allowedOrigin) => {
-        if (typeof allowedOrigin === "string") {
-          return origin === allowedOrigin;
-        } else {
-          return allowedOrigin.test(origin);
-        }
-      })
-    ) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin && process.env.NODE_ENV === "development") {
+      return callback(null, true);
     }
+
+    // Check if origin is in allowedOrigins
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    // Check for subdomains and special cases
+    if (
+      origin?.endsWith(".vercel.app") ||
+      origin?.endsWith(".yourdomain.com")
+    ) {
+      return callback(null, true);
+    }
+
+    callback(new Error(`CORS not allowed for origin: ${origin}`));
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
   allowedHeaders: [
     "Content-Type",
     "Authorization",
-    "Cache-Control",
-    "Set-Cookie",
-    "Accept",
     "X-Requested-With",
-  ],
-  exposedHeaders: [
+    "Accept",
     "Set-Cookie",
-    "Authorization",
-    "Content-Length",
-    "X-Request-ID",
   ],
-  optionsSuccessStatus: 200,
-  maxAge: 86400,
+  exposedHeaders: ["Set-Cookie", "Authorization"],
+  maxAge: 86400, // 24 hours
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
 };
 
+// Apply CORS middleware
 app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options("*", cors(corsOptions));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
