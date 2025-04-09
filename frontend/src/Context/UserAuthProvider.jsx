@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import CheckUserAuth from "../Secure/CheckUserAuth.js";
 import useCheckUserAuth from "../Secure/CheckUserAuth.js";
 
 export const UserAuthContext = createContext();

@@ -4,7 +4,7 @@ import DashboardLeft from "../../components/DashboardLeft";
 import AdminHeader from "../../components/AdminHeader";
 import { Link } from "react-router-dom";
 import { useTestimonial } from "../../../Context/GetTestimonial";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
 const ViewTestmonial = () => {
@@ -12,8 +12,8 @@ const ViewTestmonial = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   // Create mutation for deleting testimonial data
-  const mutation = useMutation(
-    (id) => {
+  const mutation = useMutation({
+    mutationFn: (id) => {
       const response = axios.put(
         `${backendUrl}/admin/delete_testimonial/${id}`,
         null,
@@ -23,19 +23,18 @@ const ViewTestmonial = () => {
       );
       return response;
     },
-    {
-      onSuccess: (data) => {
-        const newTesti = data.data.result;
-        setTestimonialData(
-          (prev) =>
-            prev &&
-            prev.map((item) =>
-              item._id === newTesti._id ? { ...item, ...newTesti } : item
-            )
-        );
-      },
-    }
-  );
+
+    onSuccess: (data) => {
+      const newTesti = data.data.result;
+      setTestimonialData(
+        (prev) =>
+          prev &&
+          prev.map((item) =>
+            item._id === newTesti._id ? { ...item, ...newTesti } : item
+          )
+      );
+    },
+  });
 
   const handleDeleteTesti = (id) => {
     if (id) {

@@ -4,7 +4,7 @@ import { IoCameraReverse, IoLocationSharp } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { toast, ToastContainer } from "react-toastify";
 
 const ProfilePopup = ({ isOpen, onClose }) => {

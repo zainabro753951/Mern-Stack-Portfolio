@@ -4,7 +4,7 @@ import AdminHeader from "../../components/AdminHeader";
 import GetEducation from "../../../Context/GetEducation";
 import HireMeBtn from "../../../components/HireMeBtn";
 import { Link } from "react-router-dom";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { PulseLoader } from "react-spinners";

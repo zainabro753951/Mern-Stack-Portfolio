@@ -1,67 +1,71 @@
 import axios from "axios";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import React, { createContext, useContext, useEffect } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAdminAuth } from "./AdminAuthProvider";
 
 export const TestimonialContext = createContext();
 
-export const GetTestimonial = ({ children }) => {
+export const TestimonialProvider = ({ children }) => {
   const { isAdminAuthenticated } = useAdminAuth();
-  const [testimonialData, setTestimonialData] = useState([]);
   const queryClient = useQueryClient();
-const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  // Getting Testimonial Data with useQuery Hook
-  const getData = useQuery(
-    "testimonialData",
-    async () => {
-      try {
-        const response = await axios.get(
-          `${backendUrl}/admin/getTestimonial`,
-          {
-            withCredentials: true,
-          }
-        );
-        return response.data;
-      } catch (error) {
-        throw new Error("Failed to fetch testimonial data");
-      }
-    },
-    {
-      retry: 3,
-      retryDelay: 1000,
-      staleTime: 0, // Always consider data stale
-      cacheTime: 7_200_000,
-      refetchOnMount: true, // Always refetch when component mounts
-      refetchOnWindowFocus: false, // Disable refetch on window focus
-      initialData: [], // Provide initial empty array
-      onSuccess: (data) => {
-        setTestimonialData(data);
-      },
-      onError: (error) => {
-        console.error("Error fetching testimonial data:", error);
-      },
+  const fetchTestimonials = async () => {
+    try {
+      const response = await axios.get(`${backendUrl}/admin/getTestimonial`, {
+        withCredentials: true,
+        timeout: 10000, // 10 second timeout
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Testimonial fetch error:", error);
+      throw new Error(
+        error.response?.data?.message ||
+          "Failed to fetch testimonials. Please try again later."
+      );
     }
-  );
+  };
+
+  const {
+    data: testimonialData = [],
+    isLoading,
+    isError,
+    error,
+    isFetching,
+  } = useQuery({
+    queryKey: ["testimonialData"],
+    queryFn: fetchTestimonials,
+    enabled: isAdminAuthenticated,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    gcTime: 15 * 60 * 1000, // 15 minutes
+    retry: 2, // Retry twice on failure
+    refetchOnWindowFocus: true,
+  });
 
   useEffect(() => {
     if (isAdminAuthenticated) {
-      queryClient.invalidateQueries("testimonialData");
+      queryClient.invalidateQueries({ queryKey: ["testimonialData"] });
     }
   }, [isAdminAuthenticated, queryClient]);
-  console.log(testimonialData);
+
+  const contextValue = {
+    testimonialData,
+    isLoading: isLoading || isFetching,
+    isError,
+    error,
+  };
 
   return (
-    <TestimonialContext.Provider
-      value={{
-        testimonialData,
-        setTestimonialData,
-        isLoading: getData.isFetching || getData.isLoading,
-      }}
-    >
+    <TestimonialContext.Provider value={contextValue}>
       {children}
     </TestimonialContext.Provider>
   );
 };
 
-export const useTestimonial = () => useContext(TestimonialContext);
+export const useTestimonial = () => {
+  const context = useContext(TestimonialContext);
+  if (!context) {
+    throw new Error("useTestimonial must be used within a TestimonialProvider");
+  }
+  return context;
+};

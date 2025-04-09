@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../../../components/Button";
 import { IoSend } from "react-icons/io5";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useUserAuth } from "../../../../Context/UserAuthProvider";
 import { useSocketContext } from "../../../../Context/SocketIO";
@@ -14,8 +14,8 @@ const CommentInputAvator = ({ blogId, setAllBlogComments, logedInUser }) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   // Create Mutation of Sending Comments /user/blog/comment
-  const mutation = useMutation(
-    async (commentData) => {
+  const mutation = useMutation({
+    mutationFn: async (commentData) => {
       try {
         const response = await axios.post(
           `${backendUrl}/user/blog/comment`,
@@ -29,21 +29,19 @@ const CommentInputAvator = ({ blogId, setAllBlogComments, logedInUser }) => {
         throw error;
       }
     },
-    {
-      enabled: isUserAuthenticated,
-      retry: 3,
-      onSuccess: (data) => {
-        setComment("");
-      },
-      onError: (error) => {
-        console.error(error);
-        setError("Failed to send comment");
-      },
-      onMutate: () => {
-        setError("");
-      },
-    }
-  );
+
+    enabled: isUserAuthenticated,
+    onSuccess: (data) => {
+      setComment("");
+    },
+    onError: (error) => {
+      console.error(error);
+      setError("Failed to send comment");
+    },
+    onMutate: () => {
+      setError("");
+    },
+  });
 
   useEffect(() => {
     if (isUserAuthenticated || socket) {

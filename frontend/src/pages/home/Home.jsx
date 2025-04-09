@@ -11,14 +11,14 @@ import MobileHeader from "../../components/MobileHeader";
 import CustomeCursor from "../../components/CustomeCursor";
 import { useAdminAuth } from "../../Context/AdminAuthProvider";
 import ChatbotButton from "../../components/ChatbotButton";
-import { GetAboutData } from "../../Context/GetAboutData";
+import { useAboutData } from "../../Context/GetAboutData";
 import PageProgressBar from "../../components/PageProgressBar";
 
 const Home = () => {
   const { isAdminAuthenticated } = useAdminAuth();
   console.log(isAdminAuthenticated);
 
-  const { aboutData, isLoading } = GetAboutData();
+  const { aboutData, isLoading } = useAboutData();
 
   return (
     <>

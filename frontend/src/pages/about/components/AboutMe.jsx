@@ -2,12 +2,12 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import React, { useRef } from "react";
-import { GetAboutData } from "../../../Context/GetAboutData";
+import { useAboutData } from "../../../Context/GetAboutData";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const AboutMe = () => {
-  const { aboutData, isLoading } = GetAboutData();
+  const { aboutData, isLoading } = useAboutData();
   const aboutPic = useRef(null);
   const aboutText = useRef(null);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -121,7 +121,7 @@ const AboutMe = () => {
                 >
                   <img
                     className=" w-full h-full object-cover rounded-2xl"
-                    src={`${backendUrl}/${aboutData.profileImg}`}
+                    src={`${backendUrl}/${aboutData?.profileImg || null}`}
                     loading="lazy"
                     alt=""
                   />
@@ -141,14 +141,14 @@ const AboutMe = () => {
                     style={{ willChange: "transform, opacity" }}
                     className="lg:text-[2.7vw] md:text-[3.3vw] xs:text-[4.6vw] font-semibold lg:leading-[3.3vw] md:leading-[4.1vw] xs:leading-[5.1vw] font-lexend_deca tracking-wide"
                   >
-                    {aboutData.aboutHeadline}
+                    {aboutData?.aboutHeadline || null}
                   </h2>
                 </div>
                 <p
                   style={{ willChange: "scale, opacity" }}
                   className="lg:text-[1.3vw] blured md:text-[2.3vw] xs:text-[3.6vw] lg:leading-[1.9vw] md:leading-[2.9vw] xs:leading-[4.2vw] text-gray-500 font-jost"
                 >
-                  {aboutData.about}
+                  {aboutData?.about || null}
                 </p>
                 <h3
                   style={{ willChange: "scale, opacity" }}
@@ -167,7 +167,7 @@ const AboutMe = () => {
                     style={{ willChange: "scale, opacity" }}
                     className="lg:text-[1.5vw] blured md:text-[2.5vw] xs:text-[4vw] font-semibold font-lexend_deca"
                   >
-                    {aboutData.location}
+                    {aboutData?.location || null}
                   </h3>
                 </div>
                 <div>
@@ -181,7 +181,7 @@ const AboutMe = () => {
                     style={{ willChange: "scale, opacity" }}
                     className="lg:text-[1.5vw] blured md:text-[2.5vw] xs:text-[4vw] font-semibold font-lexend_deca"
                   >
-                    {aboutData.education}
+                    {aboutData?.education || null}
                   </h3>
                 </div>
                 <div>
@@ -195,7 +195,7 @@ const AboutMe = () => {
                     style={{ willChange: "scale, opacity" }}
                     className="lg:text-[1.5vw] blured md:text-[2.5vw] xs:text-[4vw] font-semibold font-lexend_deca"
                   >
-                    {aboutData.hobbies?.map((hobby) => {
+                    {aboutData?.hobbies?.map((hobby) => {
                       return <span>{hobby}</span>;
                     })}
                   </h3>
@@ -211,7 +211,7 @@ const AboutMe = () => {
                     style={{ willChange: "scale, opacity" }}
                     className="lg:text-[1.5vw] blured md:text-[2.5vw] xs:text-[4vw] font-semibold font-lexend_deca"
                   >
-                    {aboutData?.email}
+                    {aboutData?.email || null}
                   </h3>
                 </div>
               </div>

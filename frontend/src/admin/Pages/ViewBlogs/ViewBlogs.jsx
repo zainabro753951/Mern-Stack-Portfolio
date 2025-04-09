@@ -4,7 +4,7 @@ import AdminHeader from "../../components/AdminHeader";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useBlogPosts } from "../../../Context/GetBlogs.jsx";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -12,8 +12,8 @@ const ViewBlogs = () => {
   const { blogPosts, setBlogPosts } = useBlogPosts();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   // Create Mutation for Delete Blog Post
-  const mutation = useMutation(
-    async (blogId) => {
+  const mutation = useMutation({
+    mutationFn: async (blogId) => {
       try {
         const response = await axios.put(
           `${backendUrl}/admin/delete_blog/${blogId}`,
@@ -27,37 +27,35 @@ const ViewBlogs = () => {
         throw new Error(error.message);
       }
     },
-    {
-      onSuccess: (data) => {
-        const blogData = data.data.deletedBlog;
-        setBlogPosts((prev) => {
-          if (!prev) return [];
-          return prev.map((item) =>
-            String(item._id) === String(blogData._id)
-              ? { ...item, ...blogData }
-              : item
-          );
-        });
+    onSuccess: (data) => {
+      const blogData = data.data.deletedBlog;
+      setBlogPosts((prev) => {
+        if (!prev) return [];
+        return prev.map((item) =>
+          String(item._id) === String(blogData._id)
+            ? { ...item, ...blogData }
+            : item
+        );
+      });
 
-        toast.success("Blog deleted successfully!", {
-          position: "top-right",
-          autoClose: 5000,
-          theme: "dark",
-          style: { width: "130%" },
-        });
-        // Handle success logic here
-      },
-      onError: (error) => {
-        toast.success(error.data.response.data.message, {
-          position: "top-right",
-          autoClose: 5000,
-          theme: "dark",
-          style: { width: "130%" },
-        });
-        // Handle error logic here
-      },
-    }
-  );
+      toast.success("Blog deleted successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "dark",
+        style: { width: "130%" },
+      });
+      // Handle success logic here
+    },
+    onError: (error) => {
+      toast.success(error.data.response.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "dark",
+        style: { width: "130%" },
+      });
+      // Handle error logic here
+    },
+  });
 
   const handleDeleteEducationData = (blogId) => {
     mutation.mutate(blogId);

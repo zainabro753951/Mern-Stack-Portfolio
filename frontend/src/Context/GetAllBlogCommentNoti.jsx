@@ -1,106 +1,161 @@
 import axios from "axios";
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAdminAuth } from "./AdminAuthProvider";
 import { useSocketContext } from "./SocketIO";
-import { Howl, Howler } from "howler";
+import { Howl } from "howler";
 import sound from "../assets/sounds/notification.wav";
 
 export const BlogCommentNotificationContext = createContext();
 
-export const useBlogCommentNotification = () =>
-  useContext(BlogCommentNotificationContext);
+export const useBlogCommentNotification = () => {
+  const context = useContext(BlogCommentNotificationContext);
+  if (!context) {
+    throw new Error(
+      "useBlogCommentNotification must be used within a BlogCommentNotificationProvider"
+    );
+  }
+  return context;
+};
 
-export const GetAllBlogCommentNoti = ({ children }) => {
-  const [blogCommentNotfi, setBlogCommentNotfi] = useState([]);
-  const [newNotification, setNewNotification] = useState([]);
+export const BlogCommentNotificationProvider = ({ children }) => {
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const queryClient = useQueryClient();
   const { isAdminAuthenticated } = useAdminAuth();
   const { socket } = useSocketContext();
   const [audioEnabled, setAudioEnabled] = useState(false);
   const [notificationSound, setNotificationSound] = useState(null);
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const [newNotification, setNewNotification] = useState(null);
 
-  const getCommentNotificaionts = useQuery(
-    "getBlogCommentNotification",
-    async () => {
-      const response = await axios.get(
-        `${backendUrl}/admin/get_blog_comments_notification`,
-        {
-          withCredentials: true,
-        }
-      );
-      return response.data;
+  // Main query for notifications with optimized caching
+  const {
+    data: blogCommentNotfi = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["getBlogCommentNotification"],
+    queryFn: async () => {
+      try {
+        const response = await axios.get(
+          `${backendUrl}/admin/get_blog_comments_notification`,
+          {
+            withCredentials: true,
+            // Add timeout to prevent hanging requests
+            timeout: 10000,
+          }
+        );
+        return response.data || [];
+      } catch (err) {
+        // Return cached data if available when request fails
+        const cachedData = queryClient.getQueryData([
+          "getBlogCommentNotification",
+        ]);
+        return cachedData || [];
+      }
     },
-    {
-      enabled: isAdminAuthenticated,
-      retry: 3,
-      staleTime: 7_200_000, // Data 2 hours tak stale nahi hoga
-      cacheTime: 7_200_000, // Data 2 hours tak cache mein rahega
-      refetchOnMount: true, // Component mount hone par dobara fetch nahi hoga
-      refetchOnWindowFocus: true, // Window focus hone par dobara fetch nahi hoga
-      onSuccess: (data) => {
-        setBlogCommentNotfi(data);
+    enabled: isAdminAuthenticated,
+    // Add background update throttling
+    notifyOnChangeProps: ["data", "error"], // Only re-render when these change
+  });
+
+  // Initialize audio - optimized to load only when needed
+  useEffect(() => {
+    if (!audioEnabled) return;
+
+    const soundInstance = new Howl({
+      src: [sound],
+      volume: 0.5,
+      preload: true,
+      html5: true,
+      onloaderror: () => {
+        console.error("Audio loading failed");
+        setAudioEnabled(false); // Disable audio if loading fails
       },
-      onError: (error) => {
-        console.error("Error fetching testimonial data:", error);
+      onplayerror: () => {
+        console.error("Audio playback failed");
       },
-    }
-  );
+    });
 
-  useEffect(() => {
-    if (audioEnabled) {
-      const soundInstance = new Howl({
-        src: [sound],
-        preload: true,
-        onplayerror: () => {
-          console.error(
-            "Audio playback failed. Ensure user interaction has occurred."
-          );
-        },
-      });
-      setNotificationSound(soundInstance);
-    }
-  }, [audioEnabled, sound]);
+    setNotificationSound(soundInstance);
 
-  useEffect(() => {
-    if (socket && notificationSound) {
-      const handleNewCommentNotification = (notification) => {
-        setBlogCommentNotfi((prev) => [...prev, notification]);
-        setNewNotification(notification);
-        notificationSound.play();
-      };
-
-      socket.on("newCommentNotification", handleNewCommentNotification);
-
-      return () => {
-        socket.off("newCommentNotification", handleNewCommentNotification);
-      };
-    }
-  }, [socket, notificationSound]);
-
-  useEffect(() => {
     return () => {
-      if (notificationSound) {
-        notificationSound.unload();
+      if (soundInstance) {
+        soundInstance.unload();
       }
     };
-  }, [notificationSound]);
+  }, [audioEnabled]);
 
+  // Optimized socket event handling with debouncing
   useEffect(() => {
-    if (blogCommentNotfi) {
-      setAudioEnabled(true);
-    }
-  }, [blogCommentNotfi]);
+    if (!socket || !notificationSound) return;
+
+    let debounceTimer;
+    const pendingUpdates = [];
+
+    const processUpdates = () => {
+      if (pendingUpdates.length > 0) {
+        queryClient.setQueryData(["getBlogCommentNotification"], (old) => [
+          ...(old || []),
+          ...pendingUpdates,
+        ]);
+
+        // Only show the latest notification
+        setNewNotification(pendingUpdates[pendingUpdates.length - 1]);
+
+        if (audioEnabled) {
+          notificationSound.play();
+        }
+
+        pendingUpdates.length = 0; // Clear the array
+      }
+    };
+
+    const handleNewCommentNotification = (notification) => {
+      pendingUpdates.push(notification);
+
+      // Debounce to prevent rapid updates
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(processUpdates, 500);
+    };
+
+    socket.on("newCommentNotification", handleNewCommentNotification);
+
+    return () => {
+      socket.off("newCommentNotification", handleNewCommentNotification);
+      clearTimeout(debounceTimer);
+    };
+  }, [socket, notificationSound, queryClient, audioEnabled]);
+
+  // Memoized context value with additional controls
+  const contextValue = useMemo(
+    () => ({
+      blogCommentNotfi,
+      newNotification,
+      isLoading,
+      isError,
+      error,
+      enableAudio: () => setAudioEnabled(true),
+      disableAudio: () => setAudioEnabled(false),
+      clearNewNotification: () => setNewNotification(null),
+      // Add manual refresh capability
+      manualRefresh: async () => {
+        await queryClient.invalidateQueries({
+          queryKey: ["getBlogCommentNotification"],
+        });
+      },
+    }),
+    [blogCommentNotfi, newNotification, isLoading, isError, error, queryClient]
+  );
 
   return (
-    <BlogCommentNotificationContext.Provider
-      value={{
-        blogCommentNotfi,
-        setBlogCommentNotfi,
-        newNotification,
-        enableAudio: () => setAudioEnabled(true),
-      }}
-    >
+    <BlogCommentNotificationContext.Provider value={contextValue}>
       {children}
     </BlogCommentNotificationContext.Provider>
   );

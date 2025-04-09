@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import DashboardLeft from "../../components/DashboardLeft.jsx";
 import { toast, ToastContainer } from "react-toastify";
 import AdminHeader from "../../components/AdminHeader.jsx";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import RichTextEditor from "../../components/RichText.jsx";
 import HireMeBtn from "../../../components/HireMeBtn.jsx";
 import { useLocation } from "react-router-dom";
@@ -129,14 +129,16 @@ const EditBlogForm = () => {
     setSeoKeywords(deletedKeywords);
   };
 
-  const mutation = useMutation((formData) => {
-    const response = axios.put(`${backendUrl}/admin/update_blog`, formData, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    return response;
+  const mutation = useMutation({
+    mutationFn: (formData) => {
+      const response = axios.put(`${backendUrl}/admin/update_blog`, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response;
+    },
   });
 
   const submitBlog = (e) => {

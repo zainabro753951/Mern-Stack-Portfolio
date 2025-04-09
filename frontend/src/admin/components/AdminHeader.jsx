@@ -8,7 +8,7 @@ import axios from "axios";
 import { IoMenuSharp } from "react-icons/io5";
 import { SidebarToggleContext } from "../../Context/SideBarToggle.jsx";
 import { useSocketContext } from "../../Context/SocketIO.jsx";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useAdminAuth } from "../../Context/AdminAuthProvider.jsx";
 import { toast, ToastContainer } from "react-toastify";
 import { useBlogCommentNotification } from "../../Context/GetAllBlogCommentNoti.jsx";
@@ -35,24 +35,23 @@ const AdminHeader = () => {
     setIsOpen(false);
   };
 
-  const mutation = useMutation(
-    async () => {
+  const mutation = useMutation({
+    mutationFn: async () => {
       const response = await axios.post(`${backendUrl}/admin/logout`, null, {
         withCredentials: true,
       });
       return response;
     },
-    {
-      onSuccess: (data) => {
-        setIsAdminAuthenticated(false);
-        // Handle success response
-      },
-      onError: (error) => {
-        console.log(error);
-        // Handle error response
-      },
-    }
-  );
+
+    onSuccess: (data) => {
+      setIsAdminAuthenticated(false);
+      // Handle success response
+    },
+    onError: (error) => {
+      console.log(error);
+      // Handle error response
+    },
+  });
 
   let handleLogout = () => {
     mutation.mutate();

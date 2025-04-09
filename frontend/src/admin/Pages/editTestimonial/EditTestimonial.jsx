@@ -3,7 +3,7 @@ import HireMeBtn from "../../../components/HireMeBtn";
 import AdminHeader from "../../components/AdminHeader";
 import DashboardLeft from "../../components/DashboardLeft";
 import { toast, ToastContainer } from "react-toastify";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { useTestimonial } from "../../../Context/GetTestimonial";
 import axios from "axios";
@@ -56,18 +56,20 @@ const EditTestimonial = () => {
     }
   }, [testimonial]);
 
-  const mutation = useMutation((formData) => {
-    const response = axios.put(
-      `${backendUrl}/admin/edit_testimonial/${id}`,
-      formData,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return response;
+  const mutation = useMutation({
+    mutationFn: (formData) => {
+      const response = axios.put(
+        `${backendUrl}/admin/edit_testimonial/${id}`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response;
+    },
   });
 
   const handleTestiSubmit = (e) => {

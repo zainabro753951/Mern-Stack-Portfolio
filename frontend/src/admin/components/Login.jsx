@@ -6,64 +6,70 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAdminAuth } from "../../Context/AdminAuthProvider";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
+
 const Login = () => {
   const { setIsAdminAuthenticated } = useAdminAuth();
   const [isShow, setIsShow] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  const mutation = useMutation((adminData) => {
-    try {
-      // Sending POST request to the backend
-      let response = axios.post(
-        `${backendUrl}/admin/login`,
-        {
-          username,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      return response;
-    } catch (err) {
-      setError("An error occurred. Please try again later.");
-      console.error(err);
-    }
-  });
-  let handleSubmit = async (e) => {
-    e.preventDefault();
-    // Basic validation for empty fields
-    if (!username || !password) {
-      setError("Username and Password are required!");
-      return;
-    }
-    mutation.mutate({ username, password });
-  };
-
-  useEffect(() => {
-    if (mutation.isError) {
-      toast.error(error, {
+  const loginMutation = useMutation({
+    mutationFn: async ({ username, password }) => {
+      try {
+        const response = await axios.post(
+          `${backendUrl}/admin/login`,
+          { username, password },
+          {
+            withCredentials: true,
+            timeout: 10000, // 10 second timeout
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        return response.data;
+      } catch (err) {
+        console.error("Login error:", err);
+        throw new Error(
+          err.response?.data?.message || "Login failed. Please try again."
+        );
+      }
+    },
+    onSuccess: (data) => {
+      setIsAdminAuthenticated(true);
+      localStorage.setItem("adminData", JSON.stringify(data.admin));
+      toast.success("Login successful!", {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "dark",
+      });
+      navigate("/admin/dashboard"); // Redirect after successful login
+    },
+    onError: (error) => {
+      setError(error.message);
+      toast.error(error.message, {
         position: "top-right",
         autoClose: 5000,
         theme: "dark",
       });
-    }
-  }, [mutation.isError]);
+    },
+  });
 
-  useEffect(() => {
-    if (mutation.isSuccess) {
-      setIsAdminAuthenticated(true);
-      localStorage.setItem(
-        "adminData",
-        JSON.stringify(mutation.data.data.admin)
-      );
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!username || !password) {
+      setError("Username and Password are required!");
+      return;
     }
-  }, [mutation.isSuccess]);
+
+    loginMutation.mutate({ username, password });
+  };
 
   return (
     <div className="w-full h-screen bg-cover bg-center flex items-center justify-center bg-portfolioHero">
@@ -74,6 +80,11 @@ const Login = () => {
         <h1 className="lg:text-[2.5vw] md:text-[3.5vw] sm:text-[4vw] xs:text-[5.5vw] text-center md:py-5 xs:py-3 font-semibold font-lexend_deca text-white">
           Admin <span className="text-themePurple">Login</span>
         </h1>
+        {error && (
+          <p className="text-red-500 text-center mb-4 lg:text-[1vw] md:text-[1.5vw] sm:text-[2vw] xs:text-[2.5vw]">
+            {error}
+          </p>
+        )}
         <form
           onSubmit={handleSubmit}
           className="w-full h-full flex flex-col gap-3"
@@ -100,7 +111,7 @@ const Login = () => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className="rounded-none rounded-e-lg bg-transparent border border-gray-300 text-gray-200 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] outline-none"
-                placeholder="Bonnie Green"
+                placeholder="Enter username"
               />
             </div>
           </div>
@@ -118,21 +129,23 @@ const Login = () => {
                   id="admin-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="rounded-none bg-transparent  text-gray-200  block flex-1 min-w-0 w-full lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] outline-none"
-                  placeholder="*** ***"
+                  className="rounded-none bg-transparent text-gray-200 block flex-1 min-w-0 w-full lg:text-[1.1vw] md:text-[2.1vw] sm:text-[2.7vw] xs:text-[3vw] lg:py-[0.8vw] md:py-[1.5vw] xs:py-[2vw] outline-none"
+                  placeholder="Enter password"
                 />
                 <span
-                  onClick={() => (!isShow ? setIsShow(true) : setIsShow(false))}
-                  className="text-white text-xl cursor-pointer"
+                  onClick={() => setIsShow(!isShow)}
+                  className="px-3 text-white text-xl cursor-pointer"
                 >
-                  {!isShow ? <BiHide /> : <BiShow />}
+                  {isShow ? <BiHide /> : <BiShow />}
                 </span>
               </div>
             </div>
           </div>
           <div>
-            <button>
-              <HireMeBtn text={"Login"} />
+            <button type="submit" disabled={loginMutation.isPending}>
+              <HireMeBtn
+                text={loginMutation.isPending ? "Logging in..." : "Login"}
+              />
             </button>
           </div>
         </form>

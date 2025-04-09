@@ -1,41 +1,42 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useQuery } from "react-query";
+import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useAdminAuth } from "./AdminAuthProvider";
 
 const GetAllUsers = () => {
   const { isAdminAuthenticated } = useAdminAuth();
   const [users, setUsers] = useState([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const getUsers = useQuery(
-    "getUsers",
-    async () => {
+  const { isSuccess, data, isError, isLoading, error } = useQuery({
+    queryKey: ["getUsers"],
+    queryFn: async () => {
       const response = await axios.get(`${backendUrl}/admin/getUsers`, {
         withCredentials: true,
       });
       return response.data;
     },
-    {
-      enabled: isAdminAuthenticated,
-      retry: 3,
-      retryDelay: 1000,
-      staleTime: 7_200_000, // Data 2 hours tak stale nahi hoga
-      cacheTime: 7_200_000, // Data 2 hours tak cache mein rahega
-      refetchOnMount: false, // Component mount hone par dobara fetch nahi hoga
-      refetchOnWindowFocus: false, // Window focus hone par dobara fetch nahi hoga
-      onSuccess: (data) => {
-        setUsers(data);
-      },
-      onError: (error) => {
-        console.error(error);
-      },
+
+    enabled: isAdminAuthenticated,
+    onSuccess: (data) => {},
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
+  // Storing data in useState
+  useEffect(() => {
+    if (isSuccess) {
+      setUsers(data);
     }
-  );
+    if (isError) {
+      console.error(`Error during fetching users ${error}`);
+    }
+  }, [isSuccess, isError]);
   return {
     users,
     setUsers,
-    isLoading: getUsers.isLoading,
-    error: getUsers.error,
+    isLoading,
+    error,
   };
 };
 

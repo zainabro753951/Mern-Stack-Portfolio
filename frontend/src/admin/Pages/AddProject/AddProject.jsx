@@ -4,7 +4,7 @@ import AdminHeader from "../../components/AdminHeader";
 import HireMeBtn from "../../../components/HireMeBtn";
 import { IoWarning } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -175,18 +175,16 @@ const AddProject = () => {
   };
 
   // ========== Create Mutation ============
-  const mutation = useMutation((FormData) => {
-    const response = axios.post(
-      `${backendUrl}/admin/add_project`,
-      FormData,
-      {
+  const mutation = useMutation({
+    mutationFn: (FormData) => {
+      const response = axios.post(`${backendUrl}/admin/add_project`, FormData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      }
-    );
-    return response;
+      });
+      return response;
+    },
   });
 
   // ========== Handel Submit of project form ============

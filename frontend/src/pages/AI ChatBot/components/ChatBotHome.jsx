@@ -5,7 +5,7 @@ import ChatBubble from "./ChatBubble";
 import { BiCurrentLocation } from "react-icons/bi";
 import { IoAnalyticsSharp } from "react-icons/io5";
 import { useChatBotConversation } from "../../../Context/GetChatBotConversation";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useSocketContext } from "../../../Context/SocketIO";
 
@@ -46,7 +46,7 @@ const ChatBotHome = () => {
   useEffect(() => {
     const handleUserMessage = (data) => {
       console.log("User message received:", data);
-      setMessages((prev) => [...prev, data]);
+      setMessages((prev) => (prev ? [...prev, data] : data));
     };
 
     const handleAiRealtimeMessage = (data) => {

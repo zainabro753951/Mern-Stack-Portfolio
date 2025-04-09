@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { BiHide, BiShow } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import { BeatLoader } from "react-spinners";
@@ -20,18 +20,15 @@ const Signup = () => {
   } = useForm();
 
   const [isShow, setIsShow] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   // Create Mutation of posting data
-  const mutation = useMutation(async (user) => {
-    const response = await axios.post(`${backendUrl}/user/signup`, user, {
-      withCredentials: true,
-    });
-    return response;
+  const mutation = useMutation({
+    mutationFn: async (user) => {
+      const response = await axios.post(`${backendUrl}/user/signup`, user, {
+        withCredentials: true,
+      });
+      return response;
+    },
   });
 
   // Handle Signup Form Submission
@@ -61,11 +58,6 @@ const Signup = () => {
 
   useEffect(() => {
     if (mutation.isSuccess) {
-      setFirstName("");
-      setLastName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
       toast.info(mutation.data.data.message, {
         position: "top-right",
         autoClose: 5000,

@@ -1,38 +1,42 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useAdminAuth } from "./AdminAuthProvider";
 
-const GetProjectCounts = () => {
+const useProjectCounts = () => {
   const { isAdminAuthenticated } = useAdminAuth();
-  const [deletedProjects, setDeletedProjects] = useState(0);
-  const [availableProjects, setAvailableProjects] = useState(0);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  const getProjectCounts = useQuery(
-    "getProjectCounts",
-    async () => {
+  const fetchProjectCounts = async () => {
+    try {
       const response = await axios.get(`${backendUrl}/admin/getProjectCounts`, {
         withCredentials: true,
+        timeout: 10000, // 10 second timeout
       });
       return response.data;
-    },
-    {
-      enabled: isAdminAuthenticated,
-      retry: 3,
-      staleTime: 7_200_000, // Data 2 hours tak stale nahi hoga
-      cacheTime: 7_200_000, // Data 2 hours tak cache mein rahega
-      refetchOnMount: false, // Component mount hone par dobara fetch nahi hoga
-      refetchOnWindowFocus: false, // Window focus hone par dobara fetch nahi hoga
-      retryDelay: 1000,
-      onSuccess: (data) => {
-        setDeletedProjects(data.deletedProjects);
-        setAvailableProjects(data.availableProjects);
-      },
+    } catch (error) {
+      console.error("Error fetching project counts:", error);
+      throw new Error(
+        error.response?.data?.message ||
+          "Failed to fetch project counts. Please try again later."
+      );
     }
-  );
+  };
 
-  return { deletedProjects, availableProjects };
+  const { data: counts = { deletedProjects: 0, availableProjects: 0 } } =
+    useQuery({
+      queryKey: ["projectCounts"],
+      queryFn: fetchProjectCounts,
+      enabled: isAdminAuthenticated,
+      select: (data) => ({
+        deletedProjects: data?.deletedProjects || 0,
+        availableProjects: data?.availableProjects || 0,
+      }),
+    });
+
+  return {
+    deletedProjects: counts.deletedProjects,
+    availableProjects: counts.availableProjects,
+  };
 };
 
-export default GetProjectCounts;
+export default useProjectCounts;

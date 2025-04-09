@@ -7,7 +7,7 @@ import RichTextEditor from "../../components/RichText";
 import { RxCross2 } from "react-icons/rx";
 import { IoWarning } from "react-icons/io5";
 import { useParams } from "react-router-dom";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { toast, ToastContainer } from "react-toastify";
 import { useBlogPosts } from "../../../Context/GetBlogs";
 
@@ -81,14 +81,16 @@ const AddBlog = () => {
     setSeoKeywords(deletedKeywords);
   };
 
-  const mutation = useMutation((formData) => {
-    const response = axios.post(`${backendUrl}/admin/add_blog`, formData, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    return response;
+  const mutation = useMutation({
+    mutationFn: (formData) => {
+      const response = axios.post(`${backendUrl}/admin/add_blog`, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response;
+    },
   });
 
   const submitBlog = (e) => {

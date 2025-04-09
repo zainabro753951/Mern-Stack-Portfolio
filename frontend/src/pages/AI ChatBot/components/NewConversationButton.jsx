@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { FaPlus } from "react-icons/fa";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useChatBotConversation } from "../../../Context/GetChatBotConversation";
 
 const NewConversationButton = () => {

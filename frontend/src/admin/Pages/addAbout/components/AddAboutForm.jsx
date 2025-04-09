@@ -3,7 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 import { IoWarning } from "react-icons/io5";
 import HireMeBtn from "../../../../components/HireMeBtn";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { toast, ToastContainer } from "react-toastify";
 const AddAboutForm = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -38,13 +38,15 @@ const AddAboutForm = () => {
     setMoreHobbies(deletedHobbies);
   };
 
-  const mutation = useMutation((formData) => {
-    return axios.post(`${backendUrl}/admin/add_about`, formData, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+  const mutation = useMutation({
+    mutationFn: (formData) => {
+      return axios.post(`${backendUrl}/admin/add_about`, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    },
   });
 
   const handleAbout = (e) => {

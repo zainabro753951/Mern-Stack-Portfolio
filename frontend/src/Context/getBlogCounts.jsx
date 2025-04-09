@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { useQuery } from "react-query";
+import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useAdminAuth } from "./AdminAuthProvider";
 
 const getBlogCounts = () => {
@@ -9,33 +9,29 @@ const getBlogCounts = () => {
   const [availableBlogs, setavailableBlogs] = useState(0);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  const getBlogCounts = useQuery(
-    "getBlogCounts",
-    async () => {
+  const { isSuccess, isError, data, error } = useQuery({
+    queryKey: ["getBlogCounts"],
+    queryFn: async () => {
       const response = await axios.get(`${backendUrl}/admin/getBlogCounts`, {
         withCredentials: true,
       });
       return response.data;
     },
-    {
-      enabled: isAdminAuthenticated,
-      retry: 3,
-      retryDelay: 1000,
-      staleTime: 7_200_000, // Data 2 hours tak stale nahi hoga
-      cacheTime: 7_200_000, // Data 2 hours tak cache mein rahega
-      refetchOnMount: false, // Component mount hone par dobara fetch nahi hoga
-      refetchOnWindowFocus: false, // Window focus hone par dobara fetch nahi hoga
-      onError: (error) => {
-        console.log(error);
-      },
-      onSuccess: (data) => {
-        setDeletedBlogs(data.deletedBlogs);
-        setavailableBlogs(data.availableBlogs);
-      },
-    }
-  );
+    enabled: isAdminAuthenticated,
+  });
 
-  return { availableBlogs, deletedBlogs };
+  // Storing Data in useState
+  useEffect(() => {
+    if (isSuccess) {
+      setDeletedBlogs(data.deletedBlogs);
+      setavailableBlogs(data.availableBlogs);
+    }
+    if (isError) {
+      console.log("Error during fetching blog counts" + error);
+    }
+  }, [isSuccess]);
+
+  return { availableBlogs, deletedBlogs, isError };
 };
 
 export default getBlogCounts;

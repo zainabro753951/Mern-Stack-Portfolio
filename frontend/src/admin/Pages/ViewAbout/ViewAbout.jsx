@@ -6,17 +6,17 @@ import { MdAdminPanelSettings, MdEdit } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
-import { GetAboutData } from "../../../Context/GetAboutData.jsx";
+import { useAboutData } from "../../../Context/GetAboutData.jsx";
 import { IoWarning } from "react-icons/io5";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 // Popup component for editing the values
 
 // Main component
 const ViewAbout = () => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const { aboutData, setAboutData } = GetAboutData();
+  const { aboutData, isLoading, setAboutData } = useAboutData();
   const [firstName, setFirstName] = useState(
     aboutData ? aboutData.firstName : ""
   );
@@ -93,14 +93,16 @@ const ViewAbout = () => {
     }
   }, [aboutData]);
 
-  const mutation = useMutation((formData) => {
-    const response = axios.put("${backendUrl}/admin/update_about", formData, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    return response;
+  const mutation = useMutation({
+    mutationFn: (formData) => {
+      const response = axios.put("${backendUrl}/admin/update_about", formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response;
+    },
   });
   const handleSave = (e) => {
     e.preventDefault();

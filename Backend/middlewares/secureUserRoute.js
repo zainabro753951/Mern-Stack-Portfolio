@@ -4,6 +4,7 @@ import userModel from "../Models/user.model.js";
 const secureUserRoute = async (req, res, next) => {
   try {
     const token = req.signedCookies.userToken;
+    console.log(token);
 
     if (!token) {
       return res.status(401).json({ message: "No token, found" });

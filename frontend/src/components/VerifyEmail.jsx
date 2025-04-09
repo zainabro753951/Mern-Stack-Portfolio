@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserSlider from "./UserSlider";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 

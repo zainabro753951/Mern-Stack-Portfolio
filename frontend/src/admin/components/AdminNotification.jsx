@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useBlogCommentNotification } from "../../Context/GetAllBlogCommentNoti";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { formatDistanceToNow } from "date-fns";
 import axios from "axios";
 
@@ -13,22 +13,19 @@ const AdminNotification = ({ isNotiOpen, NotiRef }) => {
   const navigate = useNavigate();
 
   // Ek single useQuery hook use karen
-  const getAllBlogCommentData = useQuery(
-    "getAllBlogCommentData",
-    async () => {
+  const { isError, isSuccess, data, error, isLoading } = useQuery({
+    queryKey: ["getAllBlogCommentData"],
+    queryFn: async () => {
       // Sabhi comments ke data ko ek saath fetch karen
       const promises = blogCommentNotfi.map((commentNoti) => {
         if (commentNoti.commentId && commentNoti.userId) {
-          return axios.get(
-            `${backendUrl}/admin/get_all_blog_comment_data`,
-            {
-              params: {
-                commentId: commentNoti.commentId,
-                userId: commentNoti.userId,
-              },
-              withCredentials: true,
-            }
-          );
+          return axios.get(`${backendUrl}/admin/get_all_blog_comment_data`, {
+            params: {
+              commentId: commentNoti.commentId,
+              userId: commentNoti.userId,
+            },
+            withCredentials: true,
+          });
         }
         return null;
       });
@@ -37,20 +34,21 @@ const AdminNotification = ({ isNotiOpen, NotiRef }) => {
       const responses = await Promise.all(promises.filter(Boolean));
       return responses.map((response) => response.data);
     },
-    {
-      enabled: blogCommentNotfi.some(
-        (commentNoti) => !!commentNoti.commentId && !!commentNoti.userId
-      ),
-      retry: 3,
-      retryDelay: 1000,
-      onSuccess: (data) => {
-        setBlogCommentData(data);
-      },
-      onError: (error) => {
-        console.error("Error fetching data:", error);
-      },
+
+    enabled: blogCommentNotfi.some(
+      (commentNoti) => !!commentNoti.commentId && !!commentNoti.userId
+    ),
+  });
+
+  // Storing notfication in useState
+  useEffect(() => {
+    if (isSuccess) {
+      setBlogCommentData(data);
     }
-  );
+    if (isError) {
+      console.error("Error fetching data:", error);
+    }
+  }, [isError, isSuccess]);
 
   const handleNotificationClick = (comment) => {
     const url = `/blog/${comment.blog.slug}/${comment.blog._id}?commentId=${comment.comment}`;

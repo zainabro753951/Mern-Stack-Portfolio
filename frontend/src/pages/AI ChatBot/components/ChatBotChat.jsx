@@ -3,7 +3,7 @@ import { IoSend } from "react-icons/io5";
 import { RiGeminiLine } from "react-icons/ri";
 import { BiCurrentLocation } from "react-icons/bi";
 import { IoAnalyticsSharp } from "react-icons/io5";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import ChatBubble from "./ChatBubble";
 

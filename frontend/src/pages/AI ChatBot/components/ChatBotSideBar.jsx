@@ -7,7 +7,7 @@ import { VscTrash } from "react-icons/vsc";
 import { LuSunMedium } from "react-icons/lu";
 import { RiLogoutCircleLine } from "react-icons/ri";
 import axios from "axios";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useChatBotConversation } from "../../../Context/GetChatBotConversation";
 
 const ChatBotSideBar = () => {

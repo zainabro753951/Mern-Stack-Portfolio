@@ -4,22 +4,34 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { AdminDataProvider } from "./Context/GetAdminData.jsx";
-import { GetAboutProvider } from "./Context/GetAboutData.jsx";
+import { AboutDataProvider } from "./Context/GetAboutData.jsx";
 import { AdminAuthProvider } from "./Context/AdminAuthProvider.jsx";
 import { SideBarToggle } from "./Context/SideBarToggle.jsx";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { GetBlogs } from "./Context/GetBlogs.jsx";
 import { SocketProvider } from "./Context/SocketIO.jsx";
 import { UserAuthProvider } from "./Context/UserAuthProvider.jsx";
-import { GetTestimonial } from "./Context/GetTestimonial.jsx";
+import { TestimonialProvider } from "./Context/GetTestimonial.jsx";
 import GetProject from "./Context/GetProject.jsx";
 import { GetAllBlogComments } from "./Context/GetAllBlogComments.jsx";
 import { GetAllBlogLikes } from "./Context/GetAllBlogLikes.jsx";
-import { GetAllBlogCommentNoti } from "./Context/GetAllBlogCommentNoti.jsx";
+import { BlogCommentNotificationProvider } from "./Context/GetAllBlogCommentNoti.jsx";
 import { GetChatBotConversation } from "./Context/GetChatBotConversation.jsx";
 import { LenisProvider } from "./Context/lenisProvider.jsx";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      retryDelay: 5000,
+      staleTime: 5 * 60 * 1000, // 5 Minutes stale time for caching
+      cacheTime: 30 * 60 * 10000,
+      refetchOnReconnect: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
@@ -30,10 +42,10 @@ createRoot(document.getElementById("root")).render(
               <GetProject>
                 <GetBlogs>
                   <GetAllBlogComments>
-                    <GetAllBlogCommentNoti>
+                    <BlogCommentNotificationProvider>
                       <GetAllBlogLikes>
-                        <GetTestimonial>
-                          <GetAboutProvider>
+                        <TestimonialProvider>
+                          <AboutDataProvider>
                             <SideBarToggle>
                               <GetChatBotConversation>
                                 <StrictMode>
@@ -43,10 +55,10 @@ createRoot(document.getElementById("root")).render(
                                 </StrictMode>
                               </GetChatBotConversation>
                             </SideBarToggle>
-                          </GetAboutProvider>
-                        </GetTestimonial>
+                          </AboutDataProvider>
+                        </TestimonialProvider>
                       </GetAllBlogLikes>
-                    </GetAllBlogCommentNoti>
+                    </BlogCommentNotificationProvider>
                   </GetAllBlogComments>
                 </GetBlogs>
               </GetProject>

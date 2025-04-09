@@ -3,7 +3,7 @@ import DashboardLeft from "../../components/DashboardLeft";
 import AdminHeader from "../../components/AdminHeader";
 import HireMeBtn from "../../../components/HireMeBtn";
 import axios from "axios";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { toast, ToastContainer } from "react-toastify";
 
 const AddEducationPgae = () => {
@@ -21,14 +21,16 @@ const AddEducationPgae = () => {
     setEduStatus(e.target.value);
   };
 
-  const Mutation = useMutation((education) => {
-    return axios.post(
-      `${backendUrl}/admin/add_education`,
-      {
-        education,
-      },
-      { withCredentials: true }
-    );
+  const Mutation = useMutation({
+    mutationFn: (education) => {
+      return axios.post(
+        `${backendUrl}/admin/add_education`,
+        {
+          education,
+        },
+        { withCredentials: true }
+      );
+    },
   });
 
   let handleSubmitEudcation = (e) => {

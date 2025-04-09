@@ -26,13 +26,12 @@ const Hero = ({ content, isLoading }) => {
   const { isDarkMode } = ToggleTheme();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  const [About, setAbout] = useState(content ? content.about : "");
+  const [About, setAbout] = useState(content?.about || null);
 
   useEffect(() => {
-    if (content) {
-      setAbout(content.about);
-    }
+    setAbout(content?.about || null);
   }, [content]);
+  console.log(content);
 
   gsap.config({ nullTargetWarn: false, force3D: true });
   useEffect(() => {
@@ -122,16 +121,14 @@ const Hero = ({ content, isLoading }) => {
     });
   }, [backBanner]);
 
-  const splitText = About.split("");
-  const spanedText = splitText.map((letter, index) => (
+  const splitText = About?.split("") || null;
+  const spanedText = splitText?.map((letter, index) => (
     <span key={index} className="letter">
       {letter}
     </span>
   ));
 
   const onHovered = (icon) => {
-    console.log(icon);
-
     gsap.to(`.${icon}`, {
       scale: 1.8,
       duration: 1.5,
@@ -227,11 +224,11 @@ const Hero = ({ content, isLoading }) => {
                   className="lg:text-[5.5vw] md:text-[6.5vw] xs:text-[8vw] lg:leading-[6vw] md:leading-[7vw] xs:leading-[8.5vw] md:py-0 xs:py-[3vw] font-lexend_deca font-bold"
                 >
                   <span className="gardient-text">
-                    {content ? content.firstName : ""}
+                    {content?.firstName || null}
                   </span>
                   <span
                     className="gradient-stroke-text px-2"
-                    data-text={content ? content.lastName : ""}
+                    data-text={content?.lastName || null}
                   ></span>
                 </h1>
                 <h3 className="lg:text-[2vw] md:text-[3vw]  xs:text-[4.5vw] font-lexend_deca font-bold tracking-wide leading-[2.5vw]">
@@ -297,9 +294,9 @@ const Hero = ({ content, isLoading }) => {
                   className="absolute top-20 object-cover left-0 w-full h-full"
                   loading="lazy"
                   src={
-                    content.profileImg
-                      ? `${backendUrl}/${content.profileImg}`
-                      : "/imgs/me.png"
+                    content?.profileImg
+                      ? `${backendUrl}/${content?.profileImg || null}`
+                      : null
                   }
                   alt=""
                 />

@@ -5,7 +5,7 @@ import AdminHeader from "../../components/AdminHeader";
 import HireMeBtn from "../../../components/HireMeBtn";
 import GetEducation from "../../../Context/GetEducation";
 import axios from "axios";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { toast, ToastContainer } from "react-toastify";
 
 const EditEducation = () => {
@@ -48,15 +48,17 @@ const EditEducation = () => {
   };
 
   // ========== Create mutation ============
-  const mutation = useMutation((editEducation) => {
-    const response = axios.put(
-      `${backendUrl}/admin/update_education`,
-      editEducation,
-      {
-        withCredentials: true,
-      }
-    );
-    return response;
+  const mutation = useMutation({
+    mutationFn: (editEducation) => {
+      const response = axios.put(
+        `${backendUrl}/admin/update_education`,
+        editEducation,
+        {
+          withCredentials: true,
+        }
+      );
+      return response;
+    },
   });
 
   let handleEditEducation = (e) => {

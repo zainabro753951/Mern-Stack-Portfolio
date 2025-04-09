@@ -6,7 +6,7 @@ import { GoComment } from "react-icons/go";
 import Button from "../../../../components/Button";
 import LeaveCommentPop from "./LeaveCommentPop";
 import { useComments } from "../../../../Context/GetAllBlogComments";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useSocketContext } from "../../../../Context/SocketIO";
 import { LikesContext } from "../../../../Context/GetAllBlogLikes";
@@ -34,8 +34,8 @@ const BlogContent = ({ content }) => {
     }
   }, [blogId, allBlogComments]);
 
-  const mutation = useMutation(
-    async (likeData) => {
+  const mutation = useMutation({
+    mutationFn: async (likeData) => {
       const response = await axios.post(
         `${backendUrl}/user/like/blogLikes`,
         likeData,
@@ -45,12 +45,10 @@ const BlogContent = ({ content }) => {
       );
       return response;
     },
-    {
-      onSuccess: (data) => {
-        setLikes(data.data.updatedBlog.likes);
-      },
-    }
-  );
+    onSuccess: (data) => {
+      setLikes(data.data.updatedBlog.likes);
+    },
+  });
 
   useEffect(() => {
     if (isUserAuthenticated || socket) {
@@ -70,8 +68,8 @@ const BlogContent = ({ content }) => {
     }
   };
 
-  const getLikeMutation = useMutation(
-    async (blogId) => {
+  const getLikeMutation = useMutation({
+    mutationFn: async (blogId) => {
       const response = await axios.get(
         `${backendUrl}/user/like/getBlogLikes/${blogId}`,
         {
@@ -80,16 +78,15 @@ const BlogContent = ({ content }) => {
       );
       return response;
     },
-    {
-      onSuccess: (data) => {
-        const [likes] = data.data;
-        setLikes(likes.likes);
-      },
-      onError: (error) => {
-        console.log(error);
-      },
-    }
-  );
+
+    onSuccess: (data) => {
+      const [likes] = data.data;
+      setLikes(likes.likes);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
 
   useEffect(() => {
     if (blogId) {

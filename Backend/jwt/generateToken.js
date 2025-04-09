@@ -10,7 +10,7 @@ export const createTokenAndSaveCookie = (data, key, res) => {
       secure: process.env.NODE_ENV === "production", // HTTPS only in production
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Adjust for cross-site
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      domain: ".vercel.app", // For all Vercel subdomains
+      domain: process.env.NODE_ENV === "production" ? ".vercel.app" : "", // For all Vercel subdomains
       path: "/",
       signed: true,
     });

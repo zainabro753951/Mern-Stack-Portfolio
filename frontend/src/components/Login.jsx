@@ -5,7 +5,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
 import { BiHide, BiShow } from "react-icons/bi";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { IoIosWarning } from "react-icons/io";
 import { toast, ToastContainer } from "react-toastify";
@@ -27,31 +27,30 @@ const Login = () => {
   const navigate = useNavigate();
 
   // Create Mutation fro posting data
-  const mutation = useMutation(
-    (loginData) => {
+  const mutation = useMutation({
+    mutationFn: (loginData) => {
       const response = axios.post(`${backendUrl}/user/login`, loginData, {
         withCredentials: true,
       });
       return response;
     },
-    {
-      onSuccess: (data) => {
-        setIsUserAuthenticated(true);
-        const redirectPath = location.state?.from?.pathname || "/";
-        navigate(redirectPath, { replace: true });
-        localStorage.setItem("logedInUser", JSON.stringify(data.data.user));
-      },
-      onError: (error) => {
-        console.log(error.response.data.message);
-        toast.error(error.response.data.message, {
-          position: "top-right",
-          autoClose: 5000,
-          theme: "dark",
-          style: { width: "130%" },
-        });
-      },
-    }
-  );
+
+    onSuccess: (data) => {
+      setIsUserAuthenticated(true);
+      const redirectPath = location.state?.from?.pathname || "/";
+      navigate(redirectPath, { replace: true });
+      localStorage.setItem("logedInUser", JSON.stringify(data.data.user));
+    },
+    onError: (error) => {
+      console.log(error.response.data.message);
+      toast.error(error.response.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "dark",
+        style: { width: "130%" },
+      });
+    },
+  });
 
   const onSubmit = (data) => {
     mutation.mutate(data);

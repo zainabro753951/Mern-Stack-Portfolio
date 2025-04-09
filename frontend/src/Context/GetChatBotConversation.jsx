@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useUserAuth } from "./UserAuthProvider";
 import { useSocketContext } from "./SocketIO";
 
@@ -32,25 +32,17 @@ export const GetChatBotConversation = ({ children }) => {
     }
   };
 
-  const getDefaultConversation = useQuery(
-    "getDefaultSessionId",
-    fetchDefaultConversation,
-    {
-      enabled: isUserAuthenticated,
-      retry: 3,
-      staleTime: 7_200_000, // Data 2 hours tak stale nahi hoga
-      cacheTime: 7_200_000, // Data 2 hours tak cache mein rahega
-      refetchOnMount: false, // Component mount hone par dobara fetch nahi hoga
-      refetchOnWindowFocus: false, // Window focus hone par dobara fetch nahi hoga
-      refetchOnReconnect: false,
-      onSuccess: (data) => {
-        setSessionId(data.sessionId);
-      },
-      onError: (error) => {
-        console.error("Error fetching default conversation:", error);
-      },
-    }
-  );
+  const getDefaultConversation = useQuery({
+    queryKey: ["getDefaultSessionId"],
+    queryFn: fetchDefaultConversation,
+    enabled: isUserAuthenticated,
+    onSuccess: (data) => {
+      setSessionId(data.sessionId);
+    },
+    onError: (error) => {
+      console.error("Error fetching default conversation:", error);
+    },
+  });
 
   const fetchConversation = async (sessionId) => {
     if (!sessionId) return;
@@ -66,22 +58,20 @@ export const GetChatBotConversation = ({ children }) => {
     }
   };
 
-  const getConversation = useQuery(
-    ["getConversation", sessionId],
-    () => fetchConversation(sessionId),
-    {
-      enabled: !sessionId,
-      retry: 3,
-      staleTime: 10000,
-      onSuccess: (data) => {
-        setAllConversations((prev) => [...(prev || []), data ? data[0] : []]);
-        setMessages(data?.[0].messages || null);
-      },
-      onError: (error) => {
-        console.error("Error fetching conversation data:", error);
-      },
-    }
-  );
+  const getConversation = useQuery({
+    queryKey: ["getConversation", sessionId],
+    queryFn: () => fetchConversation(sessionId),
+    enabled: !!sessionId, // Changed from !sessionId to !!sessionId (likely what you intended)
+    retry: 3,
+    staleTime: 10000,
+    onSuccess: (data) => {
+      setAllConversations((prev) => [...(prev || []), data ? data[0] : []]);
+      setMessages(data?.[0].messages || null);
+    },
+    onError: (error) => {
+      console.error("Error fetching conversation data:", error);
+    },
+  });
 
   useEffect(() => {
     if (sessionId) {
@@ -103,7 +93,9 @@ export const GetChatBotConversation = ({ children }) => {
   };
 
   const { data: allConversationsData, refetch: refetchAllConversations } =
-    useQuery("getAllConversation", fetchAllConversations, {
+    useQuery({
+      queryKey: ["getAllConversation"],
+      queryFn: fetchAllConversations,
       enabled: isUserAuthenticated,
       retry: 3,
       staleTime: 10000,

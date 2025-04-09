@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import DashboardLeft from "../../components/DashboardLeft";
 import AdminHeader from "../../components/AdminHeader";
 import HireMeBtn from "../../../components/HireMeBtn";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useTestimonial } from "../../../Context/GetTestimonial";
@@ -18,18 +18,20 @@ const AddTestimonial = () => {
   const [profileImg, setProfileImg] = useState("");
   const [date, setDate] = useState("");
 
-  const mutation = useMutation((formData) => {
-    const response = axios.post(
-      `${backendUrl}/admin/add_testimonial`,
-      formData,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return response;
+  const mutation = useMutation({
+    mutationFn: (formData) => {
+      const response = axios.post(
+        `${backendUrl}/admin/add_testimonial`,
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response;
+    },
   });
 
   const handleTestiSubmit = (e) => {
