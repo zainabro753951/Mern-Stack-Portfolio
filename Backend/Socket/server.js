@@ -16,10 +16,7 @@ const allowedOrigins = [
 
 const ioOptions = {
   cors: {
-    origin:
-      process.env.NODE_ENV === "production"
-        ? [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT2]
-        : " http://localhost:5173",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     exposedHeaders: ["x-custom-header"],
@@ -28,6 +25,7 @@ const ioOptions = {
     maxDisconnectionDuration: 2 * 60 * 1000,
     skipMiddlewares: true, // Improves recovery performance
   },
+  path: "/socket.io/", // Consistent path
   pingTimeout: 60000, // 60 seconds
   pingInterval: 25000, // 25 seconds
 };
