@@ -16,33 +16,13 @@ const allowedOrigins = [
 
 const ioOptions = {
   cors: {
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
-
-      if (
-        allowedOrigins.some((allowedOrigin) => {
-          if (typeof allowedOrigin === "string") {
-            return origin === allowedOrigin;
-          } else {
-            return allowedOrigin.test(origin);
-          }
-        })
-      ) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true, // REQUIRED for cookies
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization",
-      "Cache-Control",
-      "Set-Cookie",
-      "Accept",
-      "X-Requested-With",
-    ],
+    origin:
+      process.env.NODE_ENV === "production"
+        ? [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT2]
+        : " http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+    exposedHeaders: ["x-custom-header"],
   },
   connectionStateRecovery: {
     maxDisconnectionDuration: 2 * 60 * 1000,
