@@ -28,15 +28,6 @@ const ioOptions = {
     maxDisconnectionDuration: 2 * 60 * 1000,
     skipMiddlewares: true, // Improves recovery performance
   },
-  // Production-specific optimizations
-  transports: ["websocket"], // Explicitly specify transports
-  serveClient: false, // Don't serve client files
-  perMessageDeflate: {
-    threshold: 1024, // Size threshold for compression
-    zlibDeflateOptions: {
-      level: 3, // Compression level (1-9)
-    },
-  },
   pingTimeout: 60000, // 60 seconds
   pingInterval: 25000, // 25 seconds
 };
