@@ -5,7 +5,6 @@ import GetBlogData from "../../Controller/AdminControllers/getBlogPosts.controll
 import getTestimonial from "../../Controller/AdminControllers/GetTestimonial.controller.js";
 import ViewProject from "../../Controller/AdminControllers/ViewProject.controller.js";
 import getAllBlogComment from "../../Controller/AdminControllers/getAllBlogCommentNotif.controller.js";
-import secureUserRoute from "../../middlewares/secureUserRoute.js";
 import secureAdminRoute from "../../middlewares/secureAdminRoute.js";
 import getAdminId from "../../Controller/AdminControllers/getAdminId.controller.js";
 import getUsers from "../../Controller/AdminControllers/getAllUser.controller.js";

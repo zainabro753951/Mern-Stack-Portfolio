@@ -7,9 +7,7 @@ import React, {
   useEffect,
 } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAdminAuth } from "./AdminAuthProvider";
 import { useUserAuth } from "./UserAuthProvider";
-import WelcomeLoader from "../components/WelcomeLoader";
 
 export const GetBlogContext = createContext();
 
@@ -39,7 +37,6 @@ apiClient.interceptors.response.use(
 );
 
 export const GetBlogs = ({ children }) => {
-  const { isAdminAuthenticated } = useAdminAuth();
   const { isUserAuthenticated } = useUserAuth();
   const [blogPosts, setBlogPosts] = useState([]);
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -68,18 +65,18 @@ export const GetBlogs = ({ children }) => {
 
   // Prefetch data when authentication status changes
   useEffect(() => {
-    if (isUserAuthenticated || isAdminAuthenticated) {
+    if (isUserAuthenticated) {
       queryClient.prefetchQuery({
         queryKey: ["blogPosts"],
         queryFn: fetchBlogPosts,
       });
     }
-  }, [isUserAuthenticated, isAdminAuthenticated, queryClient, fetchBlogPosts]);
+  }, [isUserAuthenticated, queryClient, fetchBlogPosts]);
 
   const { isLoading, isError, error, isSuccess, data } = useQuery({
     queryKey: ["blogPosts"],
     queryFn: fetchBlogPosts,
-    enabled: isUserAuthenticated || isAdminAuthenticated,
+    enabled: isUserAuthenticated,
     onError: (error) => {
       console.error("Error in useQuery:", error);
       const cachedData = queryClient.getQueryData(["blogPosts"]);

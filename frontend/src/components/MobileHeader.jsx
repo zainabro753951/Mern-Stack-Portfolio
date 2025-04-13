@@ -81,27 +81,22 @@ const MobileHeader = () => {
         >
           <div className="w-full h-full p-10">
             <ul className="flex flex-col gap-5 h-full">
-              {[
-                "Home",
-                "About",
-                "Portfolio",
-                "Testimonial",
-                "Blog",
-                "Contact",
-              ].map((item, idx) => {
-                return (
-                  <li className="links" key={idx}>
-                    <NavLink
-                      to={idx === 0 ? "/" : `/${item.toLowerCase()}`}
-                      className={({ isActive }) =>
-                        isActive ? "text-themePurple " : ""
-                      }
-                    >
-                      {item}
-                    </NavLink>
-                  </li>
-                );
-              })}
+              {["Home", "About", "Portfolio", "Testimonial", "Contact"].map(
+                (item, idx) => {
+                  return (
+                    <li className="links" key={idx}>
+                      <NavLink
+                        to={idx === 0 ? "/" : `/${item.toLowerCase()}`}
+                        className={({ isActive }) =>
+                          isActive ? "text-themePurple " : ""
+                        }
+                      >
+                        {item}
+                      </NavLink>
+                    </li>
+                  );
+                }
+              )}
             </ul>
           </div>
         </div>

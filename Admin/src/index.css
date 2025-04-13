@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@theme {
+  --color-themePurple: #ff6d5a;
+  --color-themeGolden: #f4c430;
+  --color-gradientStart: #5137a1;
+  --color-gradientEnd: #db6268;
+  --color-themeBlue: #342ead;
+  --color-themeGray: #b5b5c0;
+  --color-themePurpleDark: #c55a4a;
+  --color-themeGoldenLight: #f7d2a4;
+  --color-themeBlueLight: #4557b7;
+}
+
+.bg-portfolioHero {
+  background-image: url("/imgs/footer_bg.svg") !important;
+}
+
+.preview-content {
+  font-family: "Lexend", sans-serif;
+  font-size: 1.5vw;
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .preview-content {
+    font-size: 2.5vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .preview-content {
+    font-size: 4vw;
+  }
+}
+
+.preview-content img {
+  max-width: 100%;
+  height: auto;
+  width: 30vw !important;
+}

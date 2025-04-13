@@ -1,46 +1,40 @@
+// Dot env Configuration
+import dotenv from "dotenv";
+dotenv.config();
+
+// Express configuration
 import express from "express";
+const app = express();
+
+// Importing Some Pakages for improvements
 import cors from "cors";
-import { app, server } from "./Socket/server.js";
 import path from "path";
 import { fileURLToPath } from "url";
-import mongoose from "mongoose";
-import rateLimit from "express-rate-limit";
-import admin from "./Routes/AdminRoutes/admin.route.js";
-import Insert from "./Routes/AdminRoutes/Insert.route.js";
-import getData from "./Routes/AdminRoutes/getData.route.js";
-import deleteData from "./Routes/AdminRoutes/delete.route.js";
-import user from "./Routes/UserRoutes/user.route.js";
-import likes from "./Routes/UserRoutes/likes.router.js";
-import DeepSeek from "./Routes/UserRoutes/DeepSeek.route.js";
-import commentsRoute from "./Routes/UserRoutes/comments.route.js";
 import cookieParser from "cookie-parser";
+import mongoose from "mongoose";
 import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
+import rateLimit from "express-rate-limit";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Dotenv Config
+const port = process.env.PORT;
 
-const allowedOrigins = [
-  process.env.FRONTEND_PORT,
-  process.env.FRONTEND_PORT2,
-  "http://localhost:5173",
-  /\.vercel\.app$/,
-];
-
+// CORS configuration for dev and also production
 app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
         ? [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT2]
-        : " http://localhost:5173",
+        : ["http://localhost:5173", "http://localhost:5174"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     exposedHeaders: ["x-custom-header"],
   })
 );
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 // MongoDB Connection String
 const mongooseUrl = process.env.MONGODBURL;
@@ -72,33 +66,20 @@ const limiter = rateLimit({
   message: "Too many requests, please try again later",
   standardHeaders: true,
   legacyHeaders: false,
-  skip: (req) => {
-    // Skip rate limiting for certain important API endpoints
-    const skipUrl = [
-      req.url.startsWith("/admin/get_blog_comments_notification"),
-      req.url.startsWith("/user/blog/all_comments"),
-    ];
-    return skipUrl;
-  },
 });
 app.use(limiter);
+
+// Importing some Routes here
+import admin from "./Routes/AdminRoutes/admin.route.js";
+import Insert from "./Routes/AdminRoutes/Insert.route.js";
+import getData from "./Routes/AdminRoutes/getData.route.js";
+import deleteData from "./Routes/AdminRoutes/delete.route.js";
 
 // Admin Routes
 app.use(admin);
 app.use(Insert);
 app.use(getData);
 app.use(deleteData);
-
-// User Routes
-app.use(user);
-
-// Comments Route
-app.use(commentsRoute);
-
-// DeepSeek Model Integrating
-app.use(DeepSeek);
-
-app.use(likes);
 
 // After all routes
 app.use((err, req, res, next) => {
@@ -110,5 +91,9 @@ app.use((err, req, res, next) => {
 process.on("unhandledRejection", (err) => {
   console.error("Unhandled Rejection:", err);
   // Optionally exit the process
-  // process.exit(1);
+  process.exit(1);
+});
+
+app.listen(port, () => {
+  console.log(`Server listening on http://localhost:${port}`);
 });

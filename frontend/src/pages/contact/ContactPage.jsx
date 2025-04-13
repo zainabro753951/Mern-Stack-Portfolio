@@ -5,14 +5,12 @@ import ContactForm from "./components/ContactForm";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import MobileHeader from "../../components/MobileHeader";
-import CustomeCursor from "../../components/CustomeCursor";
 
 const ContactPage = () => {
   return (
     <>
       <Header />
       <MobileHeader />
-      <CustomeCursor />
       <ContactHero />
       <ContactInfo />
       <ContactForm />

@@ -1,12 +1,10 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAdminAuth } from "./AdminAuthProvider";
 
 export const TestimonialContext = createContext();
 
 export const TestimonialProvider = ({ children }) => {
-  const { isAdminAuthenticated } = useAdminAuth();
   const queryClient = useQueryClient();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -35,18 +33,11 @@ export const TestimonialProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["testimonialData"],
     queryFn: fetchTestimonials,
-    enabled: isAdminAuthenticated,
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 15 * 60 * 1000, // 15 minutes
     retry: 2, // Retry twice on failure
     refetchOnWindowFocus: true,
   });
-
-  useEffect(() => {
-    if (isAdminAuthenticated) {
-      queryClient.invalidateQueries({ queryKey: ["testimonialData"] });
-    }
-  }, [isAdminAuthenticated, queryClient]);
 
   const contextValue = {
     testimonialData,

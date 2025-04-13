@@ -56,7 +56,7 @@ export const SocketProvider = ({ children }) => {
 
     const socketInstance = io(backendUrl, {
       withCredentials: true,
-      transports: ["websocket", "polling"],
+      transports: ["websocket"],
       autoConnect: true,
       reconnection: true,
       reconnectionAttempts: maxReconnectAttempts,

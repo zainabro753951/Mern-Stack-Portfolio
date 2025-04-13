@@ -6,14 +6,12 @@ import Testimonial from "../../components/Testimonial";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import MobileHeader from "../../components/MobileHeader";
-import CustomeCursor from "../../components/CustomeCursor";
 
 const About = () => {
   return (
     <>
       <Header />
       <MobileHeader />
-      <CustomeCursor />
       <AboutHero />
       <AboutMe />
       <AboutEducation />

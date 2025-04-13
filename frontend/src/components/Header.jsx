@@ -68,7 +68,7 @@ const Header = () => {
           />
         </div>
         <ul className="flex items-center gap-[3.2vw] text-[1.1vw]">
-          {["Home", "About", "Portfolio", "Testimonial", "Blog", "Contact"].map(
+          {["Home", "About", "Portfolio", "Testimonial", "Contact"].map(
             (item, idx) => {
               return (
                 <li className="links" key={idx}>
@@ -92,9 +92,9 @@ const Header = () => {
           >
             <LuSun />
           </div>
-          <Link to={"/login"}>
+          <Link to={"/contact"}>
             {" "}
-            <HireMeBtn text={"Login"} />{" "}
+            <HireMeBtn text={"Hire Me"} />{" "}
           </Link>
         </div>
       </div>

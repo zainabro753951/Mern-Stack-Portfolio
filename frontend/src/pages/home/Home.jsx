@@ -5,19 +5,14 @@ import Portfolio from "./components/Portfolio";
 import Projects from "./components/Projects";
 import Testimonial from "../../components/Testimonial";
 import HappyClients from "./components/HappyClients";
-import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import MobileHeader from "../../components/MobileHeader";
+import Footer from "../../components/Footer";
 import CustomeCursor from "../../components/CustomeCursor";
-import { useAdminAuth } from "../../Context/AdminAuthProvider";
-import ChatbotButton from "../../components/ChatbotButton";
 import { useAboutData } from "../../Context/GetAboutData";
 import PageProgressBar from "../../components/PageProgressBar";
 
 const Home = () => {
-  const { isAdminAuthenticated } = useAdminAuth();
-  console.log(isAdminAuthenticated);
-
   const { aboutData, isLoading } = useAboutData();
 
   return (
@@ -26,7 +21,6 @@ const Home = () => {
       <Header />
       <MobileHeader />
       <CustomeCursor />
-      <ChatbotButton />
       <Hero content={aboutData} isLoading={isLoading} />
       <About content={aboutData} isLoading={isLoading} />
       <Portfolio />

@@ -18,7 +18,7 @@ const adminLogin = async (req, res) => {
     }
     let key = process.env.ADMIN_TOKEN;
     let token = createTokenAndSaveCookie(admin._id, key, res);
-    res.status(200).json({ message: "Login Successfully!", admin });
+    res.status(200).json({ message: "Login Successfully!", admin, token });
   } catch (error) {
     console.log(error);
 
