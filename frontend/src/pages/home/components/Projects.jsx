@@ -5,6 +5,7 @@ import React, { useRef } from "react";
 import Counter from "./Counter";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+
 const Projects = () => {
   let projectData = [
     {
@@ -21,13 +22,13 @@ const Projects = () => {
     },
   ];
 
-  // Gsap animations here
-  gsap.config({ nullTargetWarn: false, force3D: true });
+  // Create an array of refs
+  const counterRefs = useRef([]);
 
   useGSAP(() => {
-    gsap.from(".counter", {
+    gsap.from(counterRefs.current, {
       scrollTrigger: {
-        trigger: ".counter",
+        trigger: counterRefs.current[0], // or you can use a parent element
         markers: true,
         start: "top 110%",
         scrub: true,
@@ -41,6 +42,7 @@ const Projects = () => {
       force3D: true,
     });
   }, []);
+
   return (
     <div
       style={{ backgroundAttachment: "fixed" }}
@@ -54,6 +56,7 @@ const Projects = () => {
                 key={idx}
                 style={{ willChange: "scale, opacity" }}
                 className="counter h-[70%]"
+                ref={(el) => (counterRefs.current[idx] = el)}
               >
                 <Counter data={data} />
               </div>
