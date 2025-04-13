@@ -22,7 +22,6 @@ const Hero = ({ content, isLoading }) => {
   const myName = useRef(null);
   const webDev = useRef(null);
   const backBanner = useRef(null);
-  const iconsRef = useRef([]);
   const { isDarkMode } = ToggleTheme();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -150,7 +149,7 @@ const Hero = ({ content, isLoading }) => {
   return (
     <>
       {isLoading ? (
-        <div className={`w-full  animate-pulse bg-gray-200`}>
+        <div className={`w-full animate-pulse bg-gray-200`}>
           <div className="md:max-w-[80vw] mx-auto px-5 grid lg:grid-cols-2 md:pt-[6vw] xs:pt-[20vw] pb-[6vw] gap-5">
             {/* Left Column - Text Content */}
             <div>
@@ -206,42 +205,43 @@ const Hero = ({ content, isLoading }) => {
       ) : (
         <div
           ref={targetSection}
-          className={`w-full bg-hero isDarkMode ? "bg-zinc-950 text-gray-300" : "bg-gray-200 text-black" bg-cover bg-no-repeat`}
+          className={`w-full bg-hero bg-cover bg-no-repeat`}
         >
-          <div className="md:max-w-[80vw] mx-auto px-5 place-items-center gap-5 pb-[6vw] grid lg:grid-cols-2 md:pt-[6vw] xs:pt-[20vw] items-center">
+          <div className="md:max-w-[80vw] mx-auto px-5 place-items-center md:gap-[2vw] xs:gap-[3vw] md:py-[8vw] xs:pb-[6vw] xs:pt-[10vw] grid lg:grid-cols-2 items-center">
             <div>
               <div className="flex flex-col">
                 <h2
                   ref={textRef}
                   style={{ willChange: "transform, opacity" }}
-                  className="lg:text-[3vw] md:text-[4vw] xs:text-[5.5vw] font-lexend_deca text-themeGray lg:leading-[3vw] md:leading-[4vw] xs:leading-[5.5vw] font-semibold"
+                  className="md:text-[3vw] xs:text-[4vw] font-lexend_deca text-themeGray md:leading-[3.5vw] xs:leading-[4.5vw] font-semibold"
                 >
                   Hi! I'm
                 </h2>
                 <h1
                   ref={myName}
                   style={{ willChange: "transform, opacity" }}
-                  className="lg:text-[5.5vw] md:text-[6.5vw] xs:text-[8vw] lg:leading-[6vw] md:leading-[7vw] xs:leading-[8.5vw] md:py-0 xs:py-[3vw] font-lexend_deca font-bold"
+                  className="md:text-[5.5vw] xs:text-[6.5vw] md:leading-[6vw]  xs:leading-[7vw] font-lexend_deca font-bold"
                 >
                   <span className="gardient-text">
                     {content?.firstName || null}
                   </span>
+                  &nbsp;
                   <span
                     className="gradient-stroke-text px-2"
                     data-text={content?.lastName || null}
                   ></span>
                 </h1>
-                <h3 className="lg:text-[2vw] md:text-[3vw]  xs:text-[4.5vw] font-lexend_deca font-bold tracking-wide leading-[2.5vw]">
+                <h3 className="md:text-[2vw] xs:text-[3vw] font-lexend_deca font-bold tracking-wide md:leading-[2.5vw] xs:leading-[3.5vw]">
                   <span className="text-themeGray ">MERN Stack</span>{" "}
                   <span ref={webDev} className="text-themeBlue">
                     Web Developer
                   </span>
                 </h3>
               </div>
-              <p className="lg:text-[1.3vw] will-change-contents md:text-[2.3vw] xs:text-[3.6vw] lg:py-[2vw] md:py-[3vw] xs:py-[4.5vw] font-jost text-gray-500">
+              <p className="md:text-[1.3vw] will-change-contents xs:text-[2.3vw]  lg:py-[2vw] md:py-[3vw] xs:py-[4vw] font-jost text-gray-500">
                 {spanedText}
               </p>
-              <div className="flex items-center lg:gap-[2vw] md:gap-[3vw] xs:gap-[4.5vw]">
+              <div className="flex items-center md:gap-[2vw] xs:gap-[3vw]">
                 {icons.map((icon, idx) => {
                   return (
                     <a
@@ -257,8 +257,8 @@ const Hero = ({ content, isLoading }) => {
                       <img
                         className={` ${
                           idx === 0
-                            ? "lg:w-[1.2vw] md:w-[1.6vw] xs:w-[2vw]"
-                            : "lg:w-[1.8vw] md:w-[2.2vw] xs:w-[2.6]"
+                            ? "md:w-[1vw] xs:w-[1.7vw] "
+                            : "md:w-[1.8vw] xs:w-[2.8vw]"
                         }`}
                         src={icon}
                         alt=""
@@ -267,20 +267,20 @@ const Hero = ({ content, isLoading }) => {
                   );
                 })}
               </div>
-              <div className="py-10 flex items-center gap-5">
+              <div className="md:py-[3vw] xs:py-[4vw] flex items-center md:gap-[1.5vw] xs:gap-[2.5vw]">
                 <Link>
                   <HireMeBtn text={"Download Now"} />
                 </Link>
                 <Link
                   id="talkBtn"
-                  className="lg:text-[1.4vw] md:text-[2.4vw] xs:text-[3.9vw] font-lexend_deca relative font-semibold text-themeBlue"
+                  className="md:text-[1.4vw] xs:text-[2.4vw] font-lexend_deca relative font-semibold text-themeBlue"
                 >
                   Let's Talk
                 </Link>
               </div>
             </div>
             <div>
-              <div className="lg:w-[20vw] md:w-[30vw] xs:w-[50vw] relative">
+              <div className="md:w-[20vw] xs:w-[40vw] relative">
                 <img
                   ref={backBanner}
                   style={{ willChange: "scale, opacity" }}
@@ -291,14 +291,13 @@ const Hero = ({ content, isLoading }) => {
                 <img
                   id="meAnimate"
                   style={{ willChange: "opacity" }}
-                  className="absolute top-20 object-cover left-0 w-full h-full"
+                  className="absolute top-0 object-cover left-0 w-full h-full"
                   loading="lazy"
                   src={
                     content?.profileImg
                       ? `${backendUrl}/${content?.profileImg || null}`
                       : null
                   }
-                  alt=""
                 />
               </div>
             </div>

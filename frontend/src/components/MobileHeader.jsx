@@ -31,17 +31,13 @@ const MobileHeader = () => {
   return (
     <>
       <nav
-        className={` fixed z-50 w-full xs:block lg:hidden transition-all duration-700 md:px-[2vw] xs:px-[5vw] py-1 font-jost left-1/2 opacity-100 -translate-x-1/2  ${
+        className={` fixed z-50 w-full xs:block md:hidden transition-all duration-700 xs:px-[1.2vw] py-1 font-jost left-1/2 opacity-100 -translate-x-1/2  ${
           scrollDirection === "down" ? "  opacity-0" : "opacity-100"
         } ${!scrollDown ? "bg-transparent" : "bg-white"}`}
       >
-        <div className="flex items-center justify-between max-w-[1200px] mx-auto">
+        <div className="flex items-center justify-between  mx-auto">
           <div>
-            <img
-              className="sm:w-[5.5vw] xs:w-[7vw]"
-              src="imgs/logo.png"
-              alt="Logo"
-            />
+            <img className="xs:w-[7vw]" src="imgs/logo.png" alt="Logo" />
           </div>
           <div className="flex items-center gap-[6vw]">
             <Link>
@@ -51,20 +47,20 @@ const MobileHeader = () => {
             <div>
               <div
                 onClick={() => (!isOpen ? setIsOpen(true) : setIsOpen(false))}
-                className="flex flex-col md:gap-[0.7vw] sm:gap-[0.9vw] xs:gap-[1.1vw] cursor-pointer"
+                className="flex flex-col gap-[0.9vw] py-[2vw] cursor-pointer"
               >
                 <div
-                  className={`md:w-[3.5vw] sm:w-[4.5vw] xs:w-[6.5vw] md:h-[0.3vw] sm:h-[0.5vw] xs:h-[0.9vw] bg-black rounded-full ${
+                  className={`xs:w-[5vw] xs:h-[0.6vw] bg-black rounded-full ${
                     isOpen ? "lineOneRotate" : ""
                   } transition-all duration-300`}
                 ></div>
                 <div
-                  className={`md:w-[3.5vw] sm:w-[4.5vw] xs:w-[6.5vw] md:h-[0.3vw] sm:h-[0.5vw] xs:h-[0.9vw] bg-black rounded-full ${
+                  className={`xs:w-[5vw] xs:h-[0.6vw] bg-black rounded-full ${
                     isOpen ? "translate-x-10 opacity-0" : ""
                   } transition-all duration-300`}
                 ></div>
                 <div
-                  className={`md:w-[3.5vw] sm:w-[4.5vw] xs:w-[6.5vw] md:h-[0.3vw] sm:h-[0.5vw] xs:h-[0.9vw] bg-black rounded-full ${
+                  className={`xs:w-[5vw] xs:h-[0.6vw] bg-black rounded-full ${
                     isOpen ? "lineTwoRotate" : ""
                   } transition-all duration-300`}
                 ></div>

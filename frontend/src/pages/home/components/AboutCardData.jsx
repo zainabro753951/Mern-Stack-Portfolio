@@ -20,36 +20,32 @@ const AboutCardData = ({ data, idx }) => {
         stiffness: 100, // Controls speed
         type: "spring",
       }}
-      className="flex items-center gap-4 elem bg-white rounded-xl border-b-2 border-gray-200 border-r border-l lg:p-[1vw] md:p-[2vw] xs:p-[4.5vw]"
+      className="flex items-center md:gap-[0.4vw] xs:gap-[1vw] bg-white md:rounded-[1vw] xs:rounded-[2vw] border-b-2 border-gray-200 border-r border-l lg:p-[1vw] md:p-[2vw] xs:p-[4.5vw]"
     >
-      <div className="lg:p-[3vw] md:p-[4vw] xs:p-[5.5vw]">
-        <img
-          className="lg:w-[4.5vw] md:w-[7.5vw] sm:w-[10vw] xs:w-[13vw]"
-          src={data.icon}
-          alt=""
-        />
+      <div className="md:p-[3vw] xs:p-[4vw]">
+        <img className="md:w-[4.5vw] xs:w-[6.5vw]" src={data.icon} alt="" />
       </div>
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col md:gap-[0.8vw] xs:gap-[1.8vw]">
         <div>
           <h1
             id="aboutName"
-            className="lg:text-[2.3vw] md:text-[3.4vw] xs:text-[4.9vw] font-lexend_deca text-themeBlue font-medium transition-all duration-700"
+            className="md:text-[2.3vw] xs:text-[3.4vw] font-lexend_deca text-themeBlue font-medium transition-all duration-700"
           >
             {data.name}
           </h1>
-          <p className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] text-gray-500 font-jost tracking-wide">
+          <p className="md:text-[1.3vw] xs:text-[2.3vw] text-gray-500 font-jost tracking-wide">
             {data.disc}
           </p>
         </div>
         <div className="flex items-center justify-between">
-          <p className="lg:text-[1.4vw] md:text-[2.4vw] xs:text-[3.7vw] text-gray-500">
+          <p className="md:text-[1.4vw] xs:text-[2.4vw] text-gray-500">
             {data.projects} Projects
           </p>
           <Link
             id="icon"
-            className="lg:p-[0.8vw] md:p-[1.6vw] sm:p-[2.1vw] xs:p-[2.6vw] duration-1000 rounded-full border border-gray-400"
+            className="md:p-[0.8vw] xs:p-[1.8vw] duration-1000 rounded-full border border-gray-400"
           >
-            <ArroIcon className={"lg:w-[0.7vw] md:w-[1.7vw] xs:w-[3.5vw]"} />
+            <ArroIcon className={"md:w-[0.7vw] xs:w-[1.7vw]"} />
           </Link>
         </div>
       </div>

@@ -32,12 +32,11 @@ const Projects = () => {
         markers: true,
         start: "top 110%",
         scrub: true,
-        end: "bottom 0%",
+        end: "center 0%",
         toggleActions: "play none none reverse",
       },
       y: 100,
       duration: 0.5,
-      transformOrigin: "top",
       stagger: 0.1,
       force3D: true,
     });
@@ -55,7 +54,7 @@ const Projects = () => {
               <div
                 key={idx}
                 style={{ willChange: "scale, opacity" }}
-                className="counter h-[70%]"
+                className="md:py-[5vw] xs:py-[6vw]"
                 ref={(el) => (counterRefs.current[idx] = el)}
               >
                 <Counter data={data} />

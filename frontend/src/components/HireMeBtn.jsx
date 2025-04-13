@@ -1,25 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
-import gsap from "gsap";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { HashLoader } from "react-spinners";
+
 const HireMeBtn = ({ text, isLoading }) => {
   const [mouseHovered, setMouseHovered] = useState(false);
-  const textRef = useRef(null);
-
-  useEffect(() => {
-    if (mouseHovered) {
-      gsap.to(textRef.current, {
-        y: "-1.25rem",
-        duration: 2,
-        ease: "elastic.out",
-      });
-    } else {
-      gsap.to(textRef.current, {
-        y: "1.25rem",
-        duration: 2,
-        ease: "elastic.out",
-      });
-    }
-  }, [mouseHovered]);
 
   return (
     <button
@@ -29,7 +13,7 @@ const HireMeBtn = ({ text, isLoading }) => {
         isLoading
           ? "bg-transparent border-themePurple border"
           : "bg-themePurple"
-      } lg:px-[2vw] md:px-[3vw] sm:px-[3.7vw] xs:px-[4vw] lg:py-[1.7vw] md:py-[1.9vw] sm:py-[2.3vw] xs:py-[3.3vw] rounded-[0.5vw]`}
+      } md:px-[2vw] xs:px-[3vw] md:py-[1.7vw] xs:py-[2.7vw] md:rounded-[0.5vw] xs:rounded-[1vw]`}
     >
       {isLoading ? (
         <HashLoader
@@ -38,21 +22,29 @@ const HireMeBtn = ({ text, isLoading }) => {
           title="Please waiting after response come"
         />
       ) : (
-        <div
-          ref={textRef}
-          className="xl:flex xs:hidden leading-none w-fit flex-col items-center gap-[1.6vw] relative translate-y-[1.25rem] font-bold text-[1.2vw] text-white"
-        >
-          <span>{text}</span>
-          <span>{text}</span>
-        </div>
+        <>
+          <motion.div
+            className="xl:flex xs:hidden leading-none w-fit flex-col items-center md:gap-[1.6vw] xs:gap-[2.6vw] relative font-bold md:text-[1.1vw] xs:text-[2.1vw] text-white"
+            animate={{ y: mouseHovered ? -20 : 20 }}
+            transition={{
+              type: "spring",
+              duration: 1,
+              stiffness: 500,
+              damping: 25,
+            }}
+          >
+            <span>{text}</span>
+            <span>{text}</span>
+          </motion.div>
+          <div
+            className={`${
+              isLoading ? "hidden" : "xl:hidden"
+            } font-bold md:text-[1.1vw] xs:text-[2.1vw] text-white`}
+          >
+            {text}
+          </div>
+        </>
       )}
-      <div
-        className={`${
-          isLoading ? "hidden" : "xl:hidden"
-        } font-bold md:text-[1.5vw] sm:text-[2.3vw] xs:text-[3.3vw] text-white`}
-      >
-        {text}
-      </div>
     </button>
   );
 };
