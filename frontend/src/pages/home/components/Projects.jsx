@@ -26,12 +26,12 @@ const Projects = () => {
   const counterRefs = useRef([]);
 
   useGSAP(() => {
-    gsap.from(counterRefs.current, {
+    const animation = gsap.from(counterRefs.current, {
       y: 200,
       duration: 0.5,
       stagger: 0.09,
       scrollTrigger: {
-        trigger: counterRefs.current[0], // or you can use a parent element
+        trigger: counterRefs.current[0],
         markers: true,
         start: "top 110%",
         end: "center 0%",
@@ -39,6 +39,15 @@ const Projects = () => {
         toggleActions: "play none none reverse",
       },
     });
+
+    // Refresh ScrollTrigger after images load
+    window.addEventListener("load", () => ScrollTrigger.refresh());
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("load", () => ScrollTrigger.refresh());
+      animation.kill();
+    };
   }, []);
 
   return (
