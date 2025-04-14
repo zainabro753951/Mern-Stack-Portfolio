@@ -20,7 +20,6 @@ const Home = () => {
       <PageProgressBar />
       <Header />
       <MobileHeader />
-      <CustomeCursor />
       <Hero content={aboutData} isLoading={isLoading} />
       <About content={aboutData} isLoading={isLoading} />
       <Portfolio />
