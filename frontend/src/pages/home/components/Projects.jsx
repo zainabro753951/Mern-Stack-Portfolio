@@ -27,18 +27,17 @@ const Projects = () => {
 
   useGSAP(() => {
     gsap.from(counterRefs.current, {
+      y: 200,
+      duration: 0.5,
+      stagger: 0.09,
       scrollTrigger: {
         trigger: counterRefs.current[0], // or you can use a parent element
         markers: true,
         start: "top 110%",
-        scrub: true,
         end: "center 0%",
+        scrub: true,
         toggleActions: "play none none reverse",
       },
-      y: 100,
-      duration: 0.5,
-      stagger: 0.1,
-      force3D: true,
     });
   }, []);
 
@@ -47,14 +46,14 @@ const Projects = () => {
       style={{ backgroundAttachment: "fixed" }}
       className="w-full bg-projects bg-cover bg-no-repeat"
     >
-      <div className="md:max-w-[80vw] mx-auto xs:h-full lg:h-[40vh] xs:px-20 lg:py-0 xs:py-[5vw] lg:px-0">
+      <div className="md:max-w-[80vw] mx-auto xs:px-20 lg:py-0 xs:py-[5vw] lg:px-0">
         <div className="w-full h-full grid lg:grid-cols-3 lg:gap-[3vw] items-center">
           {projectData.map((data, idx) => {
             return (
               <div
                 key={idx}
                 style={{ willChange: "scale, opacity" }}
-                className="md:py-[5vw] xs:py-[6vw]"
+                className="md:py-[5vw] xs:py-[7vw]"
                 ref={(el) => (counterRefs.current[idx] = el)}
               >
                 <Counter data={data} />
