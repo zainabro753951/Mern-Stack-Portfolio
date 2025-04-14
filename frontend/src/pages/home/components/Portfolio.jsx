@@ -42,10 +42,10 @@ const Portfolio = () => {
   }, []);
 
   return (
-    <div className="w-full bg-portfolio bg-cover bg-no-repeat">
-      <div className="w-full md:max-w-[80vw]  mx-auto px-5 py-32 grid lg:grid-cols-2 lg:gap-[5vw] md:gap-[6vw] xs:gap-[8vw] font-jost">
+    <div className="w-full bg-portfolio min-h-screen max-h-full bg-cover bg-no-repeat">
+      <div className="w-full md:max-w-[80vw] mx-auto px-5 py-32 grid lg:grid-cols-2 lg:gap-[5vw] md:gap-[6vw] xs:gap-[8vw] h-full font-jost">
         <div className="w-full h-full">
-          <div className="flex items-center gap-4 text-themeBlue ">
+          <div className="flex items-center gap-4 text-themeBlue">
             <h1 className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw]">
               Portfolio
             </h1>
