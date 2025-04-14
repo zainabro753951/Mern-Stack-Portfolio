@@ -238,7 +238,7 @@ const Hero = ({ content, isLoading }) => {
                   </span>
                 </h3>
               </div>
-              <p className="md:text-[1.3vw] will-change-contents xs:text-[2.3vw]  lg:py-[2vw] md:py-[3vw] xs:py-[4vw] font-jost text-gray-500">
+              <p className="md:text-[1.4vw] will-change-contents xs:text-[2.4vw]  lg:py-[2vw] md:py-[3vw] xs:py-[4vw] font-jost text-gray-500">
                 {spanedText}
               </p>
               <div className="flex items-center md:gap-[2vw] xs:gap-[3vw]">
