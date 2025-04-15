@@ -1,45 +1,75 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { IoMdArrowDropright } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { motion, useAnimation, useInView } from "motion/react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 const Portfolio = () => {
-  const portfolioText = useRef(null);
-  gsap.config({ nullTargetWarn: false, force3D: true });
-  useGSAP(() => {
-    gsap.from(portfolioText.current, {
-      scrollTrigger: {
-        trigger: portfolioText.current,
-        start: "80% 80%",
-        end: "bottom 10%",
-        toggleActions: "play none none reverse",
-      },
+  const portfolioTextRef = useRef(null);
+  const projectCardsRef = useRef([]);
+
+  // Animation controls
+  const portfolioControls = useAnimation();
+  const projectCardsControls = useAnimation();
+
+  // Check if elements are in view
+  const isPortfolioTextInView = useInView(portfolioTextRef, {
+    once: true,
+    margin: "0px 0px -20% 0px",
+  });
+  // const isProjectCardsInView = useInView(projectCardsRef.current[0], {
+  //   once: true,
+  //   margin: "0px 0px -30% 0px",
+  // });
+
+  useEffect(() => {
+    if (isPortfolioTextInView) {
+      portfolioControls.start("visible");
+    }
+  }, [isPortfolioTextInView, portfolioControls]);
+
+  // useEffect(() => {
+  //   if (isProjectCardsInView) {
+  //     projectCardsControls.start("visible");
+  //   }
+  // }, [isProjectCardsInView, projectCardsControls]);
+
+  // Animation variants
+  const portfolioTextVariants = {
+    hidden: {
       y: -90,
-      duration: 1,
       opacity: 0,
       rotate: 45,
       transformOrigin: "center",
-      ease: "power4",
-      force3D: true,
-    });
-
-    gsap.from(".projectCards", {
-      scrollTrigger: {
-        trigger: ".projectCards",
-        start: "top 130% ",
-        end: "top 10%",
-        toggleActions: "play none none reverse",
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      rotate: 0,
+      transition: {
+        duration: 1,
+        ease: [0.25, 0.1, 0.25, 1], // Similar to power4 in GSAP
       },
-      scale: 0,
-      duration: 1,
-      transformOrigin: "center",
-      stagger: 0.1,
-      force3D: true,
-    });
-  }, []);
+    },
+  };
+
+  // const projectCardVariants = {
+  //   hidden: {
+  //     scale: 0,
+  //     transformOrigin: "center",
+  //   },
+  //   visible: (i) => ({
+  //     scale: 1,
+  //     transition: {
+  //       delay: i * 0.1,
+  //       duration: 1,
+  //       ease: "backOut",
+  //     },
+  //   }),
+  // };
 
   return (
     <div className="w-full bg-portfolio min-h-screen bg-cover bg-no-repeat">
@@ -64,13 +94,16 @@ const Portfolio = () => {
             </div>
           </div>
           <div className="overflow-hidden">
-            <h2
-              ref={portfolioText}
+            <motion.h2
+              ref={portfolioTextRef}
+              initial="hidden"
+              animate={portfolioControls}
+              variants={portfolioTextVariants}
               className="md:text-[3.2vw] xs:text-[4.2vw] md:leading-[3.6vw] xs:leading-[4.6vw] font-lexend_deca font-semibold xs:pt-[1.7vw] md:pt-[0.7vw] tracking-wide"
             >
               My latest <br /> awasome{" "}
               <span className="text-themePurple">projects</span>
-            </h2>
+            </motion.h2>
           </div>
           <div
             id="ProjectHovers"

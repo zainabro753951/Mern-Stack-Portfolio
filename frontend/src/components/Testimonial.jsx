@@ -1,61 +1,90 @@
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
-import React, { useRef } from "react";
+import { motion, useAnimation, useInView } from "framer-motion";
+import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import TestimonialCard from "./TestimonialCard";
 import { useTestimonial } from "../Context/GetTestimonial";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 const Testimonial = () => {
-  const { testimonialData } = useTestimonial();
+  const { testimonialData = [] } = useTestimonial();
+  const testiTextRef = useRef(null);
+  const containerRef = useRef(null); // Added container ref for scroll animations
 
-  const testiText = useRef(null);
-  gsap.config({ nullTargetWarn: false, force3D: true });
-  useGSAP(() => {
-    gsap.from(testiText.current, {
-      scrollTrigger: {
-        trigger: testiText.current,
-        start: "center 80%",
-        end: "bottom 10%",
-        toggleActions: "play none none reverse",
-      },
-      y: -90,
-      duration: 1,
+  // Animation controls
+  const textControls = useAnimation();
+  const cardControls = useAnimation();
+
+  // Check if elements are in view
+  const isTextInView = useInView(testiTextRef, {
+    once: true,
+    margin: "0px 0px -20% 0px",
+  });
+
+  // Using container ref for cards animation
+  const isContainerInView = useInView(containerRef, {
+    once: true,
+    margin: "0px 0px -10% 0px",
+  });
+
+  useEffect(() => {
+    if (isTextInView) {
+      textControls.start("visible");
+    }
+  }, [isTextInView, textControls]);
+
+  useEffect(() => {
+    if (isContainerInView) {
+      cardControls.start("visible");
+    }
+  }, [isContainerInView, cardControls]);
+
+  // Animation variants
+  const textVariants = {
+    hidden: {
+      y: 90, // Changed from -90 to 90 for better visibility
       opacity: 0,
-      rotate: 45,
+      rotate: 15, // Reduced rotation for smoother effect
       transformOrigin: "center",
-      ease: "power4",
-      force3D: true,
-    });
-
-    gsap.from(".testimonialCard", {
-      scrollTrigger: {
-        trigger: ".testimonialCard",
-        start: "top 90%",
-        end: "bottom 10%",
-        toggleActions: "play none none reverse",
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      rotate: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.1, 0.25, 1],
       },
-      scale: 0,
-      duration: 1.5,
+    },
+  };
+
+  const cardVariants = {
+    hidden: {
+      scale: 0.8, // Changed from 0 to 0.8 for smoother scaling
+      opacity: 0,
+      y: 50, // Added slight vertical movement
       transformOrigin: "center",
-      ease: "power4",
-      force3D: true,
-    });
-  }, []);
+    },
+    visible: (i) => ({
+      scale: 1,
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.15, // Increased stagger delay
+        duration: 0.8, // Reduced duration
+        ease: "backOut", // Changed easing for better effect
+      },
+    }),
+  };
 
   return (
     <div className="bg-[#F9FBFF]">
-      <div className="md:max-w-[80vw] mx-auto pt-[14vw] lg:pt-[15vw] md:py-[9vw] xs:py-[15vw] px-5 font-jost">
+      <div className="md:max-w-[80vw] mx-auto md:pt-[14vw] xs:pt-[15vw] md:py-[9vw] xs:py-[15vw] px-5 font-jost">
         <div className="flex justify-between flex-wrap lg:gap-0 md:gap-[2vw] xs:gap-[4vw] items-end">
           <div>
-            <div className="flex items-center gap-4 text-themeBlue">
-              <h1 className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw]">
-                Testimonial
-              </h1>
+            <div className="flex items-center md:gap-[1vw] xs:gap-[2vw] text-themeBlue">
+              <h1 className="md:text-[1.3vw] xs:text-[2.3vw]">Testimonial</h1>
               <div id="rotateAbout">
                 <svg
-                  className="lg:w-[2.2vw] md:w-[3.2vw] xs:w-[4.7vw]"
+                  className="md:w-[2.2vw] xs:w-[3.2vw]"
                   viewBox="0 0 21 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -70,35 +99,43 @@ const Testimonial = () => {
               </div>
             </div>
             <div className="overflow-hidden">
-              <h2
-                ref={testiText}
+              <motion.h2
+                ref={testiTextRef}
+                initial="hidden"
+                animate={textControls}
+                variants={textVariants}
                 style={{ willChange: "transform, opacity" }}
-                className="lg:text-[3.2vw] md:text-[4.2vw] xs:text-[5.7vw] pt-4 font-semibold lg:leading-[3.6vw] md:leading-[4.6vw] xs:leading-[6.1vw] font-lexend_deca tracking-wide"
+                className="md:text-[3.2vw] xs:text-[4.2vw] md:pt-[1.1vw] xs:pt-[2.1vw] font-semibold md:leading-[3.6vw] xs:leading-[4.6vw] font-lexend_deca tracking-wide"
               >
                 What <span className="text-themePurple">my client</span> have{" "}
                 <br /> to say <span className="text-themeBlue">about me</span>
-              </h2>
+              </motion.h2>
             </div>
           </div>
           <div>
             <Link
-              className="md:text-[2.4vw] lg:text-[1.4vw] xs:text-[3.9vw] font-semibold text-themePurple relative"
+              className="xs:text-[2.4vw] md:text-[1.4vw] font-semibold text-themePurple relative"
               id="viewProject"
+              to="/testimonials"
             >
               View All Testimonial
             </Link>
           </div>
         </div>
-        <div className="w-full">
-          <div
-            style={{ willChange: "opacity, scale" }}
-            className="grid lg:grid-cols-2 lg:gap-[2.5vw] md:gap-[3.9vw] xs:gap-[5.4vw] w-full place-items-center items-center mt-16"
-          >
-            {testimonialData?.slice(1, 3).map((data, idx) => (
-              <div key={idx} className="testimonialCard">
+        <div className="w-full" ref={containerRef}>
+          <div className="grid lg:grid-cols-2 lg:gap-[2.5vw] md:gap-[3.9vw] xs:gap-[5.4vw] w-full place-items-center items-center md:mt-[6vw] xs:mt-[7vw]">
+            {testimonialData.slice(1, 3).map((data, idx) => (
+              <motion.div
+                key={data.id || idx}
+                initial="hidden"
+                animate={cardControls}
+                variants={cardVariants}
+                custom={idx}
+                style={{ willChange: "opacity, transform" }}
+              >
                 <TestimonialCard data={data} />
-              </div>
-            )) || null}
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>

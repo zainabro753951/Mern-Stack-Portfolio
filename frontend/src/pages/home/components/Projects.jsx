@@ -58,7 +58,7 @@ const Projects = () => {
           scrollTrigger: {
             trigger: counterRefs.current[0] || containerRef.current,
             markers: import.meta.env.VITE_NODE_ENV === "development",
-            start: "top 70%", // Adjusted for better timing
+            start: "top 90%", // Adjusted for better timing
             end: "center 20%",
             scrub: true,
             toggleActions: "play none none reverse",
@@ -91,8 +91,8 @@ const Projects = () => {
       ref={containerRef}
       className="w-full bg-projects bg-cover bg-no-repeat"
     >
-      <div className="md:max-w-[80vw] mx-auto xs:px-20 lg:py-0 xs:py-[5vw] lg:px-0">
-        <div className="w-full h-full grid lg:grid-cols-3 lg:gap-[3vw] items-center">
+      <div className="md:max-w-[80vw] mx-auto xs:px-[10vw] lg:py-0 xs:py-[5vw] lg:px-0">
+        <div className="w-full h-full grid lg:grid-cols-3 md:gap-[4vw] lg:gap-[3vw] items-center">
           {projectData.map((data, idx) => {
             return (
               <div

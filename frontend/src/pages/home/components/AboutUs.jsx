@@ -54,16 +54,19 @@ const AboutUs = ({ content, isLoading }) => {
   };
 
   const headingAnimation = {
-    hidden: { opacity: 0, y: -90, rotate: 45 },
+    hidden: {
+      y: -90,
+      opacity: 0,
+      rotate: 45,
+      transformOrigin: "center",
+    },
     visible: {
-      opacity: 1,
       y: 0,
+      opacity: 1,
       rotate: 0,
       transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 10,
         duration: 1,
+        ease: [0.25, 0.1, 0.25, 1], // Similar to power4 in GSAP
       },
     },
   };
