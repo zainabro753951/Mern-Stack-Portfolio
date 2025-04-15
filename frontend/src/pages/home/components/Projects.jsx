@@ -55,18 +55,18 @@ const Projects = () => {
 
       function initAnimations() {
         gsap.from(counterRefs.current, {
-          y: 200,
-          duration: 0.5,
-          stagger: 0.09,
           scrollTrigger: {
             trigger: counterRefs.current[0] || containerRef.current,
             markers: import.meta.env.VITE_NODE_ENV === "development",
-            start: "top 90%", // Adjusted for better timing
+            start: "top 70%", // Adjusted for better timing
             end: "center 20%",
             scrub: true,
             toggleActions: "play none none reverse",
             invalidateOnRefresh: true, // Important for recalculating
           },
+          y: 200,
+          duration: 0.5,
+          stagger: 0.09,
         });
 
         // Refresh ScrollTrigger after setup
