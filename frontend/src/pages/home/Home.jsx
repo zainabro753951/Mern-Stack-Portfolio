@@ -23,6 +23,7 @@ const Home = () => {
       <Hero content={aboutData} isLoading={isLoading} />
       <About content={aboutData} isLoading={isLoading} />
       <Projects />
+      <Portfolio />
       <Testimonial />
       <HappyClients />
       <Footer footerText={"Have a Project?"} text={"Let's Talk"} />

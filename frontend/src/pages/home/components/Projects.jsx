@@ -22,28 +22,73 @@ const Projects = () => {
     },
   ];
 
-  // Create an array of refs
   const counterRefs = useRef([]);
+  const containerRef = useRef();
 
-  useGSAP(() => {
-    gsap.from(counterRefs.current, {
-      y: 200,
-      duration: 0.5,
-      stagger: 0.09,
-      scrollTrigger: {
-        trigger: counterRefs.current[0], // or you can use a parent element
-        markers: true,
-        start: "top 110%",
-        end: "center 0%",
-        scrub: true,
-        toggleActions: "play none none reverse",
-      },
-    });
-  }, []);
+  // Create an array of refs
+  useGSAP(
+    () => {
+      // Wait for all images to load
+      const images = containerRef.current.querySelectorAll("img");
+      let loadedCount = 0;
+
+      const checkImagesLoaded = () => {
+        loadedCount++;
+        if (loadedCount === images.length) {
+          initAnimations();
+        }
+      };
+
+      images.forEach((img) => {
+        if (img.complete) {
+          checkImagesLoaded();
+        } else {
+          img.addEventListener("load", checkImagesLoaded);
+          img.addEventListener("error", checkImagesLoaded); // Handle broken images too
+        }
+      });
+
+      // If no images, initialize immediately
+      if (images.length === 0) {
+        initAnimations();
+      }
+
+      function initAnimations() {
+        gsap.from(counterRefs.current, {
+          y: 200,
+          duration: 0.5,
+          stagger: 0.09,
+          scrollTrigger: {
+            trigger: counterRefs.current[0] || containerRef.current,
+            markers: import.meta.env.VITE_NODE_ENV === "development",
+            start: "top 90%", // Adjusted for better timing
+            end: "center 20%",
+            scrub: true,
+            toggleActions: "play none none reverse",
+            invalidateOnRefresh: true, // Important for recalculating
+          },
+        });
+
+        // Refresh ScrollTrigger after setup
+        setTimeout(() => ScrollTrigger.refresh(), 300);
+      }
+
+      // Cleanup
+      return () => {
+        images.forEach((img) => {
+          img.removeEventListener("load", checkImagesLoaded);
+          img.removeEventListener("error", checkImagesLoaded);
+        });
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      };
+    },
+    { scope: containerRef }
+  ); // Using GSAP context with scope
 
   return (
     <div
       style={{ backgroundAttachment: "fixed" }}
+      ref={containerRef}
       className="w-full bg-projects bg-cover bg-no-repeat"
     >
       <div className="md:max-w-[80vw] mx-auto xs:px-20 lg:py-0 xs:py-[5vw] lg:px-0">
