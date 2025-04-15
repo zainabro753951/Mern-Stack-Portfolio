@@ -43,15 +43,13 @@ const Portfolio = () => {
 
   return (
     <div className="w-full bg-portfolio min-h-screen bg-cover bg-no-repeat">
-      <div className="w-full md:max-w-[80vw] mx-auto px-5 py-32 grid lg:grid-cols-2 lg:gap-[5vw] md:gap-[6vw] xs:gap-[8vw] h-full font-jost">
+      <div className="w-full md:max-w-[80vw] mx-auto px-5 md:py-[10vw] xs:py-[11vw] grid lg:grid-cols-2 md:gap-[5vw] xs:gap-[6vw] h-full font-jost">
         <div className="w-full h-full">
-          <div className="flex items-center gap-4 text-themeBlue">
-            <h1 className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw]">
-              Portfolio
-            </h1>
+          <div className="flex items-center md:gap-[1.3vw] xs:gap-[2.3vw] text-themeBlue">
+            <h1 className="md:text-[1.3vw] xs:text-[2.3vw]">Portfolio</h1>
             <div id="rotateAbout">
               <svg
-                className="lg:w-[2.2vw] md:w-[3.2vw] xs:w-[4.7vw]"
+                className="md:w-[2.2vw] xs:w-[3.2vw]"
                 viewBox="0 0 20 18"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +66,7 @@ const Portfolio = () => {
           <div className="overflow-hidden">
             <h2
               ref={portfolioText}
-              className="lg:text-[3.2vw] md:text-[4.2vw] xs:text-[5.7vw] lg:leading-[3.6vw] md:leading-[4.6vw] xs:leading-[6.1vw] font-lexend_deca font-semibold pt-4 tracking-wide"
+              className="md:text-[3.2vw] xs:text-[4.2vw] md:leading-[3.6vw] xs:leading-[4.6vw] font-lexend_deca font-semibold xs:pt-[1.7vw] md:pt-[0.7vw] tracking-wide"
             >
               My latest <br /> awasome{" "}
               <span className="text-themePurple">projects</span>
@@ -77,26 +75,26 @@ const Portfolio = () => {
           <div
             id="ProjectHovers"
             style={{ willChange: "transform, opacity" }}
-            className="flex flex-col rounded-[2vw] overflow-hidden mt-24 relative projectCards"
+            className="flex flex-col xs:rounded-[3vw] md:rounded-[2vw] overflow-hidden md:mt-[10vw] xs:mt-[12vw] relative projectCards"
           >
-            <div className="lg:p-[1.5vw] md:p-[2.5vw] xs:p-[4vw] flex items-center gap-10 portfolioGardient">
-              <div className="flex items-center gap-4">
+            <div className="md:p-[1.5vw] xs:p-[2.5vw] flex items-center xs:gap-[5vw] md:gap-[4vw] portfolioGardient">
+              <div className="flex items-center md:gap-[0.8vw] xs:gap-[1.8vw]">
                 <div
                   id="Pcircle"
-                  className="lg:w-[2.4vw] md:w-[3.4vw] xs:w-[4.9vw] lg:h-[2.4vw] md:h-[3.4vw] xs:h-[4.9vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
                 ></div>
                 <div
                   id="Pcircle"
-                  className="lg:w-[2.4vw] md:w-[3.4vw] xs:w-[4.9vw] lg:h-[2.4vw] md:h-[3.4vw] xs:h-[4.9vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
                 ></div>
                 <div
                   id="Pcircle"
-                  className="lg:w-[2.4vw] md:w-[3.4vw] xs:w-[4.9vw] lg:h-[2.4vw] md:h-[3.4vw] xs:h-[4.9vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
                 ></div>
               </div>
               <div
                 id="Pcircle"
-                className="w-full lg:h-[2.4vw] md:h-[3.4vw] xs:h-[4.9vw] rounded-lg bg-white"
+                className="w-full md:h-[2.4vw] xs:h-[3.4vw] rounded-lg bg-white"
               ></div>
             </div>
             <div className="w-full h-full overflow-hidden">
@@ -108,15 +106,15 @@ const Portfolio = () => {
             </div>
             <div
               id="proejctLinks"
-              className="absolute transition-all duration-300 left-0 bottom-0 translate-y-full flex flex-col gap-1 p-6 bg-themeBlue/50 text-white w-full"
+              className="absolute transition-all duration-300 left-0 bottom-0 translate-y-full flex flex-col gap-1 md:p-[1.8vw] xs:p-[2.8vw] bg-themeBlue/50 text-white w-full"
             >
-              <h2 className="lg:text-[1.7vw] md:text-[2.7vw] xs:text-[4.2vw] font-semibold">
+              <h2 className="md:text-[1.7vw] xs:text-[2.7vw] font-semibold">
                 First Project
               </h2>
               <div className="flex items-center gap-2">
                 <h3
                   id="viewWork"
-                  className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.8vw] relative"
+                  className="md:text-[1.2vw] xs:text-[2.2vw] relative"
                 >
                   View Work
                 </h3>
@@ -124,7 +122,7 @@ const Portfolio = () => {
               </div>
             </div>
           </div>
-          <div className="py-8  lg:block xs:hidden md:text-[2.4vw] lg:text-[1.4vw] xs:text-[3.9vw] text-center font-semibold text-themePurple">
+          <div className="md:py-[1.5vw] xs:py-[2.5vw] lg:block xs:hidden xs:text-[2.4vw] md:text-[1.4vw] text-center font-semibold text-themePurple">
             <Link id="viewProject" className="relative">
               {" "}
               View All Project{" "}
@@ -135,26 +133,26 @@ const Portfolio = () => {
           <div
             id="ProjectHovers"
             style={{ willChange: "transform, opacity" }}
-            className="flex flex-col rounded-[2vw] overflow-hidden mt-24 relative projectCards"
+            className="flex flex-col md:rounded-[2vw] xs:rounded-[3vw] overflow-hidden md:mt-[12vw] xs:mt-[13vw] relative projectCards"
           >
-            <div className="lg:p-[1.5vw] md:p-[2.5vw] xs:p-[4vw] flex items-center gap-10 portfolioGardient">
-              <div className="flex items-center gap-4">
+            <div className="md:p-[1.5vw] xs:p-[2.5vw] flex items-center md:gap-[4vw] xs:gap-[5vw] portfolioGardient">
+              <div className="flex items-center md:gap-[0.5vw] xs:gap-[1.5vw]">
                 <div
                   id="Pcircle"
-                  className="lg:w-[2.4vw] md:w-[3.4vw] xs:w-[4.9vw] lg:h-[2.4vw] md:h-[3.4vw] xs:h-[4.9vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
                 ></div>
                 <div
                   id="Pcircle"
-                  className="lg:w-[2.4vw] md:w-[3.4vw] xs:w-[4.9vw] lg:h-[2.4vw] md:h-[3.4vw] xs:h-[4.9vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
                 ></div>
                 <div
                   id="Pcircle"
-                  className="lg:w-[2.4vw] md:w-[3.4vw] xs:w-[4.9vw] lg:h-[2.4vw] md:h-[3.4vw] xs:h-[4.9vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
                 ></div>
               </div>
               <div
                 id="Pcircle"
-                className="w-full lg:h-[2.4vw] md:h-[3.4vw] xs:h-[4.9vw] rounded-lg bg-white"
+                className="w-full md:h-[2.4vw] xs:h-[3.4vw] rounded-lg bg-white"
               ></div>
             </div>
             <div className="w-full h-full overflow-hidden">
@@ -166,13 +164,16 @@ const Portfolio = () => {
             </div>
             <div
               id="proejctLinks"
-              className="absolute transition-all duration-300 left-0 bottom-0 translate-y-full flex flex-col gap-1 p-6 bg-themeBlue/50 text-white w-full"
+              className="absolute transition-all duration-300 left-0 bottom-0 translate-y-full flex flex-col gap-1 md:p-[1.8vw] xs:p-[2.1vw] bg-themeBlue/50 text-white w-full"
             >
-              <h2 className="lg:text-[1.7vw] md:text-[2.7vw] xs:text-[4.2vw] font-semibold">
+              <h2 className="md:text-[1.7vw] xs:text-[2.7vw] font-semibold">
                 Second Project
               </h2>
               <div className="flex items-center gap-2">
-                <h3 id="viewWork" className="text-xl relative">
+                <h3
+                  id="viewWork"
+                  className="md:text-[1.3vw] xs:text-[2.3vw] relative"
+                >
                   View Work
                 </h3>
                 <IoMdArrowDropright />
@@ -182,26 +183,26 @@ const Portfolio = () => {
           <div
             id="ProjectHovers"
             style={{ willChange: "transform, opacity" }}
-            className="flex flex-col rounded-[2vw] overflow-hidden mt-24 relative projectCards"
+            className="flex flex-col md:rounded-[2vw] xs:rounded-[3vw] overflow-hidden md:mt-[12vw] xs:mt-[13vw] relative projectCards"
           >
-            <div className="lg:p-[1.5vw] md:p-[2.5vw] xs:p-[4vw] flex items-center gap-10 portfolioGardient ">
-              <div className="flex items-center gap-4">
+            <div className="md:p-[1.5vw] xs:p-[2.5vw] flex items-center gap-10 portfolioGardient ">
+              <div className="flex items-center md:gap-[0.8vw] xs:gap-[1.8vw]">
                 <div
                   id="Pcircle"
-                  className="lg:w-[2.4vw] md:w-[3.4vw] xs:w-[4.9vw] lg:h-[2.4vw] md:h-[3.4vw] xs:h-[4.9vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
                 ></div>
                 <div
                   id="Pcircle"
-                  className="lg:w-[2.4vw] md:w-[3.4vw] xs:w-[4.9vw] lg:h-[2.4vw] md:h-[3.4vw] xs:h-[4.9vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
                 ></div>
                 <div
                   id="Pcircle"
-                  className="lg:w-[2.4vw] md:w-[3.4vw] xs:w-[4.9vw] lg:h-[2.4vw] md:h-[3.4vw] xs:h-[4.9vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
                 ></div>
               </div>
               <div
                 id="Pcircle"
-                className="w-full lg:h-[2.4vw] md:h-[3.4vw] xs:h-[4.9vw] rounded-lg bg-white"
+                className="w-full md:h-[2.4vw] xs:h-[3.4vw] md:rounded-[0.5vw] xs:rounded-[1vw] bg-white"
               ></div>
             </div>
             <div className="w-full h-full overflow-hidden">
@@ -213,13 +214,16 @@ const Portfolio = () => {
             </div>
             <div
               id="proejctLinks"
-              className="absolute transition-all duration-300 left-0 bottom-0 translate-y-full flex flex-col gap-1 p-6 bg-themeBlue/50 text-white w-full"
+              className="absolute transition-all duration-300 left-0 bottom-0 translate-y-full flex flex-col gap-1 md:p-[1.8vw] xs:p-[2.8vw] bg-themeBlue/50 text-white w-full"
             >
-              <h2 className="lg:text-[1.7vw] md:text-[2.7vw] xs:text-[4.2vw] font-semibold">
+              <h2 className="md:text-[1.7vw] xs:text-[2.7vw] font-semibold">
                 Third Project
               </h2>
               <div className="flex items-center gap-2">
-                <h3 id="viewWork" className="text-xl relative">
+                <h3
+                  id="viewWork"
+                  className="md:text-[1.3vw] xs:text-[2.3vw] relative"
+                >
                   View Work
                 </h3>
                 <IoMdArrowDropright />
