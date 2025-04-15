@@ -22,8 +22,8 @@ const Home = () => {
       <MobileHeader />
       <Hero content={aboutData} isLoading={isLoading} />
       <About content={aboutData} isLoading={isLoading} />
-      <Portfolio />
       <Projects />
+      <Portfolio />
       <Testimonial />
       <HappyClients />
       <Footer footerText={"Have a Project?"} text={"Let's Talk"} />
