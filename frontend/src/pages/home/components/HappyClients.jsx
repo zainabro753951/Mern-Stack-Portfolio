@@ -75,15 +75,13 @@ const HappyClients = () => {
   return (
     <div className="bg-[#F9FBFF] w-full">
       <div className="md:max-w-[80vw] mx-auto  px-5 font-jost">
-        <div className="w-full grid lg:grid-cols-3 lg:gap-[3vw] md:gap-[4vw] xs:gap-[5.5vw] lg:py-[7vw] md:py-[8vw] xs:py-[9.5vw]">
+        <div className="w-full grid lg:grid-cols-3 md:gap-[3vw] xs:gap-[4vw] md:py-[7vw] xs:py-[8vw]">
           <div className="flex flex-col gap-5">
             <div className="flex items-center gap-4 text-themeBlue">
-              <h1 className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw]">
-                Happy Clients
-              </h1>
+              <h1 className="md:text-[1.3vw] xs:text-[2.3vw]">Happy Clients</h1>
               <div id="rotateAbout">
                 <svg
-                  className="lg:w-[2.2vw] md:w-[3.2vw] xs:w-[4.7vw]"
+                  className="md:w-[2.2vw] xs:w-[3.2vw]"
                   viewBox="0 0 23 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -102,61 +100,57 @@ const HappyClients = () => {
                 <h2
                   ref={happyClientText}
                   style={{ willChange: "transform, opacity" }}
-                  className="lg:text-[3.2vw] md:text-[4.2vw] xs:text-[5.7vw]  lg:leading-[3.6vw] md:leading-[4.6vw] xs:leading-[6.1vw] font-lexend_deca tracking-wide font-semibold"
+                  className="md:text-[3.2vw] xs:text-[4.2vw]  md:leading-[3.6vw] xs:leading-[4.6vw] font-lexend_deca tracking-wide font-semibold"
                 >
                   I work with over 150+ happy clients
                 </h2>
               </div>
             </div>
-            <p className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] lg:leading-[1.9vw] md:leading-[2.9vw] xs:leading-[5.5vw] text-gray-500">
+            <p className="md:text-[1.3vw] xs:text-[2.3vw]  md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500">
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
               commodo ligula eget dolor. Aenean massa.
             </p>
           </div>
-          <div className=" col-span-2 flex flex-col gap-8">
-            <div className="grid grid-cols-3 gap-8 w-full place-items-center lg:translate-x-20">
+          <div className="col-span-2 flex flex-col md:gap-[1.5vw] xs:gap-[2.5vw]">
+            <div className="grid grid-cols-3 md:gap-[1.5vw] xs:gap-[2.5vw] w-full place-items-center md:translate-x-20">
               {happyClient1.map((data, idx) => {
                 return (
                   <div
                     id="happyClientsBoxShadow"
                     key={idx}
                     style={{ willChange: "scale, opacity" }}
-                    className="flex flex-col happyClientsBoxShadow items-center justify-center rounded-xl overflow-hidden bg-white"
+                    className="flex flex-col happyClientsBoxShadow items-center justify-center md:rounded-[1.4vw] xs:rounded-[2.4vw] overflow-hidden bg-white"
                   >
-                    <div
-                      className={`lg:p-[2vw] md:p-[3vw] xs:p-[4.5vw] ${data.color}`}
-                    >
+                    <div className={`md:p-[2vw] xs:p-[3vw] ${data.color}`}>
                       <img
-                        className="lg:w-[10vw] md:w-[11vw] xs:w-[12.5vw]"
+                        className="md:w-[10vw] xs:w-[11vw]"
                         src={data.img}
                         alt=""
                       />
                     </div>
-                    <div className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] lg:leading-[1.9vw] md:leading-[2.9vw] xs:leading-[4.2vw] text-gray-500 py-2">
+                    <div className="md:text-[1.3vw] xs:text-[2.3vw] md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 py-2">
                       <h2>{data.name}</h2>
                     </div>
                   </div>
                 );
               })}
             </div>
-            <div className="grid grid-cols-3 gap-8 w-full place-items-center">
+            <div className="grid grid-cols-3 md:gap-[1.6vw] xs:gap-[2.6vw] w-full place-items-center">
               {happyClient2.map((data, idx) => {
                 return (
                   <div
                     key={idx}
                     id="happyClientsBoxShadow"
-                    className="flex flex-col happyClientsBoxShadow items-center justify-center rounded-xl overflow-hidden bg-white"
+                    className="flex flex-col happyClientsBoxShadow items-center justify-center md:rounded-[1.4vw] xs:rounded-[2.4vw] overflow-hidden bg-white"
                   >
-                    <div
-                      className={`lg:p-[2vw] md:p-[3vw] xs:p-[4.5vw] ${data.color}`}
-                    >
+                    <div className={`md:p-[2vw] xs:p-[3vw] ${data.color}`}>
                       <img
-                        className="lg:w-[10vw] md:w-[11vw] xs:w-[12.5vw]"
+                        className="md:w-[10vw] xs:w-[11vw]"
                         src={data.img}
                         alt=""
                       />
                     </div>
-                    <div className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] lg:leading-[1.9vw] md:leading-[2.9vw] xs:leading-[4.2vw] text-gray-500 py-2">
+                    <div className="md:text-[1.3vw] xs:text-[2.3vw] md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 py-2">
                       <h2>{data.name}</h2>
                     </div>
                   </div>

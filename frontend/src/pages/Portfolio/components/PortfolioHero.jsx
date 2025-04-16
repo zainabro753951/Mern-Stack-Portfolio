@@ -23,33 +23,32 @@ const PortfolioHero = () => {
       force3D: true,
       ease: "back",
     });
-  }, []);
-
+  });
   return (
     <div
       ref={targetSection}
       className="w-full bg-portfolioHero bg-cover bg-center bg-no-repeat"
     >
-      <div className="md:max-w-[80vw] h-[70vh] mx-auto flex flex-col items-center gap-7 justify-center">
+      <div className="md:max-w-[80vw] md:h-[70vh] xs:h-[50vh] mx-auto flex flex-col items-center md:gap-[1.3vw] xs:gap-[2.3vw] justify-center">
         <h2
           id="blueGardient"
           ref={portfolioText}
           style={{ willChange: "scale, transform, opacity" }}
-          className="lg:text-[5.5vw] md:text-[6.5vw] xs:text-[8vw] lg:leading-[6vw] md:leading-[7vw] xs:leading-[8.5vw] font-semibold font-lexend_deca"
+          className="md:text-[5.5vw] xs:text-[6.5vw] md:leading-[6vw] xs:leading-[7vw]  font-bold font-lexend_deca"
         >
           Portolio
         </h2>
         <div className="flex items-center gap-2 font-lexend_deca">
           <Link
             to={"/"}
-            className="text-themePurple lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw]"
+            className="text-themePurple md:text-[1.3vw] xs:text-[2.3vw] "
           >
             Home
           </Link>
-          <span className="text-3xl -rotate-90 text-gray-400">
+          <span className="md:text-[2vw] xs:text-[3vw] -rotate-90 text-gray-400">
             <RiArrowDropDownLine />
           </span>
-          <p className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] text-gray-400">
+          <p className="md:text-[1.3vw] xs:text-[2.3vw]  text-gray-400">
             Portfolio
           </p>
         </div>

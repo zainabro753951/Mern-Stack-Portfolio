@@ -1,8 +1,29 @@
-import React from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { useRef } from "react";
 import { IoMdArrowDropright } from "react-icons/io";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
 const PortfolioProjects = () => {
+  // const projectContainer = useRef(null);
+
+  // useGSAP(() => {
+  //   gsap.to(projectContainer.current, {
+  //     scrollTrigger: {
+  //       trigger: projectContainer.current,
+  //       start: "top 70%",
+  //       end: "top 40%",
+  //       scrub: true,
+  //       markers: true,
+  //     },
+  //     y: -200,
+  //   });
+  // });
+
   return (
-    <div>
+    <div className="relative bg-slate-100 ">
       <div className="md:max-w-[80vw] mx-auto py-24">
         <div className="w-full h-full grid md:grid-cols-3 xs:grid-cols-1">
           <div className="relative h-fit w-full projectHovers overflow-hidden">

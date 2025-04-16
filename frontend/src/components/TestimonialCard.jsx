@@ -28,7 +28,7 @@ const TestimonialCard = ({ data }) => {
             {data.message}
           </p>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col">
           <p className="xs:text-[2.4vw] md:text-[1.4vw] font-medium">
             {data.name}
           </p>

@@ -68,8 +68,8 @@ const AboutMe = () => {
     <>
       {isLoading ? (
         <div className="bg-[#F9FBFF]">
-          <div className="md:max-w-[80vw] mx-auto py-24 min-h-screen">
-            <div className="w-full h-full grid xs:grid-cols-1 md:grid-cols-2 px-5 place-items-center xs:gap-4 lg:gap-32">
+          <div className="md:max-w-[80vw] mx-auto md:py-[10vw] xs:py-[11vw] min-h-screen">
+            <div className="w-full h-full grid xs:grid-cols-1 md:grid-cols-2 px-5 place-items-center  md:gap-[12vw] xs:gap-[13vw]">
               {/* Image Column Skeleton */}
               <div className="w-full h-full">
                 <div className="relative">
@@ -111,8 +111,8 @@ const AboutMe = () => {
         </div>
       ) : (
         <div className="bg-[#F9FBFF]">
-          <div className="max-w-[1200px] mx-auto py-24 min-h-screen">
-            <div className="w-full h-full grid xs:grid-cols-1 md:grid-cols-2 px-5 place-items-center gap-32">
+          <div className="max-w-[1200px] mx-auto md:py-[10vw] xs:py-[11vw] min-h-screen">
+            <div className="w-full h-full grid xs:grid-cols-1 md:grid-cols-2 px-5 place-items-center md:gap-[12vw] xs:gap-[13vw]">
               <div className="md:w-full md:h-full">
                 <div
                   ref={aboutPic}
@@ -120,7 +120,7 @@ const AboutMe = () => {
                   className="relative"
                 >
                   <img
-                    className=" w-full h-full object-cover rounded-2xl"
+                    className=" w-full h-full object-cover md:rounded-[1.3vw] xs:rounded-[2.3vw]"
                     src={`${backendUrl}/${aboutData?.profileImg || null}`}
                     loading="lazy"
                     alt=""
@@ -134,38 +134,38 @@ const AboutMe = () => {
                   />
                 </div>
               </div>
-              <div className="flex flex-col gap-9">
+              <div className="flex flex-col md:gap-[1.5vw] xs:gp-[2.5vw]">
                 <div className="overflow-hidden">
                   <h2
                     ref={aboutText}
                     style={{ willChange: "transform, opacity" }}
-                    className="lg:text-[2.7vw] md:text-[3.3vw] xs:text-[4.6vw] font-semibold lg:leading-[3.3vw] md:leading-[4.1vw] xs:leading-[5.1vw] font-lexend_deca tracking-wide"
+                    className="md:text-[2.7vw] xs:text-[3.3vw] font-semibold md:leading-[3.3vw] xs:leading-[4.1vw] font-lexend_deca tracking-wide"
                   >
                     {aboutData?.aboutHeadline || null}
                   </h2>
                 </div>
                 <p
                   style={{ willChange: "scale, opacity" }}
-                  className="lg:text-[1.3vw] blured md:text-[2.3vw] xs:text-[3.6vw] lg:leading-[1.9vw] md:leading-[2.9vw] xs:leading-[4.2vw] text-gray-500 font-jost"
+                  className="md:text-[1.3vw] xs:text-[2.3vw] blured md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 font-jost"
                 >
                   {aboutData?.about || null}
                 </p>
                 <h3
                   style={{ willChange: "scale, opacity" }}
-                  className="lg:text-[1.9vw] blured md:text-[2.9vw] xs:text-[4.4vw] font-lexend_deca font-semibold"
+                  className="md:text-[1.9vw] blured xs:text-[2.9vw] font-lexend_deca font-semibold"
                 >
                   In summary
                 </h3>
                 <div>
                   <p
                     style={{ willChange: "scale, opacity" }}
-                    className="lg:text-[1.3vw] blured md:text-[2.3vw] xs:text-[3.6vw] lg:leading-[1.9vw] md:leading-[2.9vw] xs:leading-[4.2vw] font-jost text-gray-500"
+                    className="md:text-[1.3vw] xs:text-[2.3vw] blured md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 font-jost"
                   >
                     Current Location
                   </p>
                   <h3
                     style={{ willChange: "scale, opacity" }}
-                    className="lg:text-[1.5vw] blured md:text-[2.5vw] xs:text-[4vw] font-semibold font-lexend_deca"
+                    className="md:text-[1.5vw] blured xs:text-[2.5vw] font-semibold font-lexend_deca"
                   >
                     {aboutData?.location || null}
                   </h3>
@@ -173,13 +173,13 @@ const AboutMe = () => {
                 <div>
                   <p
                     style={{ willChange: "scale, opacity" }}
-                    className="lg:text-[1.3vw] blured md:text-[2.3vw] xs:text-[3.6vw] lg:leading-[1.9vw] md:leading-[2.9vw] xs:leading-[4.2vw] font-jost text-gray-500"
+                    className="md:text-[1.3vw] xs:text-[2.3vw] blured md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 font-jost"
                   >
                     Education
                   </p>
                   <h3
                     style={{ willChange: "scale, opacity" }}
-                    className="lg:text-[1.5vw] blured md:text-[2.5vw] xs:text-[4vw] font-semibold font-lexend_deca"
+                    className="md:text-[1.5vw] blured xs:text-[2.5vw] font-semibold font-lexend_deca"
                   >
                     {aboutData?.education || null}
                   </h3>
@@ -187,13 +187,13 @@ const AboutMe = () => {
                 <div>
                   <p
                     style={{ willChange: "scale, opacity" }}
-                    className="lg:text-[1.3vw] blured md:text-[2.3vw] xs:text-[3.6vw] lg:leading-[1.9vw] md:leading-[2.9vw] xs:leading-[4.2vw] font-jost text-gray-500"
+                    className="md:text-[1.3vw] xs:text-[2.3vw] blured md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 font-jost"
                   >
                     Interests
                   </p>
                   <h3
                     style={{ willChange: "scale, opacity" }}
-                    className="lg:text-[1.5vw] blured md:text-[2.5vw] xs:text-[4vw] font-semibold font-lexend_deca"
+                    className="md:text-[1.5vw] blured xs:text-[2.5vw] font-semibold font-lexend_deca"
                   >
                     {aboutData?.hobbies?.map((hobby) => {
                       return <span>{hobby}</span>;
@@ -203,13 +203,13 @@ const AboutMe = () => {
                 <div>
                   <p
                     style={{ willChange: "scale, opacity" }}
-                    className="lg:text-[1.3vw] blured md:text-[2.3vw] xs:text-[3.6vw] lg:leading-[1.9vw] md:leading-[2.9vw] xs:leading-[4.2vw] font-jost text-gray-500"
+                    className="md:text-[1.3vw] xs:text-[2.3vw] blured md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 font-jost"
                   >
                     Email
                   </p>
                   <h3
                     style={{ willChange: "scale, opacity" }}
-                    className="lg:text-[1.5vw] blured md:text-[2.5vw] xs:text-[4vw] font-semibold font-lexend_deca"
+                    className="md:text-[1.5vw] blured xs:text-[2.5vw] font-semibold font-lexend_deca"
                   >
                     {aboutData?.email || null}
                   </h3>
