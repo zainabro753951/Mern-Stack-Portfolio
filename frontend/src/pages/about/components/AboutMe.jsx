@@ -134,7 +134,7 @@ const AboutMe = () => {
                   />
                 </div>
               </div>
-              <div className="flex flex-col md:gap-[1.5vw] xs:gp-[2.5vw]">
+              <div className="flex flex-col md:gap-[1.5vw] xs:gap-[2.6vw]">
                 <div className="overflow-hidden">
                   <h2
                     ref={aboutText}
