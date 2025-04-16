@@ -11,7 +11,7 @@ const ContactInfo = () => {
     {
       svg: (
         <svg
-          className="lg:w-[4.5vw] md:w-[5.5vw] xs:w-[7vw]"
+          className="md:w-[4.5vw] xs:w-[5.5vw] "
           viewBox="0 0 59 68"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +31,7 @@ const ContactInfo = () => {
     {
       svg: (
         <svg
-          className="lg:w-[4.5vw] md:w-[5.5vw] xs:w-[7vw]"
+          className="md:w-[4.5vw] xs:w-[5.5vw] "
           viewBox="0 0 61 61"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@ const ContactInfo = () => {
     {
       svg: (
         <svg
-          className="lg:w-[4.5vw] md:w-[5.5vw] xs:w-[7vw]"
+          className="md:w-[4.5vw] xs:w-[5.5vw] "
           viewBox="0 0 63 62"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -88,25 +88,25 @@ const ContactInfo = () => {
 
   return (
     <div className="bg-[#F9FBFF]">
-      <div className="md:max-w-[80vw] mx-auto lg:pb-[8vw] lg:pt-0 xs:pt-[15vw] xs:py-[15vw]">
+      <div className="md:max-w-[80vw] mx-auto md:pb-[8vw] md:pt-0 xs:pt-[15vw] xs:py-[15vw]">
         <div className="w-full grid lg:grid-cols-3 place-items-center items-center xs:grid-cols-1 gap-10">
           {contactInfo.map((items, idx) => {
             return (
               <div
                 key={idx}
                 style={{ willChange: "transform, opacity, scale" }}
-                className="p-7 flex contactInfo lg:-translate-y-1/2 items-center gap-4 bg-white shadow-xl rounded-xl"
+                className="md:p-[1.5vw] xs:p-[2.5vw] flex contactInfo lg:-translate-y-1/2 items-center gap-4 bg-white shadow-xl md:rounded-[1.3vw] xs:rounded-[2.3vw]"
               >
                 <div>{items.svg}</div>
                 <div className="flex flex-col gap-1">
-                  <h3 className="lg:text-[1.8vw] md:text-[2.8vw] xs:text-[4.3vw] font-semibold font-lexend_deca">
+                  <h3 className="md:text-[1.8vw] xs:text-[2.8vw] font-semibold font-lexend_deca">
                     {items.heading}
                   </h3>
-                  <p className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] text-gray-500 font-jost">
+                  <p className="md:text-[1.3vw] xs:text-[2.3vw]  text-gray-500 font-jost">
                     {items.p}
                   </p>
                   <Link
-                    className="mr-auto lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.8vw] font-semibold transition-all duration-300 hover:text-themeBlue text-themePurple relative"
+                    className="mr-auto md:text-[1.3vw] xs:text-[2.3vw] font-semibold transition-all duration-300 hover:text-themeBlue text-themePurple relative"
                     id="viewProject"
                   >
                     {items.btn}
