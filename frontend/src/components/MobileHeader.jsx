@@ -50,17 +50,17 @@ const MobileHeader = () => {
                 className="flex flex-col gap-[0.9vw] py-[2vw] cursor-pointer"
               >
                 <div
-                  className={`xs:w-[5vw] xs:h-[0.6vw] bg-black rounded-full ${
+                  className={`xs:w-[5vw] xs:h-[0.6vw] bg-slate-600 rounded-full ${
                     isOpen ? "lineOneRotate" : ""
                   } transition-all duration-300`}
                 ></div>
                 <div
-                  className={`xs:w-[5vw] xs:h-[0.6vw] bg-black rounded-full ${
+                  className={`xs:w-[5vw] xs:h-[0.6vw] bg-slate-600 rounded-full ${
                     isOpen ? "translate-x-10 opacity-0" : ""
                   } transition-all duration-300`}
                 ></div>
                 <div
-                  className={`xs:w-[5vw] xs:h-[0.6vw] bg-black rounded-full ${
+                  className={`xs:w-[5vw] xs:h-[0.6vw] bg-slate-600 rounded-full ${
                     isOpen ? "lineTwoRotate" : ""
                   } transition-all duration-300`}
                 ></div>
