@@ -15,7 +15,6 @@ const ProjectProvider = ({ children }) => {
     try {
       const response = await axios.get(`${backendUrl}/admin/getProjects`, {
         withCredentials: true,
-        timeout: 10000, // 10 second timeout
       });
       return response.data;
     } catch (error) {
@@ -27,19 +26,26 @@ const ProjectProvider = ({ children }) => {
     }
   };
 
-  const { isLoading, isError, error } = useQuery({
+  const { isLoading, isError, error, isSuccess, data } = useQuery({
     queryKey: ["projectData"],
     queryFn: fetchProjects,
     enabled: isAdminAuthenticated,
-    staleTime: 5 * 60 * 1000, // 5 minutes cache
-    onSuccess: (data) => {
-      setProjects(data || []); // Ensure array fallback
-    },
-    onError: (error) => {
-      console.error("Projects query error:", error);
-      // Consider setting error state here if you want to expose it
-    },
   });
+
+  // Handle Responses
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data);
+
+      setProjects(data || []); // Ensure array fallback
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      console.error("Error fetching projects:", error);
+    }
+  }, [isError]);
 
   const contextValue = {
     projects,

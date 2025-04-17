@@ -3,10 +3,13 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import React, { useRef } from "react";
 import { IoMdArrowDropright } from "react-icons/io";
+import { useProjects } from "../../../Context/GetProject";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const PortfolioProjects = () => {
+  const backendUrl = import.meta.env.BACKEND_URL;
+  const { projects, setProjects, isLoading, isError, error } = useProjects();
   // const projectContainer = useRef(null);
 
   // useGSAP(() => {
@@ -22,235 +25,21 @@ const PortfolioProjects = () => {
   //   });
   // });
 
+  console.log(projects);
+
   return (
-    <div className="relative bg-slate-100 ">
-      <div className="md:max-w-[80vw] mx-auto py-24">
-        <div className="w-full h-full grid md:grid-cols-3 xs:grid-cols-1">
-          <div className="relative h-fit w-full projectHovers overflow-hidden">
-            <div className="md:w-full">
-              <img
-                className=" projectImgs w-full object-cover transition-all duration-500"
-                src="/imgs/projects/p3.jpg"
-                alt=""
-              />
-            </div>
-            <div className="absolute transition-all flex items-end duration-300 left-0 bottom-0 p-6 text-white w-full">
-              <div className="flex flex-col gap-1">
-                <h2 className="lg:text-[1.7vw] md:text-[2.7vw] xs:text-[4.2vw] font-semibold">
-                  First Project
-                </h2>
-                <div className="flex items-center gap-2">
-                  <h3
-                    id="viewWork"
-                    className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.8vw] relative"
-                  >
-                    View Work
-                  </h3>
-                  <IoMdArrowDropright />
+    <div className="relative bg-slate-100">
+      <div className="md:max-w-[80vw] mx-auto md:py-[10vw] xs:py-[5vw]">
+        <div className="grid md:grid-cols-3 xs:grid-cols-1">
+          {projects.map((project) => {
+            return (
+              <div className="md:p-[1.5vw] xs:p-[2.5vw] border border-purple-600 md:rounded-[1.3vw] xs:rounded-[2.3vw]">
+                <div>
+                  <img src={`${backendUrl}/${project.posterImage}`} alt="" />
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="relative w-full h-full projectHovers overflow-hidden">
-            <div className="w-full object-cover">
-              <img
-                className=" projectImgs w-full transition-all duration-500"
-                src="/imgs/projects/p2.jpg"
-                alt=""
-              />
-            </div>
-            <div className="absolute transition-all flex items-end duration-300 left-0 bottom-0 p-6 text-white w-full">
-              <div className="flex flex-col gap-1">
-                <h2 className="lg:text-[1.7vw] md:text-[2.7vw] xs:text-[4.2vw] font-semibold">
-                  First Project
-                </h2>
-                <div className="flex items-center gap-2">
-                  <h3
-                    id="viewWork"
-                    className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.8vw] relative"
-                  >
-                    View Work
-                  </h3>
-                  <IoMdArrowDropright />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="relative w-full h-fit projectHovers overflow-hidden">
-            <div className="w-full object-cover">
-              <img
-                className=" projectImgs w-full transition-all duration-500"
-                src="/imgs/projects/p8.jpg"
-                alt=""
-              />
-            </div>
-            <div className="absolute transition-all flex items-end duration-300 left-0 bottom-0 p-6 text-white w-full">
-              <div className="flex flex-col gap-1">
-                <h2 className="lg:text-[1.7vw] md:text-[2.7vw] xs:text-[4.2vw] font-semibold">
-                  First Project
-                </h2>
-                <div className="flex items-center gap-2">
-                  <h3
-                    id="viewWork"
-                    className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.8vw] relative"
-                  >
-                    View Work
-                  </h3>
-                  <IoMdArrowDropright />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="relative w-full h-fit projectHovers -translate-y-[52%] overflow-hidden">
-            <div className="w-full object-cover">
-              <img
-                className=" projectImgs w-full transition-all duration-500"
-                src="/imgs/projects/p7.jpg"
-                alt=""
-              />
-            </div>
-            <div className="absolute transition-all flex items-end duration-300 left-0 bottom-0 p-6 text-white w-full">
-              <div className="flex flex-col gap-1">
-                <h2 className="lg:text-[1.7vw] md:text-[2.7vw] xs:text-[4.2vw] font-semibold">
-                  First Project
-                </h2>
-                <div className="flex items-center gap-2">
-                  <h3
-                    id="viewWork"
-                    className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.8vw] relative"
-                  >
-                    View Work
-                  </h3>
-                  <IoMdArrowDropright />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="relative w-full h-fit projectHovers overflow-hidden">
-            <div className="w-full object-cover">
-              <img
-                className=" projectImgs w-full transition-all duration-500"
-                src="/imgs/projects/p9.jpg"
-                alt=""
-              />
-            </div>
-            <div className="absolute transition-all flex items-end duration-300 left-0 bottom-0 p-6 text-white w-full">
-              <div className="flex flex-col gap-1">
-                <h2 className="lg:text-[1.7vw] md:text-[2.7vw] xs:text-[4.2vw] font-semibold">
-                  First Project
-                </h2>
-                <div className="flex items-center gap-2">
-                  <h3
-                    id="viewWork"
-                    className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.8vw] relative"
-                  >
-                    View Work
-                  </h3>
-                  <IoMdArrowDropright />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="relative w-full h-fit projectHovers -translate-y-[75%] overflow-hidden">
-            <div className="w-full object-cover">
-              <img
-                className=" projectImgs w-full transition-all duration-500"
-                src="/imgs/projects/p4.jpg"
-                alt=""
-              />
-            </div>
-            <div className="absolute transition-all flex items-end duration-300 left-0 bottom-0 p-6 text-white w-full">
-              <div className="flex flex-col gap-1">
-                <h2 className="lg:text-[1.7vw] md:text-[2.7vw] xs:text-[4.2vw] font-semibold">
-                  First Project
-                </h2>
-                <div className="flex items-center gap-2">
-                  <h3
-                    id="viewWork"
-                    className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.8vw] relative"
-                  >
-                    View Work
-                  </h3>
-                  <IoMdArrowDropright />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="relative w-full h-fit projectHovers -translate-y-[47%] overflow-hidden">
-            <div className="w-full object-cover">
-              <img
-                className=" projectImgs w-full transition-all duration-500"
-                src="/imgs/projects/p10.jpg"
-                alt=""
-              />
-            </div>
-            <div className="absolute transition-all flex items-end duration-300 left-0 bottom-0 p-6 text-white w-full">
-              <div className="flex flex-col gap-1">
-                <h2 className="lg:text-[1.7vw] md:text-[2.7vw] xs:text-[4.2vw] font-semibold">
-                  First Project
-                </h2>
-                <div className="flex items-center gap-2">
-                  <h3
-                    id="viewWork"
-                    className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.8vw] relative"
-                  >
-                    View Work
-                  </h3>
-                  <IoMdArrowDropright />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="relative w-full h-fit projectHovers overflow-hidden">
-            <div className="w-full object-cover">
-              <img
-                className=" projectImgs w-full transition-all duration-500"
-                src="/imgs/projects/pp9.jpg"
-                alt=""
-              />
-            </div>
-            <div className="absolute transition-all flex items-end duration-300 left-0 bottom-0 p-6 text-white w-full">
-              <div className="flex flex-col gap-1">
-                <h2 className="lg:text-[1.7vw] md:text-[2.7vw] xs:text-[4.2vw] font-semibold">
-                  First Project
-                </h2>
-                <div className="flex items-center gap-2">
-                  <h3
-                    id="viewWork"
-                    className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.8vw] relative"
-                  >
-                    View Work
-                  </h3>
-                  <IoMdArrowDropright />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="relative w-full h-fit projectHovers -translate-y-[58%] overflow-hidden">
-            <div className="w-full object-cover">
-              <img
-                className=" projectImgs w-full transition-all duration-500"
-                src="/imgs/projects/p11.jpg"
-                alt=""
-              />
-            </div>
-            <div className="absolute transition-all flex items-end duration-300 left-0 bottom-0 p-6 text-white w-full">
-              <div className="flex flex-col gap-1">
-                <h2 className="lg:text-[1.7vw] md:text-[2.7vw] xs:text-[4.2vw] font-semibold">
-                  First Project
-                </h2>
-                <div className="flex items-center gap-2">
-                  <h3
-                    id="viewWork"
-                    className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.8vw] relative"
-                  >
-                    View Work
-                  </h3>
-                  <IoMdArrowDropright />
-                </div>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </div>

@@ -37,7 +37,6 @@ const AdminHeader = () => {
       });
       return response;
     },
-
     onSuccess: (data) => {
       setIsAdminAuthenticated(false);
       // Handle success response
@@ -51,39 +50,6 @@ const AdminHeader = () => {
   let handleLogout = () => {
     mutation.mutate();
   };
-
-  const toggleNotification = () => {
-    setIsNotificationOpen(!isNotificationOpen);
-  };
-
-  // Prevew All Notifciations
-  // useEffect(() => {
-  //   if (newNotification) {
-  //     toast.info(newNotification.message, {
-  //       position: "top-right",
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: false,
-  //       pauseOnHover: true,
-  //       theme: "dark",
-  //     });
-  //   }
-  // }, [newNotification]);
-
-  // Handle click outside notification
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (NotiRef.current && !NotiRef.current.contains(event.target)) {
-        setIsNotiOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <>

@@ -7,10 +7,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AdminAuthProvider } from "./Context/AdminAuthProvider.jsx";
 import { AdminDataProvider } from "./Context/GetAdminData.jsx";
 import { AboutDataProvider } from "./Context/GetAboutData.jsx";
-import GetAllUsers from "./Context/GetAllUsers.jsx";
 import { TestimonialProvider } from "./Context/GetTestimonial.jsx";
 import { SideBarToggle } from "./Context/SideBarToggle.jsx";
-import { GetBlogsProvider } from "./Context/GetBlogs.jsx";
 import ProjectProvider from "./Context/GetProject.jsx";
 
 const queryClient = new QueryClient({
@@ -31,15 +29,13 @@ createRoot(document.getElementById("root")).render(
         <AdminDataProvider>
           <AboutDataProvider>
             <TestimonialProvider>
-              <GetBlogsProvider>
-                <ProjectProvider>
-                  <SideBarToggle>
-                    <StrictMode>
-                      <App />
-                    </StrictMode>
-                  </SideBarToggle>
-                </ProjectProvider>
-              </GetBlogsProvider>
+              <ProjectProvider>
+                <SideBarToggle>
+                  <StrictMode>
+                    <App />
+                  </StrictMode>
+                </SideBarToggle>
+              </ProjectProvider>
             </TestimonialProvider>
           </AboutDataProvider>
         </AdminDataProvider>

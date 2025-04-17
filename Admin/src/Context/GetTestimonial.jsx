@@ -1,11 +1,12 @@
 import axios from "axios";
-import React, { createContext, useContext, useEffect } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAdminAuth } from "./AdminAuthProvider";
 
 export const TestimonialContext = createContext();
 
 export const TestimonialProvider = ({ children }) => {
+  const [testimonialData, setTestimonialData] = useState([]);
   const { isAdminAuthenticated } = useAdminAuth();
   const queryClient = useQueryClient();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -14,7 +15,6 @@ export const TestimonialProvider = ({ children }) => {
     try {
       const response = await axios.get(`${backendUrl}/admin/getTestimonial`, {
         withCredentials: true,
-        timeout: 10000, // 10 second timeout
       });
       return response.data;
     } catch (error) {
@@ -26,24 +26,23 @@ export const TestimonialProvider = ({ children }) => {
     }
   };
 
-  const {
-    data: testimonialData = [],
-    isLoading,
-    isError,
-    error,
-    isFetching,
-  } = useQuery({
+  const { data, isLoading, isError, isSuccess, error, isFetching } = useQuery({
     queryKey: ["testimonialData"],
     queryFn: fetchTestimonials,
     enabled: isAdminAuthenticated,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 15 * 60 * 1000, // 15 minutes
-    retry: 2, // Retry twice on failure
     refetchOnWindowFocus: true,
   });
 
+  // Handle Response
+  useEffect(() => {
+    if (isSuccess) {
+      setTestimonialData(data);
+    }
+  }, [isSuccess]);
+
   const contextValue = {
     testimonialData,
+    setTestimonialData,
     isLoading: isLoading || isFetching,
     isError,
     error,

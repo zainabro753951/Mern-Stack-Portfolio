@@ -4,9 +4,6 @@ import AdminHeader from "../../components/AdminHeader";
 import AddAboutForm from "./components/AddAboutForm";
 
 const AddAbout = () => {
-
-
-  
   return (
     <div className="h-screen w-full overflow-hidden flex md:p-2 gap-2 bg-gray-200">
       <DashboardLeft />

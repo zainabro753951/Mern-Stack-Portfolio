@@ -40,12 +40,13 @@ const ProfilePopup = ({ isOpen, onClose }) => {
     }
   }, [adminData]);
 
-  const mutation = useMutation((formData) => {
-    const response = axios.put(`${backendUrl}/admin/update_admin`, formData, {
-      withCredentials: true,
-    });
-
-    return response;
+  const mutation = useMutation({
+    mutationFn: async (formData) => {
+      const response = axios.put(`${backendUrl}/admin/update_admin`, formData, {
+        withCredentials: true,
+      });
+      return response;
+    },
   });
 
   let handleUpdateAdmin = async (e) => {
@@ -79,7 +80,8 @@ const ProfilePopup = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (mutation.isError) {
-      toast.error(mutation.error.response.data.message, {
+      console.error("Error updating admin profile", mutation.error);
+      toast.error(mutation?.error?.response?.data?.message, {
         position: "top-right",
         autoClose: 5000,
         theme: "dark",
@@ -201,7 +203,7 @@ const ProfilePopup = ({ isOpen, onClose }) => {
                 id="website-admin"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className="rounded-none lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-8lg:py-[0.8vw] outline-none"
+                className="rounded-none lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] w-full rounded-e-lg bg-transparent border border-gray-800 text-gray-8 lg:py-[0.8vw] outline-none"
                 placeholder="+244 564 4651"
               />
             </div>

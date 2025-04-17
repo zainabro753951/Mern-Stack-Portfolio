@@ -4,10 +4,11 @@ import DashboardLeft from "../../components/DashboardLeft";
 import AdminHeader from "../../components/AdminHeader";
 import { Link } from "react-router-dom";
 import { useTestimonial } from "../../../Context/GetTestimonial";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 const ViewTestmonial = () => {
+  const client = useQueryClient();
   const { testimonialData, setTestimonialData } = useTestimonial();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -25,12 +26,13 @@ const ViewTestmonial = () => {
     },
 
     onSuccess: (data) => {
+      client.invalidateQueries({ queryKey: ["testimonialData"] });
       const newTesti = data.data.result;
       setTestimonialData(
         (prev) =>
           prev &&
           prev.map((item) =>
-            item._id === newTesti._id ? { ...item, ...newTesti } : item
+            item._id === newTesti._id ? { ...item, newTesti } : item
           )
       );
     },
@@ -131,8 +133,8 @@ const ViewTestmonial = () => {
                 </tr>
               </thead>
               <tbody>
-                {testimonialData
-                  ? testimonialData.map((data, idx) => {
+                {!testimonialData.isDeleted
+                  ? testimonialData?.map((data, idx) => {
                       const createdAt = new Date(
                         data.createdAt
                       ).toLocaleDateString();

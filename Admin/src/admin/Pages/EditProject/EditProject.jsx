@@ -80,18 +80,7 @@ const EditProject = () => {
                     {project.projectName}
                   </h1>
                   <p className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-jost text-gray-500">
-                    Donec quam felis, ultricies nec, pellentesque eu, pretium
-                    quis, sem. Nulla consequat massa quis enim. Donec pede
-                    justo, fringilla vel, aliquet nec, vulputate eget, arcu. In
-                    enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-                    Donec quam felis, ultricies nec, pellentesque eu, pretium
-                    quis, sem. Nulla consequat massa quis enim. Donec pede
-                    justo, fringilla vel, aliquet nec, vulputate eget, arcu. In
-                    enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-                    Donec quam felis, ultricies nec, pellentesque eu, pretium
-                    quis, sem. Nulla consequat massa quis enim. Donec pede
-                    justo, fringilla vel, aliquet nec, vulputate eget, arcu. In
-                    enim justo, rhoncus ut, imperdiet a, venenatis vitae,
+                    {project?.projectDescription}
                   </p>
                 </div>
               </div>
@@ -180,7 +169,7 @@ const EditProject = () => {
               <div>
                 <div className="py-[2vw] w-full flex items-center">
                   <Link
-                    to={`/admin/edit-project/${project._id}`}
+                    to={`/edit-project/${project._id}`}
                     type="button"
                     class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-[0.4vw] lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] lg:px-[1.5vw] md:px-[2.5vw] xs:px-[3.9vw] py-[0.5vw] me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                   >

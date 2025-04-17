@@ -200,6 +200,7 @@ const AddProject = () => {
     formData.append("githubUrl", githubUrl);
     formData.append("poster", projectPoster);
     formData.append("video", projectVideo);
+    formData.append("metaDescription", metaDescription);
     for (let file of projetScreenShots) {
       formData.append("screenshots", file);
     }
@@ -279,7 +280,7 @@ const AddProject = () => {
                   Project Name*
                 </label>
                 <input
-                  className="py-[0.8vw]w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                  className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="text"
                   value={projectName}
                   onChange={(e) => setProjectName(e.target.value)}
@@ -298,7 +299,7 @@ const AddProject = () => {
                   Project Slug Url
                 </label>
                 <input
-                  className="py-[0.8vw]w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                  className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="text"
                   value={projectSlug}
                   onChange={(e) => setProjectSlug(e.target.value)}
@@ -318,7 +319,7 @@ const AddProject = () => {
                 Project Discription*
               </label>
               <textarea
-                className="py-[0.8vw]w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                 rows={7}
                 value={projectDescription}
                 onChange={(e) => setProjectDescription(e.target.value)}
@@ -411,7 +412,7 @@ const AddProject = () => {
                   Project Type*
                 </label>
                 <input
-                  className="py-[0.8vw]w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                  className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="text"
                   value={projectType}
                   onChange={(e) => setProjectType(e.target.value)}
@@ -432,7 +433,7 @@ const AddProject = () => {
                   Live Demo Url*
                 </label>
                 <input
-                  className="py-[0.8vw]w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                  className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="url"
                   value={projectUrl}
                   onChange={(e) => setProjectUrl(e.target.value)}
@@ -451,7 +452,7 @@ const AddProject = () => {
                   GitHub Demo Url*
                 </label>
                 <input
-                  className="py-[0.8vw]w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                  className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="url"
                   value={githubUrl}
                   onChange={(e) => setgithubUrl(e.target.value)}
@@ -510,7 +511,6 @@ const AddProject = () => {
               </div>
 
               {/* Project Video */}
-
               <div className="flex flex-col gap-1 w-full">
                 <label
                   htmlFor="project-video"
@@ -549,7 +549,6 @@ const AddProject = () => {
             </div>
 
             {/* Project Poster */}
-
             <div className="flex flex-col gap-1 w-full">
               <label
                 htmlFor="project-screenshots"
@@ -587,7 +586,6 @@ const AddProject = () => {
             </div>
 
             {/* Project Tags */}
-
             <div
               className={`flex w-full flex-col ${
                 projectTags.length > 0 ? "gap-3" : "gap-0"
@@ -661,7 +659,7 @@ const AddProject = () => {
                 Meta Discription*
               </label>
               <textarea
-                className="py-[0.8vw]w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                 required
                 rows={6}
                 value={metaDescription}
@@ -670,10 +668,8 @@ const AddProject = () => {
                 placeholder="Enter your meta discription"
               ></textarea>
             </div>
-
             <div className="flex md:flex-row xs:flex-col gap-3 w-full">
               {/* Project Category */}
-
               <div className="flex flex-col gap-1 w-full">
                 <label
                   htmlFor="about-headline"
@@ -682,13 +678,13 @@ const AddProject = () => {
                   Project Category*
                 </label>
                 <select
-                  className="py-[0.8vw]w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                  className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                   type="text"
                   value={projectCategory}
                   onChange={(e) => setprojectCategory(e.target.value)}
                   required
                 >
-                  <option value="">Select Category</option>
+                  <option>Select Category</option>
                   <option
                     className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw]"
                     value="E-Commerce"
@@ -733,7 +729,7 @@ const AddProject = () => {
                     Seo Title*
                   </label>
                   <input
-                    className="py-[0.8vw]w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                    className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
                     type="text"
                     id="seoTitle"
                     value={seoTitle}
