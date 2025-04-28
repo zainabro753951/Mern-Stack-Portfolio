@@ -53,9 +53,7 @@ app.options("*", cors(corsOptions)); // Enable preflight for all routes
 // MongoDB Connection String
 const mongooseUrl = process.env.MONGODBURL;
 try {
-  await mongoose.connect(mongooseUrl, {
-    maxPoolSize: 10, // Connection pool size
-  });
+  await mongoose.connect(mongooseUrl);
   console.log("Connected to MongoDB");
 } catch (e) {
   console.log("Error connecting to MongoDB", e);
@@ -132,12 +130,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Handle unhandled promise rejections
-process.on("unhandledRejection", (err) => {
-  console.error("Unhandled Rejection:", err);
-  // Optionally exit the process
-  process.exit(1);
-});
 
 app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}`);
