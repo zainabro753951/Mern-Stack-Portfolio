@@ -23,18 +23,32 @@ const __dirname = path.dirname(__filename);
 // Dotenv Config
 const port = process.env.PORT;
 
-// CORS configuration for dev and also production
-app.use(
-  cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT2]
-        : ["http://localhost:5173", "http://localhost:5174"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-    exposedHeaders: ["x-custom-header"],
-  })
-);
+// CORS Configuration
+const corsOptions = {
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      "https://mern-stack-portfolio-git-main-zain-abros-projects.vercel.app",
+      "https://mern-stack-portfolio.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:5174",
+    ];
+
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
+  exposedHeaders: ["x-custom-header"],
+};
+
+app.use(cors(corsOptions));
+
+// Handle OPTIONS requests (Preflight)
+app.options("*", cors(corsOptions)); // Enable preflight for all routes
 
 // MongoDB Connection String
 const mongooseUrl = process.env.MONGODBURL;
