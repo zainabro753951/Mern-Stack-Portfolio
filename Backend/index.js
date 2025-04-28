@@ -1,3 +1,16 @@
+// Add these at the VERY TOP to catch early errors
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+  // Perform cleanup if needed
+  process.exit(1); // Mandatory (as per the Node.js docs)
+});
+
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled Rejection:", err);
+  // Perform cleanup if needed
+  process.exit(1); // Mandatory for unhandled rejections
+});
+
 // Dot env Configuration
 import dotenv from "dotenv";
 dotenv.config();
