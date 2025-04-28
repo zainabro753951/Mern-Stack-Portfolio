@@ -13,3 +13,4 @@
 ::1 - - [28/Apr/2025:10:49:31 +0000] "GET /admin/getEducation HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
 ::1 - - [28/Apr/2025:10:49:39 +0000] "GET /projectImgs/poster-1744818648870-817536562.png HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
 ::1 - - [28/Apr/2025:10:49:43 +0000] "GET /testimonialImgs/profileImg-1742367905282-844774398.jpeg HTTP/1.1" 304 - "http://localhost:5173/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
+::1 - - [28/Apr/2025:10:53:36 +0000] "GET /admin/getTestimonial HTTP/1.1" 304 - "http://localhost:5174/" "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36"
