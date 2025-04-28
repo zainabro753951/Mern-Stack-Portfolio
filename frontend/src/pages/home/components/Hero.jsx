@@ -15,6 +15,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import ToggleTheme from "../../../Context/ToggleTheme";
+import OptimizedImage from "../../../Common/OptimiseImage";
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollToPlugin);
 
 const Hero = ({ content, isLoading }) => {
@@ -254,14 +255,13 @@ const Hero = ({ content, isLoading }) => {
                         idx + 1
                       }`}
                     >
-                      <img
+                      <OptimizedImage
                         className={` ${
                           idx === 0
                             ? "md:w-[1vw] xs:w-[1.7vw] "
                             : "md:w-[1.8vw] xs:w-[2.8vw]"
                         }`}
                         src={icon}
-                        alt=""
                       />
                     </a>
                   );
@@ -281,23 +281,24 @@ const Hero = ({ content, isLoading }) => {
             </div>
             <div>
               <div className="md:w-[20vw] xs:w-[40vw] relative">
-                <img
+                <img loading="lazy" />
+                <OptimizedImage
                   ref={backBanner}
                   style={{ willChange: "scale, opacity" }}
                   src="/imgs/myBanner.png"
-                  alt=""
-                  loading="lazy"
                 />
-                <img
+                <OptimizedImage
                   id="meAnimate"
                   style={{ willChange: "opacity" }}
-                  className="absolute top-0 object-cover left-0 w-full h-full"
-                  loading="lazy"
                   src={
                     content?.profileImg
                       ? `${backendUrl}/${content?.profileImg || null}`
                       : null
                   }
+                  alt="Descriptive text"
+                  width={800}
+                  height={600}
+                  className="absolute top-0 object-cover left-0 w-full h-full"
                 />
               </div>
             </div>

@@ -5,6 +5,7 @@ import "react-quill/dist/quill.core.css";
 import CustomeCursor from "./components/CustomeCursor";
 import WelcomeLoader from "./components/WelcomeLoader";
 import { useUserAuth } from "./Context/UserAuthProvider";
+import PortfolioDetails from "./pages/Portfolio/PortfolioDetails";
 
 // Lazy load all page components
 const Home = lazy(() => import("./pages/home/Home"));
@@ -24,6 +25,10 @@ const App = () => {
           <Route path={"/"} element={<Home />} />
           <Route path={"/about"} element={<About />} />
           <Route path={"/portfolio"} element={<PortfolioPage />} />
+          <Route
+            path="/portfolio/details/:slug/:id"
+            element={<PortfolioDetails />}
+          />
           <Route path={"/testimonial"} element={<TestimonialPage />} />
           <Route path={"/contact"} element={<ContactPage />} />
         </Routes>

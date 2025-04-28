@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ArroIcon from "../../../components/ArroIcon";
 import { motion } from "motion/react";
+import OptimizedImage from "../../../Common/OptimiseImage";
 
 const AboutCardData = ({ data, idx }) => {
   return (
@@ -23,7 +24,7 @@ const AboutCardData = ({ data, idx }) => {
       className="flex items-center md:gap-[0.4vw] xs:gap-[1vw] bg-white md:rounded-[1vw] xs:rounded-[2vw] border-b-2 border-gray-200 border-r border-l lg:p-[1vw] md:p-[2vw] xs:p-[4.5vw]"
     >
       <div className="md:p-[3vw] xs:p-[4vw]">
-        <img className="md:w-[4.5vw] xs:w-[6.5vw]" src={data.icon} alt="" />
+        <OptimizedImage className="md:w-[4.5vw] xs:w-[6.5vw]" src={data.icon} />
       </div>
       <div className="flex flex-col md:gap-[0.8vw] xs:gap-[1.8vw]">
         <div>

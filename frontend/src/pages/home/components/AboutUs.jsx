@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import HireMeBtn from "../../../components/HireMeBtn";
 import { motion } from "framer-motion";
 import AboutCardData from "./AboutCardData";
+import OptimizedImage from "../../../Common/OptimiseImage";
 
 const AboutUs = ({ content, isLoading }) => {
   const AboutHead = useRef(null);
@@ -99,11 +100,9 @@ const AboutUs = ({ content, isLoading }) => {
                 About Me
               </h1>
               <div id="rotateAbout">
-                <img
+                <OptimizedImage
                   src="/imgs/About/aboutSvg.png"
                   className="md:w-[2.2vw] xs:w-[4.2vw]"
-                  alt=""
-                  loading="lazy"
                 />
               </div>
             </div>

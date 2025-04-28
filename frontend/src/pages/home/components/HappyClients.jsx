@@ -2,6 +2,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import React, { useRef } from "react";
+import OptimizedImage from "../../../Common/OptimiseImage";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 const HappyClients = () => {
@@ -122,10 +123,9 @@ const HappyClients = () => {
                     className="flex flex-col happyClientsBoxShadow items-center justify-center md:rounded-[1.4vw] xs:rounded-[2.4vw] overflow-hidden bg-white"
                   >
                     <div className={`md:p-[2vw] xs:p-[3vw] ${data.color}`}>
-                      <img
+                      <OptimizedImage
                         className="md:w-[10vw] xs:w-[11vw]"
                         src={data.img}
-                        alt=""
                       />
                     </div>
                     <div className="md:text-[1.3vw] xs:text-[2.3vw] md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 py-2">
@@ -144,10 +144,9 @@ const HappyClients = () => {
                     className="flex flex-col happyClientsBoxShadow items-center justify-center md:rounded-[1.4vw] xs:rounded-[2.4vw] overflow-hidden bg-white"
                   >
                     <div className={`md:p-[2vw] xs:p-[3vw] ${data.color}`}>
-                      <img
+                      <OptimizedImage
                         className="md:w-[10vw] xs:w-[11vw]"
                         src={data.img}
-                        alt=""
                       />
                     </div>
                     <div className="md:text-[1.3vw] xs:text-[2.3vw] md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 py-2">

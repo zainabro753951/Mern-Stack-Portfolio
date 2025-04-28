@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from "react";
 import { IoMdArrowDropright } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { motion, useAnimation, useInView } from "motion/react";
+import OptimizedImage from "../../../Common/OptimiseImage";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 const Portfolio = () => {
@@ -131,10 +132,9 @@ const Portfolio = () => {
               ></div>
             </div>
             <div className="w-full h-full overflow-hidden">
-              <img
+              <OptimizedImage
                 className="w-full h-full transition-all hover:scale-110 duration-500"
                 src="/imgs/p5.jpg"
-                alt=""
               />
             </div>
             <div
@@ -189,10 +189,9 @@ const Portfolio = () => {
               ></div>
             </div>
             <div className="w-full h-full overflow-hidden">
-              <img
+              <OptimizedImage
                 className="w-full h-full transition-all hover:scale-110 duration-500"
                 src="/imgs/p4.jpg"
-                alt=""
               />
             </div>
             <div
@@ -239,10 +238,9 @@ const Portfolio = () => {
               ></div>
             </div>
             <div className="w-full h-full overflow-hidden">
-              <img
+              <OptimizedImage
                 className="w-full h-full transition-all hover:scale-110 duration-500"
                 src="/imgs/p6.jpg"
-                alt=""
               />
             </div>
             <div

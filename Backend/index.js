@@ -23,19 +23,6 @@ const __dirname = path.dirname(__filename);
 // Dotenv Config
 const port = process.env.PORT;
 
-// CORS configuration for dev and also production
-app.use(
-  cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? [process.env.FRONTEND_PORT, process.env.FRONTEND_PORT2]
-        : ["http://localhost:5173", "http://localhost:5174"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-    exposedHeaders: ["x-custom-header"],
-  })
-);
-
 // MongoDB Connection String
 const mongooseUrl = process.env.MONGODBURL;
 try {
@@ -45,19 +32,36 @@ try {
   console.log("Error connecting to MongoDB", e);
 }
 
-// Middleware
-app.use(express.json());
 app.use(
   helmet({
     contentSecurityPolicy: false,
     crossOriginResourcePolicy: { policy: "cross-origin" },
   })
 );
-app.use(cookieParser(process.env.COOKIE_SECRET));
+// CORS configuration for dev and also production
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "production"
+        ? process.env.FRONTEND_PORTS.split(",")
+        : ["http://localhost:5173", "http://localhost:5174"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-custom-header"],
+    credentials: true,
+    exposedHeaders: ["x-custom-header"],
+    optionsSuccessStatus: 200,
+    preflightContinue: false, // Important for proper preflight handling
+  })
+);
 
+app.options("*", cors()); // Enable preflight for all routes
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(morgan("combined"));
 app.use(compression({ level: 9 }));
-app.use(express.urlencoded({ extended: true }));
 // Static files with caching
 app.use(
   express.static(path.join(__dirname, "upload/"), {

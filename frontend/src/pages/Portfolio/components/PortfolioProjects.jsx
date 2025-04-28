@@ -97,6 +97,7 @@ const PortfolioProjects = () => {
                         </p>
                         <Link
                           id="projectButton"
+                          to={`/portfolio/details/${project?.projectSlug}/${project?._id}`}
                           className="md:text-[1.3vw] relative xs:text-[2.3vw] font-jost"
                         >
                           View Work
