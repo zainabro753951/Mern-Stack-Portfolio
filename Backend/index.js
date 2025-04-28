@@ -27,8 +27,8 @@ const port = process.env.PORT;
 const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
-      "https://mern-stack-portfolio-git-main-zain-abros-projects.vercel.app",
-      "https://mern-stack-portfolio.vercel.app",
+      process.env.FRONTEND_PORT,
+      process.env.FRONTEND_PORT2,
       "http://localhost:5173",
       "http://localhost:5174",
     ];
