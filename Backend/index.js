@@ -15,6 +15,7 @@ import mongoose from "mongoose";
 import helmet from "helmet";
 import compression from "compression";
 import morgan from "morgan";
+import fs from "fs";
 import rateLimit from "express-rate-limit";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -129,7 +130,6 @@ app.use((err, req, res, next) => {
         : err.message,
   });
 });
-
 
 app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}`);
