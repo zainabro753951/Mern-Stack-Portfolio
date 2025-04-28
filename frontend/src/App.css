@@ -88,6 +88,31 @@ button {
   width: 100%;
 }
 
+/* Project Button */
+#projectButton::after {
+  content: "";
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  bottom: 0;
+  background: theme(colors.themeGolden);
+  left: 0%;
+}
+#projectButton::before {
+  content: "";
+  width: 0%;
+  height: 2px;
+  position: absolute;
+  bottom: 0;
+  background: theme(colors.themeGolden);
+  left: 0%;
+  transition: all 0.5s;
+}
+
+#projectButton:hover::before {
+  width: 100%;
+}
+
 #meAnimate {
   animation: meAnimation 2.5s ease alternate infinite;
 }

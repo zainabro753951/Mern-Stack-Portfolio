@@ -1,6 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useAdminAuth } from "./AdminAuthProvider";
 
 export const GetProjectContext = createContext();
@@ -30,6 +34,7 @@ const ProjectProvider = ({ children }) => {
     queryKey: ["projectData"],
     queryFn: fetchProjects,
     enabled: isAdminAuthenticated,
+    placeholderData: keepPreviousData,
   });
 
   // Handle Responses

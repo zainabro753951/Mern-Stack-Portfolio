@@ -1,6 +1,10 @@
 import React, { createContext, useContext, useMemo } from "react";
 import axios from "axios";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 export const AboutDataContext = createContext();
 
@@ -17,6 +21,7 @@ export const AboutDataProvider = ({ children }) => {
   const queryClient = useQueryClient();
 
   const fetchAboutData = async () => {
+    const [aboutData, setAboutData] = useState([]);
     try {
       const response = await axios.get(`${backendUrl}/admin/getAbout`, {
         withCredentials: true,
@@ -43,6 +48,7 @@ export const AboutDataProvider = ({ children }) => {
   } = useQuery({
     queryKey: ["aboutData"], // Query keys must be arrays in v5
     queryFn: fetchAboutData,
+    placeholderData: keepPreviousData,
   });
 
   // Memoize the context value

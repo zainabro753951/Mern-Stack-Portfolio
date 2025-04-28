@@ -25,18 +25,17 @@ const ProjectProvider = ({ children }) => {
     }
   };
 
-  const { isLoading, isError, error } = useQuery({
+  const { isLoading, isError, error, isSuccess, data } = useQuery({
     queryKey: ["projectData"],
     queryFn: fetchProjects,
-    staleTime: 5 * 60 * 1000, // 5 minutes cache
-    onSuccess: (data) => {
-      setProjects(data || []); // Ensure array fallback
-    },
-    onError: (error) => {
-      console.error("Projects query error:", error);
-      // Consider setting error state here if you want to expose it
-    },
   });
+
+  // Handle Response
+  useEffect(() => {
+    if (isSuccess) {
+      setProjects(data || []); // Ensure array fallback
+    }
+  }, [isSuccess]);
 
   const contextValue = {
     projects,

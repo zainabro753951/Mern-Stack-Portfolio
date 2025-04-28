@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useAdminAuth } from "./AdminAuthProvider";
 
 const useProjectCounts = () => {
@@ -27,6 +27,7 @@ const useProjectCounts = () => {
       queryKey: ["projectCounts"],
       queryFn: fetchProjectCounts,
       enabled: isAdminAuthenticated,
+      placeholderData: keepPreviousData,
       select: (data) => ({
         deletedProjects: data?.deletedProjects || 0,
         availableProjects: data?.availableProjects || 0,

@@ -12,8 +12,6 @@ const AddEducationPgae = lazy(() =>
 const ViewEducationPage = lazy(() =>
   import("../Pages/viewEducation/ViewEducationPage")
 );
-const AddBlog = lazy(() => import("../Pages/AddBlog/AddBlog"));
-const ViewBlogs = lazy(() => import("../Pages/ViewBlogs/ViewBlogs"));
 const AddTestimonial = lazy(() =>
   import("../Pages/AddTestimonial/AddTestimonial")
 );
@@ -25,8 +23,6 @@ const ViewProject = lazy(() => import("../Pages/ViewProject/ViewProject"));
 const EditEducation = lazy(() =>
   import("../Pages/editEducation/EditEducation")
 );
-const EditBlogs = lazy(() => import("../Pages/EditBlogs/EditBlogs"));
-const EditBlogForm = lazy(() => import("../Pages/EditBlogFrom/EditBlogForm"));
 const EditTestimonial = lazy(() =>
   import("../Pages/editTestimonial/EditTestimonial")
 );
@@ -61,14 +57,7 @@ export const adminRoutes = [
     path: "/edit-Education/:id",
     element: <EditEducation />,
   },
-  {
-    path: "/add-blog",
-    element: <AddBlog />,
-  },
-  {
-    path: "/view-blog",
-    element: <ViewBlogs />,
-  },
+
   {
     path: "/add-testimonial",
     element: <AddTestimonial />,
@@ -93,14 +82,7 @@ export const adminRoutes = [
     path: "/edit-project/:id",
     element: <EditProjectFrom />,
   },
-  {
-    path: "/edit-blogs/:slug/:id",
-    element: <EditBlogs />,
-  },
-  {
-    path: "/edit-blogs/blog",
-    element: <EditBlogForm />,
-  },
+
   {
     path: "/edit-testimonial/:id",
     element: <EditTestimonial />,

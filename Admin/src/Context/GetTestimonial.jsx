@@ -1,6 +1,10 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useAdminAuth } from "./AdminAuthProvider";
 
 export const TestimonialContext = createContext();
@@ -31,6 +35,7 @@ export const TestimonialProvider = ({ children }) => {
     queryFn: fetchTestimonials,
     enabled: isAdminAuthenticated,
     refetchOnWindowFocus: true,
+    placeholderData: keepPreviousData,
   });
 
   // Handle Response

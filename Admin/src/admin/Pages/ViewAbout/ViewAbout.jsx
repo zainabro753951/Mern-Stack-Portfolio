@@ -95,7 +95,7 @@ const ViewAbout = () => {
 
   const mutation = useMutation({
     mutationFn: (formData) => {
-      const response = axios.put("${backendUrl}/admin/update_about", formData, {
+      const response = axios.put(`${backendUrl}/admin/update_about`, formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",

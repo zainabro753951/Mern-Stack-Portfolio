@@ -13,14 +13,16 @@ const ViewEducationPage = () => {
   const { educationData, setEducationData, isLoading } = GetEducation();
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   // Creating Mutation of Deleting
-  const mutation = useMutation((id) => {
-    const response = axios.delete(
-      `${backendUrl}/admin/delete_education/${id}`,
-      {
-        withCredentials: true,
-      }
-    );
-    return response;
+  const mutation = useMutation({
+    mutationFn: (id) => {
+      const response = axios.delete(
+        `${backendUrl}/admin/delete_education/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
+      return response;
+    },
   });
 
   // Deleting Education data
@@ -30,6 +32,8 @@ const ViewEducationPage = () => {
 
   useEffect(() => {
     if (mutation.isError) {
+      console.log(mutation.error);
+
       toast.error(mutation.error.response.data.message, {
         position: "top-right",
         autoClose: 5000,
@@ -225,7 +229,7 @@ const ViewEducationPage = () => {
                                   </td>
                                   <td className="px-[2vw] xs:py-[2.8vw] md:py-[0.3vw] lg:text-[1.2vw] whitespace-nowrap flex items-center gap-3 justify-center">
                                     <Link
-                                      to={`/admin/edit-education/${items._id}`}
+                                      to={`/edit-education/${items._id}`}
                                       type="button"
                                       className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-[0.4vw] lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] lg:px-[1.5vw] md:px-[2.5vw] xs:px-[3.9vw] py-[0.5vw] me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                                     >

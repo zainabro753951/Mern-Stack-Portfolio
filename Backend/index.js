@@ -47,22 +47,43 @@ try {
   console.log("Error connecting to MongoDB", e);
 }
 
+// Trust reverse proxy
+app.set("trust proxy", 1);
+
 // Middleware
 app.use(express.json());
 app.use(
   helmet({
+    contentSecurityPolicy: false,
     crossOriginResourcePolicy: { policy: "cross-origin" },
   })
 );
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(morgan("combined")); // Or 'tiny' for less verbose logging
-app.use(compression());
+// Production logging
+if (process.env.NODE_ENV === "production") {
+  const accessLogStream = fs.createWriteStream(
+    path.join(__dirname, "access.log"),
+    { flags: "a" }
+  );
+  app.use(morgan("combined", { stream: accessLogStream }));
+} else {
+  app.use(morgan("dev"));
+}
+app.use(compression({ level: 9 }));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "upload/")));
+// Static files with caching
+app.use(
+  express.static(path.join(__dirname, "upload/"), {
+    maxAge: process.env.NODE_ENV === "production" ? "7d" : "0",
+    setHeaders: (res) => {
+      res.header("X-Content-Type-Options", "nosniff");
+    },
+  })
+);
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300, // limit each IP to 100 requests per windowMs
+  max: process.env.NODE_ENV === "production" ? 500 : 1000,
   message: "Too many requests, please try again later",
   standardHeaders: true,
   legacyHeaders: false,
@@ -81,10 +102,20 @@ app.use(Insert);
 app.use(getData);
 app.use(deleteData);
 
-// After all routes
+// 404 Handler
+app.use((req, res) => {
+  res.status(404).json({ error: "Resource not found" });
+});
+
+// Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ error: "Something went wrong!" });
+  res.status(500).json({
+    error:
+      process.env.NODE_ENV === "production"
+        ? "Internal server error"
+        : err.message,
+  });
 });
 
 // Handle unhandled promise rejections

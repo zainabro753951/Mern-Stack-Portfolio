@@ -105,14 +105,7 @@ const DashboardLeft = () => {
             link1="/add-education"
             link2="/view-education"
           />
-          <Dropdown
-            title="Blog"
-            icon={"/imgs/dashboardleft/blog.png"}
-            state={isBlogOpen}
-            setState={setIsBlogOpen}
-            link1="/add-blog"
-            link2="/view-blog"
-          />
+
           <Dropdown
             title="Testimonial"
             icon={"/imgs/dashboardleft/testimonial.png"}
