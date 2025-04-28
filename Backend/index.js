@@ -6,7 +6,7 @@ dotenv.config();
 import express from "express";
 const app = express();
 
-// Importing Some Pakages for improvements
+// Importing Some Packages for improvements
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -22,7 +22,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Dotenv Config
-const port = process.env.PORT;
+const port = process.env.PORT || 3000; // Default port if not specified
+
+// Validate essential environment variables
+const requiredEnvVars = ["MONGODBURL", "COOKIE_SECRET", "FRONTEND_PORT"];
+requiredEnvVars.forEach((env) => {
+  if (!process.env[env]) {
+    console.error(`Missing required environment variable: ${env}`);
+    process.exit(1);
+  }
+});
 
 // CORS Configuration
 const corsOptions = {
@@ -32,11 +41,15 @@ const corsOptions = {
       process.env.FRONTEND_PORT2,
       "http://localhost:5173",
       "http://localhost:5174",
-    ];
+    ].filter(Boolean); // Remove any undefined values
 
-    if (!origin || allowedOrigins.includes(origin)) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.warn(`Blocked by CORS: ${origin}`);
       callback(new Error("Not allowed by CORS"));
     }
   },
@@ -49,16 +62,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Handle OPTIONS requests (Preflight)
-app.options("*", cors(corsOptions)); // Enable preflight for all routes
-
-// MongoDB Connection String
-const mongooseUrl = process.env.MONGODBURL;
-try {
-  await mongoose.connect(mongooseUrl);
-  console.log("Connected to MongoDB");
-} catch (e) {
-  console.log("Error connecting to MongoDB", e);
-}
+app.options("*", cors(corsOptions));
 
 // Trust reverse proxy
 app.set("trust proxy", 1);
@@ -67,26 +71,59 @@ app.set("trust proxy", 1);
 app.use(express.json());
 app.use(
   helmet({
-    contentSecurityPolicy: false,
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", "data:", "blob:"],
+        connectSrc: ["'self'"],
+        fontSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        mediaSrc: ["'self'"],
+        frameSrc: ["'none'"],
+      },
+    },
     crossOriginResourcePolicy: { policy: "cross-origin" },
   })
 );
 app.use(cookieParser(process.env.COOKIE_SECRET));
-// Production logging
+
+// Logging configuration
 if (process.env.NODE_ENV === "production") {
+  // Ensure logs directory exists
+  const logsDir = path.join(__dirname, "logs");
+  if (!fs.existsSync(logsDir)) {
+    fs.mkdirSync(logsDir);
+  }
+
   const accessLogStream = fs.createWriteStream(
-    path.join(__dirname, "access.log"),
+    path.join(logsDir, "access.log"),
     { flags: "a" }
   );
   app.use(morgan("combined", { stream: accessLogStream }));
 } else {
   app.use(morgan("dev"));
 }
-app.use(compression({ level: 9 }));
-app.use(express.urlencoded({ extended: true }));
-// Static files with caching
+
+// Compression (reduce level for production)
 app.use(
-  express.static(path.join(__dirname, "upload/"), {
+  compression({
+    level: process.env.NODE_ENV === "production" ? 6 : 9,
+    threshold: 1024, // Only compress responses larger than 1KB
+  })
+);
+
+app.use(express.urlencoded({ extended: true }));
+
+// Static files with caching
+const uploadsDir = path.join(__dirname, "upload");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir);
+}
+
+app.use(
+  express.static(uploadsDir, {
     maxAge: process.env.NODE_ENV === "production" ? "7d" : "0",
     setHeaders: (res) => {
       res.header("X-Content-Type-Options", "nosniff");
@@ -94,16 +131,42 @@ app.use(
   })
 );
 
+// Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: process.env.NODE_ENV === "production" ? 500 : 1000,
   message: "Too many requests, please try again later",
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => {
+    // Skip rate limiting for health checks
+    return req.url === "/health";
+  },
 });
 app.use(limiter);
 
-// Importing some Routes here
+// MongoDB Connection
+const mongooseOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 5000,
+  socketTimeoutMS: 45000,
+};
+
+mongoose
+  .connect(process.env.MONGODBURL, mongooseOptions)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+    process.exit(1);
+  });
+
+// Add health check endpoint
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "OK" });
+});
+
+// Importing routes
 import admin from "./Routes/AdminRoutes/admin.route.js";
 import Insert from "./Routes/AdminRoutes/Insert.route.js";
 import getData from "./Routes/AdminRoutes/getData.route.js";
@@ -123,14 +186,35 @@ app.use((req, res) => {
 // Error handling
 app.use((err, req, res, next) => {
   console.error(err.stack);
+
+  // Handle CORS errors specifically
+  if (err.message === "Not allowed by CORS") {
+    return res.status(403).json({ error: err.message });
+  }
+
   res.status(500).json({
     error:
       process.env.NODE_ENV === "production"
-        ? `Internal server error ${err.message}`
+        ? "Internal server error"
         : err.message,
+    ...(process.env.NODE_ENV !== "production" && { stack: err.stack }),
   });
 });
 
-app.listen(port, () => {
+// Server startup
+const server = app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}`);
+  console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
+});
+
+// Handle unhandled promise rejections
+process.on("unhandledRejection", (err) => {
+  console.error("Unhandled Rejection:", err);
+  server.close(() => process.exit(1));
+});
+
+// Handle uncaught exceptions
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught Exception:", err);
+  server.close(() => process.exit(1));
 });
