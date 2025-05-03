@@ -292,7 +292,7 @@ const Hero = ({ content, isLoading }) => {
                   style={{ willChange: "opacity" }}
                   src={
                     content?.profileImg
-                      ? `${backendUrl}/${content?.profileImg || null}`
+                      ? `${backendUrl.slice(0, -4)}/${content?.profileImg}`
                       : null
                   }
                   alt="Descriptive text"

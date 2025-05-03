@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import React, { useRef } from "react";
 import { useAboutData } from "../../../Context/GetAboutData";
+import OptimizedImage from "../../../Common/OptimiseImage";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -119,10 +120,11 @@ const AboutMe = () => {
                   style={{ willChange: "scale, opacity" }}
                   className="relative"
                 >
-                  <img
+                  <OptimizedImage
                     className=" w-full h-full object-cover md:rounded-[1.3vw] xs:rounded-[2.3vw]"
-                    src={`${backendUrl}/${aboutData?.profileImg || null}`}
-                    loading="lazy"
+                    src={`${backendUrl.slice(0, -4)}/${
+                      aboutData?.profileImg || null
+                    }`}
                     alt=""
                   />
                   <img
@@ -195,8 +197,8 @@ const AboutMe = () => {
                     style={{ willChange: "scale, opacity" }}
                     className="md:text-[1.5vw] blured xs:text-[2.5vw] font-semibold font-lexend_deca"
                   >
-                    {aboutData?.hobbies?.map((hobby) => {
-                      return <span>{hobby}</span>;
+                    {aboutData?.hobbies?.map((hobby, idx) => {
+                      return <span key={idx}>{hobby}</span>;
                     })}
                   </h3>
                 </div>

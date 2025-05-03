@@ -12,7 +12,10 @@ export const TestimonialProvider = ({ children }) => {
     try {
       const response = await axios.get(`${backendUrl}/admin/getTestimonial`, {
         withCredentials: true,
-        timeout: 10000, // 10 second timeout
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       });
       return response.data;
     } catch (error) {

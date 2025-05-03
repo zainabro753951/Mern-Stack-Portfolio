@@ -78,6 +78,8 @@ const AddProject = () => {
   const [projectName, setProjectName] = useState("");
   const [projectSlug, setProjectSlug] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
+  const [projectDescription2, setProjectDescription2] = useState("");
+  const [projectDescription3, setProjectDescription3] = useState("");
   const [projectType, setProjectType] = useState("");
   const [projectUrl, setProjectUrl] = useState("");
   const [projetScreenShots, setProjetScreenShots] = useState([]);
@@ -194,6 +196,8 @@ const AddProject = () => {
     formData.append("projectName", projectName);
     formData.append("projectSlug", projectSlug);
     formData.append("projectDescription", projectDescription);
+    formData.append("projectDescription2", projectDescription2);
+    formData.append("projectDescription3", projectDescription3);
     formData.append("techStacks", techStacks);
     formData.append("projectType", projectType);
     formData.append("projectUrl", projectUrl);
@@ -309,7 +313,7 @@ const AddProject = () => {
               </div>
             </div>
 
-            {/* Project Discription */}
+            {/* Project Discription1 */}
 
             <div className="flex flex-col gap-1 w-full">
               <label
@@ -325,6 +329,38 @@ const AddProject = () => {
                 onChange={(e) => setProjectDescription(e.target.value)}
                 required
                 placeholder="Enter your degree or qualification"
+              ></textarea>
+            </div>
+
+            {/* Project Discription 2*/}
+
+            <div className="flex flex-col gap-1 w-full">
+              <label className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca">
+                Project Discription*
+              </label>
+              <textarea
+                className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                rows={7}
+                value={projectDescription2}
+                onChange={(e) => setProjectDescription2(e.target.value)}
+                required
+                placeholder="Enter your project description 2"
+              ></textarea>
+            </div>
+
+            {/* Project Discription 3*/}
+
+            <div className="flex flex-col gap-1 w-full">
+              <label className="lg:text-[1.2vw] md:text-[2.2vw] xs:text-[3.4vw] font-lexend_deca">
+                Project Discription*
+              </label>
+              <textarea
+                className="py-[0.8vw] w-full xs:px-2 md:px-5 xs:rounded-md md:rounded-lg border border-gray-400 outline-none lg:placeholder:text-[1.1vw] md:placeholder:text-[2.1vw] sm:placeholder:text-[2.7vw] xs:placeholder:text-[3vw] focus:border-themeBlue"
+                rows={7}
+                value={projectDescription3}
+                onChange={(e) => setProjectDescription3(e.target.value)}
+                required
+                placeholder="Enter your project description 2"
               ></textarea>
             </div>
 

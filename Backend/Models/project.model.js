@@ -14,6 +14,12 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    projectDescription2: {
+      type: String,
+    },
+    projectDescription3: {
+      type: String,
+    },
     techStacks: [
       {
         type: String,

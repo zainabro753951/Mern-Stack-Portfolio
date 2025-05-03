@@ -5,6 +5,7 @@ import PortfolioDetailsHero from "./components/PortfolioDetailsHero";
 import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import { useProjects } from "../../Context/GetProject";
+import ProjectDetails from "./components/ProjectDetails";
 
 const PortfolioDetails = () => {
   const { slug, id } = useParams();
@@ -32,6 +33,7 @@ const PortfolioDetails = () => {
       <Header />
       <MobileHeader />
       <PortfolioDetailsHero projectName={project?.projectName} />
+      <ProjectDetails project={project} />
       <Footer footerText={"Have a Project"} text={"Contact me"} />
     </>
   );

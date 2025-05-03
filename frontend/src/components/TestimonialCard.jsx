@@ -12,7 +12,7 @@ const TestimonialCard = ({ data }) => {
       <div className="w-full md:h-[16vw] sm:w-full sm:h-full">
         <OptimizedImage
           className="md:rounded-l-[2vw] xs:rounded-l-[3vw] md:w-full md:h-full xs:rounded-full sm:rounded-none object-cover sm:h-full sm:w-full xs:w-[50vw] xs:h-[50vw] lg:-translate-x-20"
-          src={`${backendUrl}/${data.profileImg}`}
+          src={`${backendUrl.slice(0, -4)}/${data.profileImg}`}
         />
       </div>
       <div className="flex flex-col md:gap-[1.5vw] xs:gap-[2.5vw]">

@@ -13,7 +13,6 @@ const ProjectProvider = ({ children }) => {
     try {
       const response = await axios.get(`${backendUrl}/admin/getProjects`, {
         withCredentials: true,
-        timeout: 10000, // 10 second timeout
       });
       return response.data;
     } catch (error) {

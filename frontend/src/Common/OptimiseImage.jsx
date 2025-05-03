@@ -19,6 +19,8 @@ const OptimizedImage = forwardRef(
   ) => {
     const [loaded, setLoaded] = useState(false);
     const [error, setError] = useState(false);
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    console.log(src);
 
     const generateSrcSet = () => {
       if (!src) return null;

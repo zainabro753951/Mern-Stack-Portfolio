@@ -138,11 +138,12 @@ const AboutEducation = () => {
                 Education
               </h2>
               <div className="flex flex-col md:gap-[4vw] xs:gap-[5vw] pt-4">
-                {educationData?.map((data) => {
+                {educationData?.map((data, idx) => {
                   const startDate = new Date(data?.startDate).getFullYear();
                   const endDate = new Date(data?.endDate).getFullYear();
                   return (
                     <div
+                      key={idx}
                       style={{ willChange: "transform, opacity, scale" }}
                       className="flex items-center gap-5 eduCard"
                     >

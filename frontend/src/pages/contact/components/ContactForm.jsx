@@ -54,9 +54,9 @@ const ContactForm = () => {
               rows="7"
               placeholder="Message"
             ></textarea>
-            <button>
+            <div>
               <HireMeBtn text={"Send Message"} />
-            </button>
+            </div>
           </form>
         </div>
       </div>

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { IoMdArrowDropright } from "react-icons/io";
 import { useProjects } from "../../../Context/GetProject";
 import { motion } from "motion/react";
+import OptimizedImage from "../../../Common/OptimiseImage";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -74,9 +75,9 @@ const PortfolioProjects = () => {
                       transition={{ duration: 0.4, ease: "backInOut" }}
                       className="relative overflow-hidden  md:rounded-[1.3vw] xs:rounded-[2.3vw] w-full h-full"
                     >
-                      <img
+                      <OptimizedImage
                         className="w-full h-full object-cover object-right"
-                        src={`${backendUrl}/${project.poster}`}
+                        src={`${backendUrl.slice(0, -4)}/${project.poster}`}
                         alt=""
                       />
                       <motion.div

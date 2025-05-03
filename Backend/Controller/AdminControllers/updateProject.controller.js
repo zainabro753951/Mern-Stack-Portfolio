@@ -35,6 +35,8 @@ const updateProject = async (req, res) => {
       projectName,
       projectSlug,
       projectDescription,
+      projectDescription2,
+      projectDescription3,
       techStacks,
       projectType,
       projectUrl,
@@ -123,6 +125,8 @@ const updateProject = async (req, res) => {
       project.projectName = projectName;
       project.projectSlug = projectSlug;
       project.projectDescription = projectDescription;
+      project.projectDescription2 = projectDescription2;
+      project.projectDescription3 = projectDescription3;
       project.techStacks = techStacks;
       project.projectType = projectType;
       project.projectUrl = projectUrl;
