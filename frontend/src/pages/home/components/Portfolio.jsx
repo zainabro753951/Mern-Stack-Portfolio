@@ -74,13 +74,15 @@ const Portfolio = () => {
 
   return (
     <div className="w-full bg-portfolio min-h-screen bg-cover bg-no-repeat">
-      <div className="w-full md:max-w-[80vw] mx-auto px-5 md:py-[10vw] xs:py-[11vw] grid lg:grid-cols-2 md:gap-[5vw] xs:gap-[6vw] h-full font-jost">
+      <div className="w-full md:max-w-[80vw] mx-auto px-5 md:py-[10vw] xs:py-[11vw] grid lg:grid-cols-2 md:gap-[5vw]  h-full font-jost">
         <div className="w-full h-full">
           <div className="flex items-center md:gap-[1.3vw] xs:gap-[2.3vw] text-themeBlue">
-            <h1 className="md:text-[1.3vw] xs:text-[2.3vw]">Portfolio</h1>
+            <h1 className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw]">
+              Portfolio
+            </h1>
             <div id="rotateAbout">
               <svg
-                className="md:w-[2.2vw] xs:w-[3.2vw]"
+                className="md:w-[2.2vw] sm:w-[3.2vw] xs:w-[4.2vw]"
                 viewBox="0 0 20 18"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -100,7 +102,7 @@ const Portfolio = () => {
               initial="hidden"
               animate={portfolioControls}
               variants={portfolioTextVariants}
-              className="md:text-[3.2vw] xs:text-[4.2vw] md:leading-[3.6vw] xs:leading-[4.6vw] font-lexend_deca font-semibold xs:pt-[1.7vw] md:pt-[0.7vw] tracking-wide"
+              className="md:text-[3.2vw] sm:text-[4.2vw] xs:text-[5.2vw] md:leading-[3.7vw] sm:leading-[4.7vw] xs:leading-[5.7vw] font-lexend_deca font-semibold xs:pt-[1.7vw] md:pt-[0.7vw] tracking-wide"
             >
               My latest <br /> awasome{" "}
               <span className="text-themePurple">projects</span>
@@ -109,26 +111,26 @@ const Portfolio = () => {
           <div
             id="ProjectHovers"
             style={{ willChange: "transform, opacity" }}
-            className="flex flex-col xs:rounded-[3vw] md:rounded-[2vw] overflow-hidden md:mt-[10vw] xs:mt-[12vw] relative projectCards"
+            className="flex flex-col xs:rounded-[3vw] sm:rounded-[4vw] md:rounded-[5vw] overflow-hidden md:mt-[10vw] sm:mt-[7vw] xs:mt-[5vw] relative projectCards"
           >
-            <div className="md:p-[1.5vw] xs:p-[2.5vw] flex items-center xs:gap-[5vw] md:gap-[4vw] portfolioGardient">
-              <div className="flex items-center md:gap-[0.8vw] xs:gap-[1.8vw]">
+            <div className="md:p-[1.5vw] sm:p-[2.5vw] xs:p-[3.5vw] flex items-center xs:gap-[5vw] sm:gap-[6vw] md:gap-[7vw] portfolioGardient">
+              <div className="flex items-center md:gap-[0.8vw] sm:gap-[1.8vw] xs:gap-[2.8vw]">
                 <div
                   id="Pcircle"
-                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] sm:w-[3.4vw] xs:w-[4.4vw] md:h-[2.4vw] sm:h-[3.4vw] xs:h-[4.4vw] rounded-full bg-white"
                 ></div>
                 <div
                   id="Pcircle"
-                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] sm:w-[3.4vw] xs:w-[4.4vw] md:h-[2.4vw] sm:h-[3.4vw] xs:h-[4.4vw] rounded-full bg-white"
                 ></div>
                 <div
                   id="Pcircle"
-                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] sm:w-[3.4vw] xs:w-[4.4vw] md:h-[2.4vw] sm:h-[3.4vw] xs:h-[4.4vw] rounded-full bg-white"
                 ></div>
               </div>
               <div
                 id="Pcircle"
-                className="w-full md:h-[2.4vw] xs:h-[3.4vw] rounded-lg bg-white"
+                className="w-full md:h-[2.4vw] sm:h-[3.4vw] xs:h-[4.4vw] rounded-lg bg-white"
               ></div>
             </div>
             <div className="w-full h-full overflow-hidden">
@@ -172,20 +174,20 @@ const Portfolio = () => {
               <div className="flex items-center md:gap-[0.5vw] xs:gap-[1.5vw]">
                 <div
                   id="Pcircle"
-                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] sm:w-[3.4vw] xs:w-[4.4vw] md:h-[2.4vw] sm:h-[3.4vw] xs:h-[4.4vw] rounded-full bg-white"
                 ></div>
                 <div
                   id="Pcircle"
-                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] sm:w-[3.4vw] xs:w-[4.4vw] md:h-[2.4vw] sm:h-[3.4vw] xs:h-[4.4vw] rounded-full bg-white"
                 ></div>
                 <div
                   id="Pcircle"
-                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] sm:w-[3.4vw] xs:w-[4.4vw] md:h-[2.4vw] sm:h-[3.4vw] xs:h-[4.4vw] rounded-full bg-white"
                 ></div>
               </div>
               <div
                 id="Pcircle"
-                className="w-full md:h-[2.4vw] xs:h-[3.4vw] rounded-lg bg-white"
+                className="w-full md:h-[2.4vw] sm:h-[3.4vw] xs:h-[4.4vw] rounded-lg bg-white"
               ></div>
             </div>
             <div className="w-full h-full overflow-hidden">
@@ -221,20 +223,20 @@ const Portfolio = () => {
               <div className="flex items-center md:gap-[0.8vw] xs:gap-[1.8vw]">
                 <div
                   id="Pcircle"
-                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] sm:w-[3.4vw] xs:w-[4.4vw] md:h-[2.4vw] sm:h-[3.4vw] xs:h-[4.4vw] rounded-full bg-white"
                 ></div>
                 <div
                   id="Pcircle"
-                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] sm:w-[3.4vw] xs:w-[4.4vw] md:h-[2.4vw] sm:h-[3.4vw] xs:h-[4.4vw] rounded-full bg-white"
                 ></div>
                 <div
                   id="Pcircle"
-                  className="md:w-[2.4vw] xs:w-[3.4vw] md:h-[2.4vw] xs:h-[3.4vw] rounded-full bg-white"
+                  className="md:w-[2.4vw] sm:w-[3.4vw] xs:w-[4.4vw] md:h-[2.4vw] sm:h-[3.4vw] xs:h-[4.4vw] rounded-full bg-white"
                 ></div>
               </div>
               <div
                 id="Pcircle"
-                className="w-full md:h-[2.4vw] xs:h-[3.4vw] md:rounded-[0.5vw] xs:rounded-[1vw] bg-white"
+                className="w-full md:h-[2.4vw] sm:h-[3.4vw] xs:h-[4.4vw] rounded-lg bg-white"
               ></div>
             </div>
             <div className="w-full h-full overflow-hidden">
@@ -262,7 +264,7 @@ const Portfolio = () => {
             </div>
           </div>
         </div>
-        <div className="py-8 xs:block lg:hidden lg:text-[1.4vw] md:text-[2.4vw] xs:text-[3.9vw] text-center font-semibold text-themePurple">
+        <div className="py-8 xs:block lg:hidden sm:text-[2.4vw] md:text-[1.4vw] xs:text-[3.4vw] text-center font-semibold text-themePurple">
           <Link id="viewProject" className="relative">
             {" "}
             View All Project{" "}

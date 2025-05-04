@@ -75,14 +75,16 @@ const HappyClients = () => {
   }, []);
   return (
     <div className="bg-[#F9FBFF] w-full">
-      <div className="md:max-w-[80vw] mx-auto  px-5 font-jost">
+      <div className="md:max-w-[80vw] mx-auto px-5 font-jost">
         <div className="w-full grid lg:grid-cols-3 md:gap-[3vw] xs:gap-[4vw] md:py-[7vw] xs:py-[8vw]">
-          <div className="flex flex-col gap-5">
-            <div className="flex items-center gap-4 text-themeBlue">
-              <h1 className="md:text-[1.3vw] xs:text-[2.3vw]">Happy Clients</h1>
+          <div className="flex flex-col xs:gap-2 md:gap-5">
+            <div className="flex items-center md:gap-4 xs:gap-2 text-themeBlue">
+              <h1 className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw]">
+                Happy Clients
+              </h1>
               <div id="rotateAbout">
                 <svg
-                  className="md:w-[2.2vw] xs:w-[3.2vw]"
+                  className="md:w-[2.2vw] sm:w-[3.2vw] xs:w-[4.2vw]"
                   viewBox="0 0 23 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -101,13 +103,13 @@ const HappyClients = () => {
                 <h2
                   ref={happyClientText}
                   style={{ willChange: "transform, opacity" }}
-                  className="md:text-[3.2vw] xs:text-[4.2vw]  md:leading-[3.6vw] xs:leading-[4.6vw] font-lexend_deca tracking-wide font-semibold"
+                  className="md:text-[3.2vw] sm:text-[4.2vw] xs:text-[5.2vw]  md:leading-[3.6vw] sm:leading-[4.7vw] xs:leading-[6vw] font-lexend_deca tracking-wide font-semibold"
                 >
                   I work with over 150+ happy clients
                 </h2>
               </div>
             </div>
-            <p className="md:text-[1.3vw] xs:text-[2.3vw]  md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500">
+            <p className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw] md:leading-[1.9vw] sm:leading-[2.9vw] xs:leading-[4.1vw] text-gray-500">
               Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean
               commodo ligula eget dolor. Aenean massa.
             </p>
@@ -122,13 +124,15 @@ const HappyClients = () => {
                     style={{ willChange: "scale, opacity" }}
                     className="flex flex-col happyClientsBoxShadow items-center justify-center md:rounded-[1.4vw] xs:rounded-[2.4vw] overflow-hidden bg-white"
                   >
-                    <div className={`md:p-[2vw] xs:p-[3vw] ${data.color}`}>
+                    <div
+                      className={`md:p-[2vw] sm:p-[3vw] xs:p-[4vw] ${data.color}`}
+                    >
                       <OptimizedImage
-                        className="md:w-[10vw] xs:w-[11vw]"
+                        className="md:w-[10vw] sm:w-[12vw] xs:w-[14vw]"
                         src={data.img}
                       />
                     </div>
-                    <div className="md:text-[1.3vw] xs:text-[2.3vw] md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 py-2">
+                    <div className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw] md:leading-[1.9vw] sm:leading-[2.9vw] xs:leading-[4.1vw] text-gray-500 py-2">
                       <h2>{data.name}</h2>
                     </div>
                   </div>
@@ -143,13 +147,15 @@ const HappyClients = () => {
                     id="happyClientsBoxShadow"
                     className="flex flex-col happyClientsBoxShadow items-center justify-center md:rounded-[1.4vw] xs:rounded-[2.4vw] overflow-hidden bg-white"
                   >
-                    <div className={`md:p-[2vw] xs:p-[3vw] ${data.color}`}>
+                    <div
+                      className={`md:p-[2vw] sm:p-[3vw] xs:p-[4vw] ${data.color}`}
+                    >
                       <OptimizedImage
-                        className="md:w-[10vw] xs:w-[11vw]"
+                        className="md:w-[10vw] sm:w-[12vw] xs:w-[14vw]"
                         src={data.img}
                       />
                     </div>
-                    <div className="md:text-[1.3vw] xs:text-[2.3vw] md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 py-2">
+                    <div className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw] md:leading-[1.9vw] sm:leading-[2.9vw] xs:leading-[4.1vw] text-gray-500 py-2">
                       <h2>{data.name}</h2>
                     </div>
                   </div>

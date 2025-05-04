@@ -13,7 +13,7 @@ const HireMeBtn = ({ text, isLoading }) => {
         isLoading
           ? "bg-transparent border-themePurple border"
           : "bg-themePurple"
-      } md:px-[2vw] xs:px-[3vw] md:py-[1.7vw] xs:py-[2.7vw] md:rounded-[0.5vw] xs:rounded-[1vw]`}
+      } md:px-[2vw] sm:px-[3vw] xs:px-[4vw] md:py-[1.7vw] sm:py-[2.7vw] xs:py-[3.4vw] md:rounded-[0.5vw] xs:rounded-[1vw]`}
     >
       {isLoading ? (
         <HashLoader
@@ -24,7 +24,7 @@ const HireMeBtn = ({ text, isLoading }) => {
       ) : (
         <>
           <motion.div
-            className="xl:flex xs:hidden leading-none w-fit flex-col items-center md:gap-[1.6vw] xs:gap-[2.6vw] relative font-bold md:text-[1.1vw] xs:text-[2.1vw] text-white"
+            className="xl:flex xs:hidden leading-none w-fit flex-col items-center md:gap-[1.6vw] xs:gap-[2.6vw] relative font-bold md:text-[1.1vw] sm:text-[2.1vw] xs:text-[3.1vw] text-white"
             animate={{ y: mouseHovered ? -20 : 20 }}
             transition={{
               type: "spring",
@@ -39,7 +39,7 @@ const HireMeBtn = ({ text, isLoading }) => {
           <div
             className={`${
               isLoading ? "hidden" : "xl:hidden"
-            } font-bold md:text-[1.1vw] xs:text-[2.1vw] text-white`}
+            } font-bold md:text-[1.1vw] sm:text-[2.1vw] xs:text-[3.1vw] text-white`}
           >
             {text}
           </div>

@@ -81,10 +81,12 @@ const Testimonial = () => {
         <div className="flex justify-between flex-wrap lg:gap-0 md:gap-[2vw] xs:gap-[4vw] items-end">
           <div>
             <div className="flex items-center md:gap-[1vw] xs:gap-[2vw] text-themeBlue">
-              <h1 className="md:text-[1.3vw] xs:text-[2.3vw]">Testimonial</h1>
+              <h1 className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw]">
+                Testimonial
+              </h1>
               <div id="rotateAbout">
                 <svg
-                  className="md:w-[2.2vw] xs:w-[3.2vw]"
+                  className="md:w-[2.2vw] sm:w-[3.2vw] xs:w-[4.2vw]"
                   viewBox="0 0 21 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +107,7 @@ const Testimonial = () => {
                 animate={textControls}
                 variants={textVariants}
                 style={{ willChange: "transform, opacity" }}
-                className="md:text-[3.2vw] xs:text-[4.2vw] md:pt-[1.1vw] xs:pt-[2.1vw] font-semibold md:leading-[3.6vw] xs:leading-[4.6vw] font-lexend_deca tracking-wide"
+                className="md:text-[3.2vw] sm:text-[4.2vw] xs:text-[5.2vw] md:pt-[1.1vw] xs:pt-[2.1vw] font-semibold md:leading-[3.6vw] sm:leading-[4.7vw] xs:leading-[6vw] font-lexend_deca tracking-wide"
               >
                 What <span className="text-themePurple">my client</span> have{" "}
                 <br /> to say <span className="text-themeBlue">about me</span>
@@ -114,7 +116,7 @@ const Testimonial = () => {
           </div>
           <div>
             <Link
-              className="xs:text-[2.4vw] md:text-[1.4vw] font-semibold text-themePurple relative"
+              className="xs:text-[2.8vw] sm:text-[2.4vw] md:text-[1.4vw] font-semibold text-themePurple relative"
               id="viewProject"
               to="/testimonials"
             >
@@ -123,7 +125,7 @@ const Testimonial = () => {
           </div>
         </div>
         <div className="w-full" ref={containerRef}>
-          <div className="grid lg:grid-cols-2 lg:gap-[2.5vw] md:gap-[3.9vw] xs:gap-[5.4vw] w-full place-items-center items-center md:mt-[6vw] xs:mt-[7vw]">
+          <div className="grid md:grid-cols-2 xs:grid-cols-1 lg:gap-[2.5vw] md:gap-[3.9vw] xs:gap-[5.4vw] w-full md:mt-[6vw] xs:mt-[7vw]">
             {testimonialData.slice(1, 3).map((data, idx) => (
               <motion.div
                 key={data.id || idx}

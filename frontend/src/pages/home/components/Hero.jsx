@@ -208,20 +208,20 @@ const Hero = ({ content, isLoading }) => {
           ref={targetSection}
           className={`w-full bg-hero bg-cover bg-no-repeat`}
         >
-          <div className="md:max-w-[80vw] mx-auto px-5 place-items-center md:gap-[2vw] xs:gap-[3vw] md:py-[8vw] xs:pb-[6vw] xs:pt-[10vw] grid lg:grid-cols-2 items-center">
+          <div className="md:max-w-[80vw] mx-auto px-5 place-items-center md:gap-[2vw] sm:gap-[15vw] xs:gap-[20vw] md:py-[8vw] xs:pb-[6vw] xs:pt-[10vw] grid lg:grid-cols-2 xs:grid-cols-1 items-center">
             <div>
               <div className="flex flex-col">
                 <h2
                   ref={textRef}
                   style={{ willChange: "transform, opacity" }}
-                  className="md:text-[3vw] xs:text-[4vw] font-lexend_deca text-themeGray md:leading-[3.5vw] xs:leading-[4.5vw] font-semibold"
+                  className="md:text-[3vw] sm:text-[4vw] xs:text-[5vw] font-lexend_deca text-themeGray md:leading-[3.5vw] sm:leading-[4.5vw] xs:leading-[5.5vw] font-semibold"
                 >
                   Hi! I'm
                 </h2>
                 <h1
                   ref={myName}
                   style={{ willChange: "transform, opacity" }}
-                  className="md:text-[5.5vw] xs:text-[6.5vw] md:leading-[6vw]  xs:leading-[7vw] font-lexend_deca font-bold"
+                  className="md:text-[5.5vw] sm:text-[6.5vw] xs:text-[7.5vw] md:leading-[6vw] sm:leading-[7vw] xs:leading-[8vw] font-lexend_deca font-bold"
                 >
                   <span className="gardient-text">
                     {content?.firstName || null}
@@ -232,14 +232,14 @@ const Hero = ({ content, isLoading }) => {
                     data-text={content?.lastName || null}
                   ></span>
                 </h1>
-                <h3 className="md:text-[2vw] xs:text-[3vw] font-lexend_deca font-bold tracking-wide md:leading-[2.5vw] xs:leading-[3.5vw]">
+                <h3 className="md:text-[2vw] sm:text-[3vw] xs:text-[4vw] font-lexend_deca font-bold tracking-wide md:leading-[2.5vw] sm:leading-[3.5vw] xs:leading-[4.5vw]">
                   <span className="text-themeGray ">MERN Stack</span>{" "}
                   <span ref={webDev} className="text-themeBlue">
                     Web Developer
                   </span>
                 </h3>
               </div>
-              <p className="md:text-[1.3vw] will-change-contents xs:text-[2.3vw]  lg:py-[2vw] md:py-[3vw] xs:py-[4vw] font-jost text-gray-500">
+              <p className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw]  lg:py-[2vw] md:py-[3vw] xs:py-[4vw] font-jost will-change-contents text-gray-500">
                 {spanedText}
               </p>
               <div className="flex items-center md:gap-[2vw] xs:gap-[3vw]">
@@ -258,8 +258,8 @@ const Hero = ({ content, isLoading }) => {
                       <OptimizedImage
                         className={` ${
                           idx === 0
-                            ? "md:w-[1vw] xs:w-[1.7vw] "
-                            : "md:w-[1.8vw] xs:w-[2.8vw]"
+                            ? "md:w-[1vw] sm:w-[1.7vw] xs:w-[2.4vw] "
+                            : "md:w-[1.8vw] sm:w-[2.8vw] xs:w-[3.8vw]"
                         }`}
                         src={icon}
                       />
@@ -273,14 +273,14 @@ const Hero = ({ content, isLoading }) => {
                 </Link>
                 <Link
                   id="talkBtn"
-                  className="md:text-[1.4vw] xs:text-[2.4vw] font-lexend_deca relative font-semibold text-themeBlue"
+                  className="md:text-[1.4vw] sm:text-[2.4vw] xs:text-[3.4vw] font-lexend_deca relative font-semibold text-themeBlue"
                 >
                   Let's Talk
                 </Link>
               </div>
             </div>
             <div>
-              <div className="md:w-[20vw] xs:w-[40vw] relative">
+              <div className="md:w-[20vw]  xs:w-[40vw] relative">
                 <img loading="lazy" />
                 <OptimizedImage
                   ref={backBanner}

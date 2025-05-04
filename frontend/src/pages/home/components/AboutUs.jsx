@@ -74,7 +74,7 @@ const AboutUs = ({ content, isLoading }) => {
 
   return (
     <div className="w-full bg-[#F9FBFF]">
-      <div className="md:max-w-[80vw] mx-auto md:py-[6vw] xs:py-[7vw] px-5 place-items-center grid lg:grid-cols-2 md:gap-[6vw] xs:gap-[7vw] place-content-center items-center">
+      <div className="md:max-w-[80vw] mx-auto md:py-[6vw] sm:py-[7vw] xs:py-[8vw] px-5 place-items-center grid lg:grid-cols-2 md:gap-[6vw] xs:gap-[7vw] place-content-center items-center">
         {isLoading ? (
           <div>
             {/* Loading skeleton remains the same */}
@@ -96,13 +96,13 @@ const AboutUs = ({ content, isLoading }) => {
         ) : (
           <div>
             <div className="flex items-center md:gap-[0.5vw] xs:gap-[1vw] pb-2">
-              <h1 className="md:text-[1.3vw] xs:text-[2.3vw] text-themeBlue font-jost">
+              <h1 className="md:text-[1.1vw] sm:text-[2.1vw] xs:text-[3.1vw] text-themeBlue font-jost">
                 About Me
               </h1>
               <div id="rotateAbout">
                 <OptimizedImage
                   src="/imgs/About/aboutSvg.png"
-                  className="md:w-[2.2vw] xs:w-[4.2vw]"
+                  className="md:w-[2.2vw] sm:text-[4.2vw] xs:w-[6.2vw]"
                 />
               </div>
             </div>
@@ -113,12 +113,12 @@ const AboutUs = ({ content, isLoading }) => {
                 whileInView="visible"
                 viewport={{ once: true, margin: "-100px" }}
                 variants={headingAnimation}
-                className="md:text-[2.6vw] will-change-transform xs:text-[3.3vw] font-semibold md:leading-[3.1vw] xs:leading-[4vw] font-lexend_deca"
+                className="md:text-[2.6vw] sm:text-[3.6vw] will-change-transform xs:text-[4.6vw] font-semibold md:leading-[3.1vw] sm:leading-[4.1vw] xs:leading-[5.2vw] font-lexend_deca"
               >
                 {content.aboutHeadline}
               </motion.h2>
             </div>
-            <p className="md:py-[1.5vw] xs:py-[2.5vw] text-gray-500 md:text-[1.3vw] xs:text-[2.3vw] md:leading-[1.9vw] xs:leading-[3.5vw] font-jost tracking-wide leading-7">
+            <p className="md:py-[1.5vw] xs:py-[3.5vw] text-gray-500 md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw] md:leading-[1.9vw] sm:leading-[2.6vw] xs:leading-[5vw] font-jost tracking-wide leading-7">
               {content.about}
             </p>
             <Link>

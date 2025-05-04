@@ -14,7 +14,7 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import helmet from "helmet";
 import compression from "compression";
-import fs from "fs"
+import fs from "fs";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 import createHttpError from "http-errors";

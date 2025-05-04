@@ -92,7 +92,7 @@ const Projects = () => {
       className="w-full bg-projects bg-cover bg-no-repeat"
     >
       <div className="md:max-w-[80vw] mx-auto xs:px-[10vw] lg:py-0 xs:py-[5vw] lg:px-0">
-        <div className="w-full h-full grid lg:grid-cols-3 md:gap-[4vw] lg:gap-[3vw] items-center">
+        <div className="w-full h-full grid lg:grid-cols-3 xs:grid-cols-1 md:gap-[5vw] lg:gap-[3vw]  items-center">
           {projectData.map((data, idx) => {
             return (
               <div

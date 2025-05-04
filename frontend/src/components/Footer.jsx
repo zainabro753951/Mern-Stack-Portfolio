@@ -12,10 +12,10 @@ const Footer = ({ footerText, text }) => {
           src="/imgs/footer_shape.svg"
           alt=""
         />
-        <div className="flex flex-wrap gap-10 items-center justify-around py-5">
+        <div className="flex flex-wrap md:gap-10 xs:gap-5 items-center justify-around py-5">
           <h2
             id="blueGardient"
-            className="lg:text-[6.3vw] md:text-[7.3vw] xs:text-[8.8vw] font-semibold font-lexend_deca"
+            className="md:text-[6.3vw] sm:text-[7.3vw] xs:text-[8.8vw] font-semibold font-lexend_deca"
           >
             {footerText}
           </h2>
@@ -23,8 +23,8 @@ const Footer = ({ footerText, text }) => {
             <HireMeBtn text={text} />
           </Link>
         </div>
-        <div className="py-7 relative smallFooterBorder mt-10">
-          <p className="lg:text-[1.3vw] md:text-[2.3vw] xs:text-[3.6vw] text-gray-400 text-center">
+        <div className="py-7 relative smallFooterBorder xs:mt-5 md:mt-10">
+          <p className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw] md:leading-[1.9vw] sm:leading-[2.9vw] xs:leading-[4.1vw] text-gray-400 text-center">
             &copy; 2024 Laralink. All rights reserved.
           </p>
         </div>
