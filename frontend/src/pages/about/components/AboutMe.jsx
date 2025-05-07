@@ -127,11 +127,10 @@ const AboutMe = () => {
                     }`}
                     alt=""
                   />
-                  <img
+                  <OptimizedImage
                     id="AboutAnimation"
                     className="absolute right-20 top-20 z-10"
                     src="/imgs/About/about_shape_3.svg"
-                    loading="lazy"
                     alt=""
                   />
                 </div>
@@ -141,33 +140,33 @@ const AboutMe = () => {
                   <h2
                     ref={aboutText}
                     style={{ willChange: "transform, opacity" }}
-                    className="md:text-[2.7vw] xs:text-[3.3vw] font-semibold md:leading-[3.3vw] xs:leading-[4.1vw] font-lexend_deca tracking-wide"
+                    className="md:text-[2.7vw] sm:text-[3.7vw] xs:text-[4.7vw] font-semibold md:leading-[3.3vw] sm:leading-[4.3vw] xs:leading-[6vw] font-lexend_deca tracking-wide"
                   >
                     {aboutData?.aboutHeadline || null}
                   </h2>
                 </div>
                 <p
                   style={{ willChange: "scale, opacity" }}
-                  className="md:text-[1.3vw] xs:text-[2.3vw] blured md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 font-jost"
+                  className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw] md:leading-[1.9vw] sm:leading-[2.9vw] xs:leading-[5.1vw] text-gray-500 font-jost"
                 >
                   {aboutData?.about || null}
                 </p>
                 <h3
                   style={{ willChange: "scale, opacity" }}
-                  className="md:text-[1.9vw] blured xs:text-[2.9vw] font-lexend_deca font-semibold"
+                  className="md:text-[1.9vw] sm:text-[2.9vw] blured xs:text-[3.9vw] font-lexend_deca font-semibold"
                 >
                   In summary
                 </h3>
                 <div>
                   <p
                     style={{ willChange: "scale, opacity" }}
-                    className="md:text-[1.3vw] xs:text-[2.3vw] blured md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 font-jost"
+                    className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw] blured md:leading-[1.9vw] sm:leading-[2.9vw] xs:leading-[3.9vw] text-gray-500 font-jost"
                   >
                     Current Location
                   </p>
                   <h3
                     style={{ willChange: "scale, opacity" }}
-                    className="md:text-[1.5vw] blured xs:text-[2.5vw] font-semibold font-lexend_deca"
+                    className="md:text-[1.9vw] sm:text-[2.9vw] blured xs:text-[3.9vw] font-semibold font-lexend_deca"
                   >
                     {aboutData?.location || null}
                   </h3>
@@ -175,13 +174,13 @@ const AboutMe = () => {
                 <div>
                   <p
                     style={{ willChange: "scale, opacity" }}
-                    className="md:text-[1.3vw] xs:text-[2.3vw] blured md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 font-jost"
+                    className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw] blured md:leading-[1.9vw] sm:leading-[2.9vw] xs:leading-[3.9vw] text-gray-500 font-jost"
                   >
                     Education
                   </p>
                   <h3
                     style={{ willChange: "scale, opacity" }}
-                    className="md:text-[1.5vw] blured xs:text-[2.5vw] font-semibold font-lexend_deca"
+                    className="md:text-[1.9vw] sm:text-[2.9vw] blured xs:text-[3.9vw] font-semibold font-lexend_deca"
                   >
                     {aboutData?.education || null}
                   </h3>
@@ -189,13 +188,13 @@ const AboutMe = () => {
                 <div>
                   <p
                     style={{ willChange: "scale, opacity" }}
-                    className="md:text-[1.3vw] xs:text-[2.3vw] blured md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 font-jost"
+                    className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw] blured md:leading-[1.9vw] sm:leading-[2.9vw] xs:leading-[3.9vw] text-gray-500 font-jost"
                   >
                     Interests
                   </p>
                   <h3
                     style={{ willChange: "scale, opacity" }}
-                    className="md:text-[1.5vw] blured xs:text-[2.5vw] font-semibold font-lexend_deca"
+                    className="md:text-[1.9vw] sm:text-[2.9vw] blured xs:text-[3.9vw] font-semibold font-lexend_deca"
                   >
                     {aboutData?.hobbies?.map((hobby, idx) => {
                       return <span key={idx}>{hobby}</span>;
@@ -205,13 +204,13 @@ const AboutMe = () => {
                 <div>
                   <p
                     style={{ willChange: "scale, opacity" }}
-                    className="md:text-[1.3vw] xs:text-[2.3vw] blured md:leading-[1.9vw] xs:leading-[2.9vw] text-gray-500 font-jost"
+                    className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw] blured md:leading-[1.9vw] sm:leading-[2.9vw] xs:leading-[3.9vw] text-gray-500 font-jost"
                   >
                     Email
                   </p>
                   <h3
                     style={{ willChange: "scale, opacity" }}
-                    className="md:text-[1.5vw] blured xs:text-[2.5vw] font-semibold font-lexend_deca"
+                    className="md:text-[1.9vw] sm:text-[2.9vw] blured xs:text-[3.9vw] font-semibold font-lexend_deca"
                   >
                     {aboutData?.email || null}
                   </h3>

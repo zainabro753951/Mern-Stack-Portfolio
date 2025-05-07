@@ -33,7 +33,7 @@ const PortfolioProjects = () => {
   return (
     <div className="relative bg-slate-100">
       <div className="md:max-w-[80vw] mx-auto md:py-[10vw] xs:py-[5vw]">
-        <div className="grid md:grid-cols-3 xs:grid-cols-1 md:gap-[1.6vw] xs:gap-[2.6vw]">
+        <div className="grid md:grid-cols-3 xs:grid-cols-1 md:px-0 sm:px-[5vw] xs:px-[10vw] md:gap-[1.6vw] xs:gap-[2.6vw]">
           {isLoading
             ? [1, 2, 3, 4, 5, 6].map((_, idx) => {
                 return (
@@ -63,7 +63,7 @@ const PortfolioProjects = () => {
                     key={idx}
                     onMouseEnter={() => setIsProjectHover(true)}
                     onMouseLeave={() => setIsProjectHover(false)}
-                    className="border w-full overflow-hidden md:h-[25vw] xs:h-[27vw] border-purple-600 md:rounded-[1.3vw] xs:rounded-[2.3vw]"
+                    className="border w-full overflow-hidden md:h-[25vw] xs:h-[50vw] border-purple-600 md:rounded-[1.3vw] xs:rounded-[2.3vw]"
                   >
                     <motion.div
                       initial={{
@@ -91,15 +91,15 @@ const PortfolioProjects = () => {
                           duration: 0.4,
                           ease: "backInOut",
                         }}
-                        className="w-full absolute bg-purple-800/70 text-white md:p-[1.5vw] xs:p-[2.5vw] bottom-0 left-0 z-10"
+                        className="w-full absolute bg-purple-800/70 text-white md:p-[1.5vw] sm:p-[2.5vw] xs:p-[3.5vw] bottom-0 left-0 z-10"
                       >
-                        <p className="md:text-[1.3vw] xs:text-[2.3vw] font-lexend_deca font-medium scale-y-[1.1]">
+                        <p className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw] font-lexend_deca font-medium scale-y-[1.1]">
                           {project.projectName}
                         </p>
                         <Link
                           id="projectButton"
                           to={`/portfolio/details/${project?.projectSlug}/${project?._id}`}
-                          className="md:text-[1.3vw] relative xs:text-[2.3vw] font-jost"
+                          className="md:text-[1.3vw] sm:text-[2.3vw] xs:text-[3.3vw] relative font-jost"
                         >
                           View Work
                         </Link>

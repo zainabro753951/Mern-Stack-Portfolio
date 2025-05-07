@@ -58,7 +58,7 @@ const Projects = () => {
           scrollTrigger: {
             trigger: counterRefs.current[0] || containerRef.current,
             markers: import.meta.env.VITE_NODE_ENV === "development",
-            start: "top 90%", // Adjusted for better timing
+            start: "top 120%", // Adjusted for better timing
             end: "center 20%",
             scrub: true,
             toggleActions: "play none none reverse",

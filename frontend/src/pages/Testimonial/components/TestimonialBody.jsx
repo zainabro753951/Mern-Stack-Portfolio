@@ -31,9 +31,9 @@ const TestimonialBody = () => {
   return (
     <>
       <div className="bg-[#F9FBFF]">
-        <div className="md:max-w-[80vw] min-h-screen mx-auto  py-24 px-5 font-jost">
+        <div className="md:max-w-[80vw] min-h-screen mx-auto py-24 px-5 font-jost">
           <div className="w-full">
-            <div className="grid lg:grid-cols-2 lg:gap-20 xs:gap-8 w-full place-items-center items-center">
+            <div className="grid lg:grid-cols-2 lg:gap-20 xs:gap-8 w-full">
               {isLoading
                 ? [1, 2, 3, 4, 5, 6].map((_, idx) => {
                     return (

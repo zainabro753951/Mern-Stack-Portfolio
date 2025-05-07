@@ -160,7 +160,8 @@ app.get("/health", (req, res) => {
   });
 });
 
-app.use(express.static(path.join(__dirname, "..")));
+const staticDir = path.join(__dirname, "..");
+app.use(express.static(staticDir));
 // Import routes
 import adminRouter from "./Routes/AdminRoutes/admin.route.js";
 import insertRouter from "./Routes/AdminRoutes/Insert.route.js";
@@ -174,7 +175,7 @@ app.use("/api", getDataRouter);
 app.use("/api", deleteDataRouter);
 
 // Improved catch-all route handler
-app.use("*", (req, res, next) => {
+app.use((req, res, next) => {
   if (req.path.startsWith("/api")) {
     const error = createHttpError.NotFound(
       `API endpoint ${req.method} ${req.url} not found`
@@ -183,7 +184,7 @@ app.use("*", (req, res, next) => {
   }
 
   // For non-API requests, serve index.html for frontend routing
-  const indexPath = path.join(__dirname, "../index.html");
+  const indexPath = path.join(staticDir, "../index.html");
 
   // Verify the file exists before sending
   if (!fs.existsSync(indexPath)) {
